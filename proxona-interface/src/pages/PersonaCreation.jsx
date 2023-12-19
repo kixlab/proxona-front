@@ -23,13 +23,6 @@ function PersonaCreation() {
 				</div>
 				<div className="creator-col user-board">
 					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
 				</div>
 			</div>
 			<div className="row p-2">
@@ -46,13 +39,6 @@ function PersonaCreation() {
 					</div>
 				</div>
 				<div className="creator-col competitor-board">
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
-					<ProxonaProfile />
 					<ProxonaProfile />
 				</div>
 			</div>

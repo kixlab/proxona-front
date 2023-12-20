@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { SignupForm } from "../components/SignupForm/SignupForm";
+import { textContent } from "../data/textContent";
 
 function Signup() {
 	return (

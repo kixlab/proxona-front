@@ -5,9 +5,10 @@ import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Signup from "./pages/Signup";
-import PersonaCreation from "./pages/PersonaCreation";
 import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const router = createBrowserRouter([
 	{

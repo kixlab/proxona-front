@@ -24,17 +24,20 @@ function groupBy(array, key) {
 }
 
 function PersonaCreation() {
-	const [similar, setSimilar] = useState([]);
+	const [filteredProfile, setFilteredProfile] = useState([]);
 	const [profiles, setProfiles] = useState(dummy);
 
-	//TODO: need to change
-	const addSimProfile = async (e) => {
+	const addSimProfile = async (key) => {
 		try {
-			const res = await axios.post("http://localhost:8000/persona", {
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			const res = await axios.post(
+				"http://localhost:8000/persona",
+				{ config: "similar", index: key },
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
 			if (res) {
 				setProfiles([...profiles, ...res.data]);
 			}
@@ -43,14 +46,17 @@ function PersonaCreation() {
 		}
 	};
 
-	//TODO: need to change
 	const addDiffProfile = async (e) => {
 		try {
-			const res = await axios.post("http://localhost:8000/persona", {
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
+			const res = await axios.post(
+				"http://localhost:8000/persona",
+				{ config: "diff", index: Object.keys(filteredProfile).length },
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
 			if (res) {
 				setProfiles([...profiles, ...res.data]);
 			}
@@ -61,7 +67,7 @@ function PersonaCreation() {
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
-		setSimilar(groupedData);
+		setFilteredProfile(groupedData);
 	}, [profiles]);
 
 	return (
@@ -71,7 +77,7 @@ function PersonaCreation() {
 					<div>{textContent.subTitle} (N)</div>
 				</div>
 				<div className="col">
-					{Object.entries(similar).map(([key, items]) => (
+					{Object.entries(filteredProfile).map(([key, items]) => (
 						<div key={key} className={`${key}__persona persona-col`}>
 							{items.map((data, idx) => {
 								return (
@@ -83,7 +89,7 @@ function PersonaCreation() {
 										/>
 										<button
 											className="w-25"
-											onClick={addSimProfile}
+											onClick={(e) => addSimProfile(key)}
 											type="button"
 										>
 											More like this

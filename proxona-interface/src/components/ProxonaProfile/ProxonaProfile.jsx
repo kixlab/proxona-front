@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
 
 function ProxonaProfile({ username, summary, tags }) {
-	const [personality, setPersonality] = useState("");
-	const [interest, setInterest] = useState("");
 
 	return (
 		<div className="profile-container m-6">

@@ -1,45 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { textContent } from "../data/textContent.js";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
+import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
+import { dummy } from "../data/dummy.js";
+import axios from "axios";
+import "./PersonaCreation.css"; // 이 파일에 CSS 스타일을 정의하세요.
+
+function groupBy(array, key) {
+	return array.reduce((result, currentItem) => {
+		// Get the value of the key for the current item
+		const keyValue = currentItem[key];
+
+		// If the key doesn't exist in the result object, initialize it with an empty array
+		if (!result[keyValue]) {
+			result[keyValue] = [];
+		}
+
+		// Add the current item to the array for the key
+		result[keyValue].push(currentItem);
+
+		return result;
+	}, {}); // Initialize the result as an empty object
+}
 
 function PersonaCreation() {
+	const [similar, setSimilar] = useState([]);
+	const [profiles, setProfiles] = useState(dummy);
+
+	//TODO: need to change
+	const addSimProfile = async (e) => {
+		try {
+			const res = await axios.post("http://localhost:8000/persona", {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			if (res) {
+				setProfiles([...profiles, ...res.data]);
+			}
+		} catch (err) {
+			console.error("Error fetching new profiles", err);
+		}
+	};
+
+	//TODO: need to change
+	const addDiffProfile = async (e) => {
+		try {
+			const res = await axios.post("http://localhost:8000/persona", {
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			if (res) {
+				setProfiles([...profiles, ...res.data]);
+			}
+		} catch (err) {
+			console.error("Error fetching new profiles", err);
+		}
+	};
+
+	useEffect(() => {
+		const groupedData = groupBy(profiles, "index");
+		setSimilar(groupedData);
+	}, [profiles]);
+
 	return (
-		<div className="container p-5">
-			<div className="row">
-				<h2>{textContent.title}</h2>
-			</div>
+		<div className="container">
 			<div className="row">
 				<div className="row">
-					<div className="col">{textContent.subTitle} (N)</div>
-					<div className="col flex-grow-1"></div>
-					<div className="col">
-						<button className="btn" type="button">
-							<i class="bi bi-arrow-left-circle"></i>
-						</button>
-						<button className="btn" type="button">
-							<i class="bi bi-arrow-right-circle"></i>
-						</button>
-					</div>
+					<div>{textContent.subTitle} (N)</div>
 				</div>
-				<div className="creator-col user-board">
-					<ProxonaProfile />
+				<div className="col">
+					{Object.entries(similar).map(([key, items]) => (
+						<div key={key} className={`${key}__persona persona-col`}>
+							{items.map((data, idx) => {
+								return (
+									<div key={idx} className="persona_board ">
+										<ProxonaProfile
+											username={data.username}
+											summary={data.summary}
+											tags={data.tags}
+										/>
+										<button
+											className="w-25"
+											onClick={addSimProfile}
+											type="button"
+										>
+											More like this
+										</button>
+									</div>
+								);
+							})}
+						</div>
+					))}
+					<button type="button" onClick={addDiffProfile}>
+						Add something different
+					</button>
 				</div>
-			</div>
-			<div className="row p-2">
-				<div className="row d-flex">
-					<div className="col">{textContent.otherTitle} (N)</div>
-					<div className="col flex-grow-1"></div>
-					<div className="col">
-						<button className="btn" type="button">
-							<i class="bi bi-arrow-left-circle"></i>
-						</button>
-						<button className="btn" type="button">
-							<i class="bi bi-arrow-right-circle"></i>
-						</button>
-					</div>
-				</div>
-				<div className="creator-col competitor-board">
-					<ProxonaProfile />
+				<div className="col-6">
+					<ChatInterface />
 				</div>
 			</div>
 		</div>

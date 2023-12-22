@@ -6,10 +6,10 @@
 	border: 1px solid #ddd;
 	border-radius: 8px;
 	padding: 16px;
-	max-width: 300px;
+	max-width: 250px;
 	display: inline-block;
-	margin: auto;
-	text-wrap: wrap;
+	margin: 10px auto;
+	/* text-wrap: wrap; */
 }
 
 .header {

@@ -6,10 +6,15 @@
 	border: 1px solid #ddd;
 	border-radius: 8px;
 	padding: 16px;
-	max-width: 250px;
-	display: inline-block;
-	margin: 10px auto;
-	/* text-wrap: wrap; */
+	width: 200px;
+	cursor: pointer;
+	/* margin: 10px auto; */
+	text-wrap: wrap;
+}
+
+.profile-container:hover {
+	background-color: gray;
+	color: white;
 }
 
 .header {
@@ -75,3 +80,25 @@ select {
 }
 
 /* Add more styles as needed */
+
+.profile-detail-bg {
+	background-color: #555;
+	opacity: 90%;
+	height: 100%;
+	width: 100%;
+	color: white;
+	z-index: 100;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	cursor: pointer;
+	text-wrap: wrap;
+}
+.profile-detail-container {
+	border: 1px solid white;
+	margin: 0 auto;
+	background-color: #555;
+
+	border-radius: 8px;
+	width: 200px;
+}

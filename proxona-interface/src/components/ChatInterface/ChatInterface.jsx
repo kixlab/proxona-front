@@ -1,33 +1,41 @@
 import React, { useEffect, useState } from "react";
+import "./ChatInterface.css";
 
 export const ChatInterface = () => {
 	const [messages, setMessages] = useState([]);
 	const [inputMessage, setInputMessage] = useState(" ");
-	const sendMessage = () => {
+
+	const sendMessage = (e) => {
 		if (inputMessage) {
-			setMessages([...messages, inputMessage]);
+			setMessages([...messages, { who: "me", text: inputMessage }]);
 			setInputMessage(" ");
 		}
 	};
 
 	return (
 		<div className="container">
-			<div className="messages">
+			<div className="chat-container">
 				{messages.map((message, idx) => (
 					<div>
 						<div className="user-face">
 							<i class="bi bi-emoji-smile"></i>
 						</div>
-						<p key={idx}>{message}</p>
+						{message.who}
+						<p key={idx}>{message.text}</p>
 					</div>
 				))}
 			</div>
-			<input
-				type="text"
-				value={inputMessage}
-				onChange={(e) => setInputMessage(e.target.value)}
-			/>
-			<button onClick={sendMessage}>Send</button>
+			<div className="input-container">
+				<input
+					className="inputbar-container"
+					type="text"
+					value={inputMessage}
+					onChange={(e) => setInputMessage(e.target.value)}
+				/>
+				<button className="button-container" onClick={sendMessage}>
+					Send
+				</button>
+			</div>
 		</div>
 	);
 };

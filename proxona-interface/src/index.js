@@ -9,6 +9,7 @@ import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
 
 const router = createBrowserRouter([
 	{
@@ -19,6 +20,12 @@ const router = createBrowserRouter([
 	{
 		path: "/persona/:id",
 		element: <App />,
+		children: [
+			{
+				path: ":persona",
+				element: <ProxonaDetailModal />,
+			},
+		],
 	},
 	{
 		path: "/feedback/:id",

@@ -71,32 +71,34 @@ function PersonaCreation() {
 	}, [profiles]);
 
 	return (
-		<div className="container">
+		<div className="container m-3">
 			<div className="row">
-				<div className="row">
-					<div>{textContent.subTitle} (N)</div>
+				<div>
+					{textContent.subTitle} {profiles.length}
 				</div>
-				<div className="col">
+			</div>
+			<div className="row">
+				<div className="col-6">
 					{Object.entries(filteredProfile).map(([key, items]) => (
 						<div key={key} className={`${key}__persona persona-col`}>
 							{items.map((data, idx) => {
 								return (
-									<div key={idx} className="persona_board ">
+									<div key={idx} className="persona_board">
 										<ProxonaProfile
 											username={data.username}
 											summary={data.summary}
 											tags={data.tags}
 										/>
-										<button
-											className="w-25"
-											onClick={(e) => addSimProfile(key)}
-											type="button"
-										>
-											More like this
-										</button>
 									</div>
 								);
 							})}
+							<button
+								className="w-25"
+								onClick={(e) => addSimProfile(key)}
+								type="button"
+							>
+								More like this
+							</button>
 						</div>
 					))}
 					<button type="button" onClick={addDiffProfile}>

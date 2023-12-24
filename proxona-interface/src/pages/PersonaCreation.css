@@ -1,12 +1,10 @@
 .persona-col {
-	display: block;
+	display: flex;
 	overflow: scroll;
-	/* height: 200px; */
 	white-space: nowrap;
-	/* width: 40%; */
-	/* height: 100%; */
 }
 
 .persona_board {
 	display: inline-block;
+	padding: 2%;
 }

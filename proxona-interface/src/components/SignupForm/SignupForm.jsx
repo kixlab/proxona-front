@@ -34,23 +34,25 @@ export const SignupForm = () => {
 		}
 	};
 	useEffect(() => {
-		if (signIn) {
+		if (signIn && formData.handleId) {
 			navigate(`/persona/${formData.handleId}`);
 			console.log("login success");
 		}
 	}, [signIn]);
 	return (
-		<form onSubmit={handleSubmit}>
-			<label for="handleId">
-				<input
-					type="text"
-					name="handleId"
-					value={formData.handleId}
-					onChange={handleChange}
-					placeholder="type your @handle id"
-				/>
-			</label>
-			<input type="submit" value="Start"></input>
-		</form>
+		<div className="form_container">
+			<form onSubmit={handleSubmit}>
+				<label for="handleId">
+					<input
+						type="text"
+						name="handleId"
+						value={formData.handleId}
+						onChange={handleChange}
+						placeholder="type your @handle id"
+					/>
+				</label>
+				<input type="submit" value="Start"></input>
+			</form>
+		</div>
 	);
 };

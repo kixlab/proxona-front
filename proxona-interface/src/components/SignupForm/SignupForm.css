@@ -1,0 +1,23 @@
+.form_container {
+	padding: 2rem;
+}
+
+.form_container input[type="text"] {
+	outline: 0;
+	border-width: 0 0 1px;
+	border-color: gray;
+	padding: 0.5rem;
+}
+
+.form_container input[type="text"]:focus {
+	outline: none;
+}
+
+.form_container input[type="submit"] {
+	background-color: #da8dec;
+	border-radius: 10px;
+	padding: 10px 20px;
+	border: none;
+	width: 80px;
+	color: white;
+}

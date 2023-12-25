@@ -4,12 +4,16 @@
 	font-family: "Arial", sans-serif;
 	background-color: #f9f9f9;
 	border: 1px solid #ddd;
+
 	border-radius: 8px;
-	padding: 16px;
-	width: 200px;
+	padding: 13px;
+	width: 300px;
 	cursor: pointer;
-	/* margin: 10px auto; */
 	text-wrap: wrap;
+}
+
+.profile-container a:link {
+	text-decoration: none;
 }
 
 .profile-container:hover {
@@ -26,11 +30,13 @@
 
 .user-info {
 	text-align: left;
+	color: #555;
 }
 
 .user-name {
 	font-weight: bold;
 	font-size: 1.2em;
+	color: #555;
 }
 
 .user-status {
@@ -65,6 +71,7 @@ progress[value]::-webkit-progress-value {
 
 .selectors {
 	text-align: left;
+	color: #555;
 }
 
 select {

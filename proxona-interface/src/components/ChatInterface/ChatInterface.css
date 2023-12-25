@@ -5,14 +5,39 @@
 	position: absolute;
 	bottom: 0;
 	width: 50%;
-	padding: 1em;
+	padding: 1rem 0.3rem 1rem 0.3rem;
 	margin: auto;
 }
 
 .input-container input {
 	width: 70%;
+	border-width: 0 0 1px;
+	border-color: #ddd;
+}
+
+.input_container input:focus {
+	outline: none;
 }
 
 .input-container button {
-	width: 20%;
+	background-color: #6d53d3;
+	border: none;
+	color: white;
+	margin: 0 0 0 0.5rem;
+}
+
+.example-questions {
+	width: 50%;
+
+	position: absolute;
+	bottom: 0;
+	height: 30%;
+}
+
+.example-questions button {
+	display: block;
+	background-color: white;
+
+	margin: 0.5rem 0;
+	border-color: #ddd;
 }

@@ -4,7 +4,8 @@ import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
 import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
 import { dummy } from "../data/dummy.js";
 import axios from "axios";
-import "./PersonaCreation.css"; // 이 파일에 CSS 스타일을 정의하세요.
+import "./index.css"; // 이 파일에 CSS 스타일을 정의하세요.
+import FooterButton from "../components/FooterButton/FooterButton.jsx";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -71,44 +72,47 @@ function PersonaCreation() {
 	}, [profiles]);
 
 	return (
-		<div className="container m-3">
+		<div className="container pt-4">
 			<div className="row">
-				<div>
-					{textContent.subTitle} {profiles.length}
+				<div className="col-7">
+					<ChatInterface />
 				</div>
-			</div>
-			<div className="row">
-				<div className="col-6">
+				<div className="col-5">
+					<div className="row">
+						<h3>
+							{textContent.subTitle} {profiles.length}
+						</h3>
+					</div>
 					{Object.entries(filteredProfile).map(([key, items]) => (
-						<div key={key} className={`${key}__persona persona-col`}>
-							{items.map((data, idx) => {
-								return (
-									<div key={idx} className="persona_board">
-										<ProxonaProfile
-											username={data.username}
-											summary={data.summary}
-											tags={data.tags}
-										/>
-									</div>
-								);
-							})}
+						<div className="persona-col">
 							<button
-								className="w-25"
+								className="more_button btn btn-outline-secondary"
 								onClick={(e) => addSimProfile(key)}
 								type="button"
 							>
 								More like this
+								<i class="bi bi-plus"></i>
 							</button>
+							<div key={key} className={`${key}__persona persona_board`}>
+								{items.map((data, idx) => {
+									return (
+										<ProxonaProfile
+											key={idx}
+											username={data.username}
+											summary={data.summary}
+											tags={data.tags}
+										/>
+									);
+								})}
+							</div>
 						</div>
 					))}
-					<button type="button" onClick={addDiffProfile}>
+					{/* <button type="button" onClick={addDiffProfile}>
 						Add something different
-					</button>
-				</div>
-				<div className="col-6">
-					<ChatInterface />
+					</button> */}
 				</div>
 			</div>
+			<FooterButton></FooterButton>
 		</div>
 	);
 }

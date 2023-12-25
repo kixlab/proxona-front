@@ -6,6 +6,9 @@ import PersonaCreation from "./pages/PersonaCreation.jsx";
 import { Outlet } from "react-router-dom";
 
 function App() {
+
+	
+
 	return (
 		<div>
 			<Outlet />

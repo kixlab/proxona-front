@@ -26,32 +26,17 @@ function groupBy(array, key) {
 
 function PersonaCreation() {
 	const [filteredProfile, setFilteredProfile] = useState([]);
-	const [profiles, setProfiles] = useState(dummy);
+	const [profiles, setProfiles] = useState(dummy); //should replace
+	const [isHovering, setIsHovering] = useState({
+		key: "",
+		ishover: 0,
+	});
 
 	const addSimProfile = async (key) => {
 		try {
 			const res = await axios.post(
 				"http://localhost:8000/persona",
 				{ config: "similar", index: key },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			if (res) {
-				setProfiles([...profiles, ...res.data]);
-			}
-		} catch (err) {
-			console.error("Error fetching new profiles", err);
-		}
-	};
-
-	const addDiffProfile = async (e) => {
-		try {
-			const res = await axios.post(
-				"http://localhost:8000/persona",
-				{ config: "diff", index: Object.keys(filteredProfile).length },
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -84,20 +69,17 @@ function PersonaCreation() {
 						</h3>
 					</div>
 					{Object.entries(filteredProfile).map(([key, items]) => (
-						<div className="persona-col">
-							<button
-								className="more_button btn btn-outline-secondary"
-								onClick={(e) => addSimProfile(key)}
-								type="button"
-							>
-								Add similar one
-								<i class="bi bi-plus"></i>
-							</button>
+						<div
+							className="persona-col"
+							onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
+							onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
+						>
 							<div key={key} className={`${key}__persona persona_board`}>
 								{items.map((data, idx) => {
 									return (
 										<ProxonaProfile
 											key={idx}
+											generated={data.generated}
 											username={data.username}
 											summary={data.summary}
 											tags={data.tags}
@@ -105,14 +87,34 @@ function PersonaCreation() {
 									);
 								})}
 							</div>
+							{isHovering.key == key && isHovering.ishover ? (
+								<button
+									className="more_button btn btn-outline-secondary"
+									onClick={(e) => addSimProfile(key)}
+									type="button"
+								>
+									Add similar one
+									<i class="bi bi-plus"></i>
+								</button>
+							) : (
+								""
+							)}
 						</div>
 					))}
-					{/* <button type="button" onClick={addDiffProfile}>
-						Add something different
-					</button> */}
 				</div>
 			</div>
-			<FooterButton></FooterButton>
+			<div
+				style={{
+					position: "fixed",
+					bottom: 0,
+					right: 0,
+				}}
+			>
+				<FooterButton></FooterButton>
+				<button className="btn btn-primary" style={{ marginRight: "80px" }}>
+					Let's get feedback
+				</button>
+			</div>
 		</div>
 	);
 }

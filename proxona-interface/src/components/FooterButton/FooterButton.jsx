@@ -1,21 +1,29 @@
 import React from "react";
 
 const FooterButton = () => {
+	// const addDiffProfile = async (e) => {
+	// 	try {
+	// 		const res = await axios.post(
+	// 			"http://localhost:8000/persona",
+	// 			{ config: "diff", index: Object.keys(filteredProfile).length },
+	// 			{
+	// 				headers: {
+	// 					"Content-Type": "application/json",
+	// 				},
+	// 			}
+	// 		);
+	// 		if (res) {
+	// 			setProfiles([...profiles, ...res.data]);
+	// 		}
+	// 	} catch (err) {
+	// 		console.error("Error fetching new profiles", err);
+	// 	}
+	// };
+
 	return (
-		<div
-			style={{
-				position: "fixed",
-				bottom: 0,
-				right: 0,
-			}}
-		>
-			<button className="btn btn-primary" style={{ marginRight: "10px" }}>
-				Discover more proxona
-			</button>
-			<button className="btn btn-primary" style={{ marginRight: "80px" }}>
-				Let's get feedback
-			</button>
-		</div>
+		<button className="btn btn-primary" style={{ marginRight: "10px" }}>
+			Discover more proxona
+		</button>
 	);
 };
 

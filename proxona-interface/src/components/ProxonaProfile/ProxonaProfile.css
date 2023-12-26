@@ -96,17 +96,21 @@ select {
 	width: 100%;
 	color: white;
 	z-index: 100;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
 	right: 0;
 	cursor: pointer;
 	text-wrap: wrap;
+	display: flex;
 }
 .profile-detail-container {
 	border: 1px solid white;
-	margin: 0 auto;
-	background-color: #555;
+	margin: auto;
+	background-color: black;
 
 	border-radius: 8px;
 	width: 200px;
+}
+.thread {
+	margin: 20px 0 0 50px;
 }

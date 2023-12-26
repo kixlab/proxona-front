@@ -31,16 +31,17 @@
 .user-info {
 	text-align: left;
 	color: #555;
+	display: flex;
+}
+
+.user-face {
+	font-size: 1.5em;
+	margin-right: 10px;
 }
 
 .user-name {
 	font-weight: bold;
-	font-size: 1.2em;
-	color: #555;
-}
-
-.user-status {
-	font-size: 0.9em;
+	font-size: 1.5em;
 	color: #555;
 }
 
@@ -64,7 +65,7 @@ progress[value]::-webkit-progress-value {
 }
 
 .message {
-	font-size: 0.9em;
+	font-size: 1.1em;
 	color: #333;
 	margin-bottom: 16px;
 }

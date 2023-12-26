@@ -90,7 +90,7 @@ function PersonaCreation() {
 								onClick={(e) => addSimProfile(key)}
 								type="button"
 							>
-								More like this
+								Add similar one
 								<i class="bi bi-plus"></i>
 							</button>
 							<div key={key} className={`${key}__persona persona_board`}>

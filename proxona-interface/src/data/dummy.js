@@ -11,12 +11,7 @@ export const dummy = [
 		summary: "실용적이고 신중한 구매자",
 		tags: ["신중한", "가격 대비 가치 중시", "구매 고려 중", "비판 중"],
 	},
-	{
-		index: 1,
-		username: "Jane",
-		summary: "경험 중심의 만족도 높은 사용자",
-		tags: ["긍정적", "친근한", "이미 사용중", "연비 중심"],
-	},
+
 	{
 		index: 2,
 		username: "Katie",

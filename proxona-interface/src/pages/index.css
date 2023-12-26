@@ -1,0 +1,22 @@
+.persona-col {
+	display: flex;
+}
+
+.persona_board {
+	padding: 2%;
+}
+
+.signup_container {
+	text-align: center;
+	margin-top: 200px;
+}
+.signup_container h2 {
+	font-weight: 700;
+}
+
+.signup_container p {
+}
+
+button.more_button {
+	align-self: flex-end;
+}

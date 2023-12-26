@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./ChatInterface.css";
+import "../ProxonaProfile/ProxonaProfile.css";
 import axios from "axios";
 
 export const ChatInterface = () => {
@@ -16,6 +17,7 @@ export const ChatInterface = () => {
 
 	const sendMessage = (e) => {
 		if (inputMessage) {
+			setInitial(false);
 			setMessages([...messages, { who: "me", text: inputMessage }]);
 			setInputMessage(" ");
 		}
@@ -48,7 +50,7 @@ export const ChatInterface = () => {
 	}, [messages]);
 
 	return (
-		<div className="container chat-interface">
+		<div className="container chat-container">
 			{initial && (
 				<div className="example-questions">
 					내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
@@ -67,18 +69,30 @@ export const ChatInterface = () => {
 					})}
 				</div>
 			)}
-			<div className="chat-container">
-				{messages.map((message, idx) => (
-					<div key={idx}>
-						<div className="chat-name">{message.who}</div>
-						<div className="chat-message">
-							<div className="user-face">
-								<i class="bi bi-emoji-smile"></i>
+			<div className="chat-container-box">
+				{messages.map((message, idx) =>
+					message.who == "me" ? (
+						<div className="chat-wrapper" key={idx}>
+							<div className="chat-name">{message.who}</div>
+							<div className="chat-message">
+								<div className="user-face">
+									<i class="bi bi-emoji-smile"></i>
+								</div>
+								<p>{message.text}</p>
 							</div>
-							<p>{message.text}</p>
 						</div>
-					</div>
-				))}
+					) : (
+						<div className="chat-wrapper bot" key={idx}>
+							<div className="chat-name bot">{message.who}</div>
+							<div className="chat-message bot">
+								<p>{message.text}</p>
+								<div className="bot-face bot">
+									<i class="bi bi-robot"></i>
+								</div>
+							</div>
+						</div>
+					)
+				)}
 			</div>
 			<div className="input-container">
 				<input

@@ -37,6 +37,7 @@ function ProxonaDetailModal() {
 					})}
 				</div>
 				<button
+					className="btn btn-outline-secondary"
 					ref={modalRef}
 					onClick={() => navigate(location.state.previousLocation.pathname)}
 				>

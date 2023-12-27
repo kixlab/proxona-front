@@ -7,6 +7,7 @@
 	position: absolute;
 	overflow: scroll;
 	height: 100%;
+	padding-right: 3rem;
 }
 
 .chat-wrapper {
@@ -52,10 +53,10 @@
 }
 
 .example-questions {
-	width: 50%;
+	width: 100%;
 	position: absolute;
 	bottom: 0;
-	height: 30%;
+	height: 35%;
 }
 
 .example-questions button {

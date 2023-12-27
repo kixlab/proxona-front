@@ -22,3 +22,20 @@ export const dummy = [
 		tags: ["비판적", "직설적", "성능 중시", "디자인 중시"],
 	},
 ];
+
+export const textMessage = [
+	{
+		who: "bot",
+		text:
+			"<p>" +
+			"Bootstrap’s grid includes five tiers of predefined classes for building complex responsive layouts." +
+			"Customize the size of your " +
+			'<span style="background-color: yellow; font-weight: bold;">columns</span> on ' +
+			'<span style="background-color: yellow; font-weight: bold;">extra small</span>, ' +
+			'<span style="background-color: yellow; font-weight: bold;">small</span>, ' +
+			'<span style="background-color: yellow; font-weight: bold;">medium</span>, ' +
+			'<span style="background-color: yellow; font-weight: bold;">large</span>, or ' +
+			'<span style="background-color: yellow; font-weight: bold;">extra large</span> devices however you see fit.' +
+			"</p>",
+	},
+];

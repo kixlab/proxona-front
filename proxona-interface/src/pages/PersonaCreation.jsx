@@ -64,43 +64,50 @@ function PersonaCreation() {
 				</div>
 				<div className="col-5">
 					<div className="row">
-						<h3>
+						<h4>
 							{textContent.subTitle} {profiles.length}
-						</h3>
+						</h4>
 					</div>
-					{Object.entries(filteredProfile).map(([key, items]) => (
-						<div
-							className="persona-col"
-							onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
-							onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
-						>
-							<div key={key} className={`${key}__persona persona_board`}>
-								{items.map((data, idx) => {
-									return (
-										<ProxonaProfile
-											key={idx}
-											generated={data.generated}
-											username={data.username}
-											summary={data.summary}
-											tags={data.tags}
-										/>
-									);
-								})}
-							</div>
-							{isHovering.key == key && isHovering.ishover ? (
-								<button
-									className="more_button btn btn-outline-secondary"
-									onClick={(e) => addSimProfile(key)}
-									type="button"
+					<div className="vh-100 persona_wrapper">
+						<div className="persona_container">
+							{Object.entries(filteredProfile).map(([key, items]) => (
+								<div
+									className="persona-col"
+									onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
+									onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
 								>
-									Add similar one
-									<i class="bi bi-plus"></i>
-								</button>
-							) : (
-								""
-							)}
+									<div
+										key={key}
+										className={`${key}__persona persona_board  min-vw-100`}
+									>
+										{items.map((data, idx) => {
+											return (
+												<ProxonaProfile
+													key={idx}
+													generated={data.generated}
+													username={data.username}
+													summary={data.summary}
+													tags={data.tags}
+												/>
+											);
+										})}
+										{isHovering.key == key && isHovering.ishover ? (
+											<button
+												className="more_button btn btn-outline-secondary"
+												onClick={(e) => addSimProfile(key)}
+												type="button"
+											>
+												Add similar one
+												<i class="bi bi-plus"></i>
+											</button>
+										) : (
+											""
+										)}
+									</div>
+								</div>
+							))}
 						</div>
-					))}
+					</div>
 				</div>
 			</div>
 			<div

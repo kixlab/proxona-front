@@ -1,21 +1,23 @@
-.persona-container {
+.persona_wrapper {
 	position: relative;
-	height: 100%;
-}
-
-.persona-container-box {
-	position: absolute;
 	overflow: scroll;
 }
 
+.persona_container {
+	position: absolute;
+
+	display: flex;
+	flex-direction: column;
+}
+
 .persona-col {
-	/* display: flex;
-	flex-direction: row-reverse; */
 }
 
 .persona_board {
-	padding: 2%;
-	align-self: flex-end;
+	padding: 1%;
+	/* align-self: flex-end; */
+	display: flex;
+	flex-direction: row;
 }
 
 .signup_container {

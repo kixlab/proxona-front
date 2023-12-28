@@ -22,6 +22,7 @@ function ProxonaProfile({ index, username, summary, generated, tags }) {
 				color: "#E4CCFF",
 			},
 			// Add more index-color mappings as needed
+			// 또는 color 팔레트 사용하기
 		},
 	};
 

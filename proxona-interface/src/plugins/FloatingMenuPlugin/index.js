@@ -23,7 +23,7 @@ function FloatingMenuPlugin({
   const show = coords !== void 0;
   const [editor] = useLexicalComposerContext();
   const { isPointerDown, isPointerReleased } = usePointerInteractions();
-  
+
   const included = useCallback(() => {
     if (!editor || !editor.getRootElement) return -1
     return editor.getRootElement().contains(window.getSelection().anchorNode)

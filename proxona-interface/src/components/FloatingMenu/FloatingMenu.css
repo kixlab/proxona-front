@@ -1,0 +1,36 @@
+.floating-menu-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .floating-menu-toggle {
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 24px;
+  }
+  
+  .floating-menu-content {
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    bottom: 40px; /* 메뉴 버튼의 크기와 간격을 고려하여 조정합니다. */
+    right: 0;
+  }
+  
+  .floating-menu-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .floating-menu-content ul li {
+    margin-bottom: 10px;
+  }
+  

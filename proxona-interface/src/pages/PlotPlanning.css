@@ -1,0 +1,17 @@
+.plotPlanning-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    /* padding: 20px; */
+  }
+  
+  .feedbackBoard {
+    width: 30%;
+    flex: 2; 
+  }
+  
+  .chatInterface {
+    flex: 1;
+    padding: 10px;
+  }

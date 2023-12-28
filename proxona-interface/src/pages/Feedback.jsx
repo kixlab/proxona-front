@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { ChatInterface } from "../components/ChatInterface/ChatInterface";
-// import { FeedbackBoard } from "../components/FeedbackBoard/FeedbackBoard";
 import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
@@ -41,22 +39,23 @@ function Feedback() {
 	const getDraft = async (topic, callback) => {
 		try {
 			setIsDraftLoading(true)
-			// await sleep(2000);
+			await sleep(1000);
 			/**
 			 * plot: Object
 			 * id, topic, body
 			 */
 
+			const res = {data: {id: 4, topic, body: ''} }
 
-			const res = await axios.post(
-				`http://localhost:8000/handle/${handleId}/plot`,
-				{ topic },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			// const res = await axios.post(
+			// 	`http://localhost:8000/handle/${handleId}/plot`,
+			// 	{ topic },
+			// 	{
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 		},
+			// 	}
+			// );
 			if (res) {
 				setPlot(res.data)
 				callback()
@@ -70,6 +69,7 @@ function Feedback() {
 
 	const createPlot = () => {
 		getDraft(topic, () => navigate('draft'))
+		console.log("createPlot is here")
 	}
 
 	useEffect(() => {
@@ -98,7 +98,7 @@ function Feedback() {
 					proxonas={proxonas}
 				/>
 			}/>
-			<Route path="/editor/:plotId" element={
+			<Route path="/editor/:plotId" element={ 
 				<PlotPlanning/>
 			}/>
 		</Routes>

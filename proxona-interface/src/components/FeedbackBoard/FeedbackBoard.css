@@ -1,0 +1,70 @@
+.text-editor {
+    background-color: #1e1e1e;
+    color: white;
+    padding: 20px;
+  }
+  
+  .paragraph-container {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .paragraph-container textarea {
+    width: 100%;
+    background-color: #333;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .paragraph-container button {
+    background-color: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .paragraph-container button:hover {
+    background-color: #777;
+  }
+  
+  .user-viewpoint-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    padding: 5px;
+    border-radius: 4px;
+    display: flex;
+    gap: 5px;
+  }
+  
+  .user-viewpoint-options button {
+    background-color: #666;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .user-viewpoint-options button:hover {
+    background-color: #888;
+  }
+  
+
+.user-interaction-container {
+    display: flex;
+    align-items: center;
+  }
+  
+.add-viewpoint-button {
+/* 기존 스타일 */
+margin-right: 8px; /* 버튼 사이의 간격을 조정합니다 */
+}
+
+.user-viewpoint-options {
+display: flex;
+gap: 4px; /* 버튼 사이의 간격을 조정합니다 */
+}

@@ -1,0 +1,27 @@
+.feedback-draft-container {
+    padding: 100px;
+    margin: 50px 0;
+}
+
+.feedback-draft-container h2 {
+    color: #6d53d3;
+    /* font-size: 20px; */
+    margin-bottom: 10px;
+}
+
+.feedback-draft-container p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.feedback-draft-container button {
+    margin: 10px;
+	background-color: #6d53d3;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+	border: none;
+	color: white;
+	/* margin: 0 0 0 0.5rem; */
+}

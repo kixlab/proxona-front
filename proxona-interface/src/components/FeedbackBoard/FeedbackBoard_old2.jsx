@@ -1,14 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-// import {$getRoot, $getSelection} from 'lexical';
+import {$getRoot, $getSelection} from 'lexical';
 
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import {ContentEditable} from '@lexical/react/LexicalContentEditable';
+import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 
-import { FloatingMenuPlugin } from "lexical-floating-menu";
+// import { FloatingMenuPlugin } from "lexical-floating-menu";
 import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 
 function OnChangePlugin({ onChange }) {
@@ -44,12 +44,12 @@ export default function FeedbackBoard() {
         />
         <HistoryPlugin />
         <OnChangePlugin onChange={onChange}/>
-        <FloatingMenuPlugin
+        {/* <FloatingMenuPlugin
           MenuComponent={FloatingMenu}
           element={document.body}
-        />
+        /> */}
       </LexicalComposer>
-      {/* <FloatingMenu></FloatingMenu> */}
+      <FloatingMenu></FloatingMenu>
     </div>
 
   );

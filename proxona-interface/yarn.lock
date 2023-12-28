@@ -1444,7 +1444,7 @@
   dependencies:
     "@floating-ui/utils" "^0.1.3"
 
-"@floating-ui/dom@^1.2.6", "@floating-ui/dom@^1.5.1":
+"@floating-ui/dom@^1.5.1":
   version "1.5.3"
   resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.5.3.tgz"
   integrity sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==
@@ -6918,13 +6918,6 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
-
-lexical-floating-menu@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/lexical-floating-menu/-/lexical-floating-menu-0.1.0.tgz"
-  integrity sha512-ORk4/TIdCJnu5J8Zwjk+wi4XS5G/qcU/uuoN8dutzclVEsbEc+VwuiTpQ8FLHGIA7s7Nvvm5IC0oqldU6LkWCw==
-  dependencies:
-    "@floating-ui/dom" "^1.2.6"
 
 lexical@^0.12.5:
   version "0.12.5"

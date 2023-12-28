@@ -8,51 +8,55 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
-import { FloatingMenuPlugin } from "lexical-floating-menu";
+// import { FloatingMenuPlugin } from "lexical-floating-menu";
+import { FloatingMenuPlugin } from '../../plugins/FloatingMenuPlugin';
 import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 
 function OnChangePlugin({ onChange }) {
-  const [editor] = useLexicalComposerContext();
-  useEffect(() => {
-    return editor.registerUpdateListener(({editorState}) => {
-      onChange(editorState);
-    });
-  }, [editor, onChange]);
+	const [editor] = useLexicalComposerContext();
+	useEffect(() => {
+		return editor.registerUpdateListener(({ editorState }) => {
+			onChange(editorState);
+		});
+	}, [editor, onChange]);
 }
 
 function onError(error) {
-  console.error(error);
+	console.error(error);
 }
 
 export default function FeedbackBoard() {
-  const initialConfig = {
-    namespace: 'MyEditor',
-    onError,
-  };
+	const initialConfig = {
+		namespace: 'MyEditor',
+		onError,
+	};
 
-  const [editorState, setEditorState] = useState();
-  function onChange(editorState) {
-    setEditorState(editorState);
-  }
+	const [editorState, setEditorState] = useState();
+	function onChange(editorState) {
+		setEditorState(editorState);
+	}
 
-  return (
-    <div>
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          placeholder={<div>Enter some text...</div>}
-          contentEditable={<ContentEditable />}
-        />
-        <HistoryPlugin />
-        <OnChangePlugin onChange={onChange}/>
-        <FloatingMenuPlugin
-          MenuComponent={FloatingMenu}
-          element={document.body}
-        />
-      </LexicalComposer>
-      {/* <FloatingMenu></FloatingMenu> */}
-    </div>
+	return (
+		<div>
+			<LexicalComposer initialConfig={initialConfig}>
+				<RichTextPlugin
+					placeholder={<div>Enter some text...</div>}
+					contentEditable={<ContentEditable />}
+				/>
+				<HistoryPlugin />
+				<OnChangePlugin onChange={onChange} />
+				<FloatingMenuPlugin
+					MenuComponent={FloatingMenu}
+					element={document.body}
+					offset={{
+						x: 10
+					}}
+				/>
+			</LexicalComposer>
+			{/* <FloatingMenu></FloatingMenu> */}
+		</div>
 
-  );
+	);
 }
 
 // // export function FeedbackBoard(props) {

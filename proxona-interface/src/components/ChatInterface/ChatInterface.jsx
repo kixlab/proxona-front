@@ -3,6 +3,12 @@ import "./ChatInterface.css";
 import "../ProxonaProfile/ProxonaProfile.css";
 import axios from "axios";
 import { textMessage } from "../../data/dummy";
+import { Link, useLocation } from "react-router-dom";
+
+//TODO
+// [ ] scroll bottom to top when chat messages reach the bottom of the page
+// [ ] suggestion : add suggestion messages
+// [ ] change background color style
 
 export const ChatInterface = () => {
 	const [messages, setMessages] = useState(textMessage);
@@ -42,10 +48,7 @@ export const ChatInterface = () => {
 				}
 			)
 			.then((res) => {
-				setMessages([
-					...messages,
-					{ who: "bot", text: res.data.kwargs.content },
-				]);
+				setMessages([...messages, ...res.data]);
 			});
 	}, [messages]);
 
@@ -90,11 +93,14 @@ export const ChatInterface = () => {
 							</div>
 						) : (
 							<div className="chat-wrapper bot" key={idx}>
-								<div className="chat-name bot">{message.who}</div>
+								<Link role="button" className="btn chat-info">
+									<i class="bi bi-info-circle"></i>
+									<div className="chat-name bot">{message.who}</div>
+								</Link>
 								<div className="chat-message bot">
 									<p dangerouslySetInnerHTML={{ __html: message.text }}></p>
 									<div className="bot-face bot">
-										<i class="bi bi-robot"></i>
+										<i class="bi bi-emoji-smile"></i>
 									</div>
 								</div>
 							</div>

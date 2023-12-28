@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SignupForm } from "../components/SignupForm/SignupForm";
 import { textContent } from "../data/textContent";
-import "./index.css";
+import "./_css/index.css";
 
 function Signup() {
 	return (

@@ -4,8 +4,8 @@ import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
 import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
 import { dummy } from "../data/dummy.js";
 import axios from "axios";
-import "./index.css"; // 이 파일에 CSS 스타일을 정의하세요.
-import FooterButton from "../components/FooterButton/FooterButton.jsx";
+import "./_css/index.css";
+import { Link, useLocation } from "react-router-dom";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -31,25 +31,7 @@ function PersonaCreation() {
 		key: "",
 		ishover: 0,
 	});
-
-	const addSimProfile = async (key) => {
-		try {
-			const res = await axios.post(
-				"http://localhost:8000/persona",
-				{ config: "similar", index: key },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			if (res) {
-				setProfiles([...profiles, ...res.data]);
-			}
-		} catch (err) {
-			console.error("Error fetching new profiles", err);
-		}
-	};
+	const location = useLocation();
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
@@ -84,6 +66,7 @@ function PersonaCreation() {
 											return (
 												<ProxonaProfile
 													key={idx}
+													index={data.index}
 													generated={data.generated}
 													username={data.username}
 													summary={data.summary}
@@ -92,14 +75,20 @@ function PersonaCreation() {
 											);
 										})}
 										{isHovering.key == key && isHovering.ishover ? (
-											<button
+											<Link
+												to={"similar/" + key}
+												role="button"
 												className="more_button btn btn-outline-secondary"
-												onClick={(e) => addSimProfile(key)}
 												type="button"
+												state={{
+													previousLocation: location,
+													key: key,
+													items: items,
+												}}
 											>
 												Add similar one
 												<i class="bi bi-plus"></i>
-											</button>
+											</Link>
 										) : (
 											""
 										)}
@@ -117,9 +106,31 @@ function PersonaCreation() {
 					right: 0,
 				}}
 			>
-				<FooterButton></FooterButton>
-				<button className="btn btn-primary" style={{ marginRight: "80px" }}>
+				<Link
+					to={"discover"}
+					state={{ previousLocation: location }}
+					role="button"
+					className="btn btn-primary"
+					style={{
+						marginRight: "10px",
+						backgroundColor: "#ffffff",
+						borderColor: "#000000",
+						color: "#000000",
+					}}
+				>
+					Discover more proxona
+					<i class="bi bi-compass"></i>
+				</Link>
+				<button
+					className="btn btn-primary"
+					style={{
+						marginRight: "80px",
+						backgroundColor: "#A66FFF",
+						borderColor: "#A66FFF",
+					}}
+				>
 					Let's get feedback
+					<i class="bi bi-people"></i>
 				</button>
 			</div>
 		</div>

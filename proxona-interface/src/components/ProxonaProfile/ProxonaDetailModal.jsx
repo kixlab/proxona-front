@@ -22,7 +22,15 @@ function ProxonaDetailModal() {
 	return (
 		<div className="profile-detail-bg">
 			<div className="profile-detail-container">
-				<div className="header">
+				<button
+					className="btn"
+					ref={modalRef}
+					onClick={() => navigate(location.state.previousLocation.pathname)}
+				>
+					<i class="bi bi-x-lg"></i>
+				</button>
+
+				<div className="header row">
 					<div className="user-info">
 						<div className="user-face">
 							<i class="bi bi-emoji-smile"></i>
@@ -32,17 +40,17 @@ function ProxonaDetailModal() {
 				</div>
 				<div className="message">{location.state.summary}</div>
 				<div className="selectors">
-					{location.state.tags.map((tag) => {
-						return <div>{tag}</div>;
+					{Object.entries(location.state.tags).map((tag) => {
+						return (
+							<div className="detail">
+								<div className="detail-head">{tag[0]}</div>
+								{tag.slice(1).map((element) => {
+									return <div className="detail-tags">{element}</div>;
+								})}
+							</div>
+						);
 					})}
 				</div>
-				<button
-					className="btn btn-outline-secondary"
-					ref={modalRef}
-					onClick={() => navigate(location.state.previousLocation.pathname)}
-				>
-					Close
-				</button>
 			</div>
 		</div>
 	);

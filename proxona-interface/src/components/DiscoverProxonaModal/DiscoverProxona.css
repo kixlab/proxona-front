@@ -1,0 +1,29 @@
+.container-bg {
+	background-color: #555;
+	opacity: 90%;
+	height: 100%;
+	width: 100%;
+	color: white;
+	z-index: 100;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	cursor: pointer;
+	text-wrap: wrap;
+	display: flex;
+}
+
+.detailproxona_container {
+	margin: auto;
+	text-align: center;
+	border: 1px solid white;
+	background-color: black;
+	border-radius: 8px;
+	width: auto;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+}
+.btn_persona {
+	flex: 0 0 10px;
+}

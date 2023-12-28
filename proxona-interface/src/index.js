@@ -10,6 +10,8 @@ import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
+import DiscoverProxona from "./components/DiscoverProxonaModal/DiscoverProxona";
+import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";
 
 const router = createBrowserRouter([
 	{
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
 			{
 				path: ":persona",
 				element: <ProxonaDetailModal />,
+			},
+			{
+				path: "discover",
+				element: <DiscoverProxona />,
+			},
+			{
+				path: "similar/:id",
+				element: <SimilarPersona />,
 			},
 		],
 	},

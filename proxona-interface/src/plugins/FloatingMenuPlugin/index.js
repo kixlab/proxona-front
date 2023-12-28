@@ -83,11 +83,11 @@ function FloatingMenuPlugin({
         ref,
         "aria-hidden": !show,
         style: {
-          position: "absolute",
+          position: show ? "absolute" : 'fixed',
           top: coords?.y,
           left: coords?.x,
           visibility: show ? "visible" : "hidden",
-          opacity: show ? 1 : 0
+          opacity: show ? 1 : 0,
         },
         children: /* @__PURE__ */ jsx(MenuComponent, { editor, shouldShow: show, show })
       }

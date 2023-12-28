@@ -27,7 +27,7 @@ export const FloatingMenu = ({ show }) => {
 		 * logic here
 		 */
 
-		window.getSelection().removeAllRanges();
+		// window.getSelection().removeAllRanges();
 	}
 
 	useEffect(() => {
@@ -56,22 +56,6 @@ export const FloatingMenu = ({ show }) => {
 					
 				</ButtonGroup>
 			)}
-			
-
-
-			{/* {isOpen && (
-				<div className="floating-menu-content">
-					<ul>
-						<li>Eun Jeong</li>
-						<li>Juho</li>
-						<li>Min</li>
-						<li>Yoonseo</li>
-						<li>Seulgi</li>
-					</ul>
-				</div>
-			)} */}
 		</div>
 	);
 };
-
-// export default FloatingMenu;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-// import {$getRoot, $getSelection} from 'lexical';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -8,9 +7,9 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
-// import { FloatingMenuPlugin } from "lexical-floating-menu";
 import { FloatingMenuPlugin } from '../../plugins/FloatingMenuPlugin';
 import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
+import FloatingToolbarPlugin from '../../plugins/FloatingToolbarPlugin';
 
 function OnChangePlugin({ onChange }) {
 	const [editor] = useLexicalComposerContext();
@@ -32,41 +31,37 @@ export default function FeedbackBoard() {
 	};
 
 	const [editorState, setEditorState] = useState();
+
+	const [floatingAnchorElem, setFloatingAnchorElem] = useState(null);
+
+	const onRef = (_floatingAnchorElem) => {
+		if (_floatingAnchorElem !== null) {
+		  setFloatingAnchorElem(_floatingAnchorElem);
+		}
+	  };
+	
 	function onChange(editorState) {
 		setEditorState(editorState);
 	}
 
 	return (
-		<div>
-			<LexicalComposer initialConfig={initialConfig}>
-				<RichTextPlugin
-					placeholder={<div>Enter some text...</div>}
-					contentEditable={<ContentEditable />}
+		<LexicalComposer initialConfig={initialConfig}>
+			<RichTextPlugin
+				placeholder={<div>Enter some text...</div>}
+				contentEditable={
+					<div ref={onRef} style={{height: '100%'}} >
+						<ContentEditable style={{height: '100%'}} />
+					</div>
+					
+				}
+			/>
+			<HistoryPlugin />
+			{floatingAnchorElem && (
+				<FloatingToolbarPlugin
+					anchorElem={floatingAnchorElem}
 				/>
-				<HistoryPlugin />
-				<OnChangePlugin onChange={onChange} />
-				<FloatingMenuPlugin
-					MenuComponent={FloatingMenu}
-					element={document.body}
-					offset={{
-						x: 10
-					}}
-				/>
-			</LexicalComposer>
-			{/* <FloatingMenu></FloatingMenu> */}
-		</div>
-
+			)}
+			
+		</LexicalComposer>
 	);
 }
-
-// // export function FeedbackBoard(props) {
-// //   return (
-// //     <LexicalComposerContext initialConfig={props.config}>
-// //       {/* ... other plugins (e.g. RichTextPlugin) */}
-// //       <FloatingMenuPlugin
-// //         MenuComponent={FloatingMenu}
-// //         element={document.body}
-// //       />
-// //     </LexicalComposerContext>
-// //   );
-// // }

@@ -2,8 +2,7 @@
 
 .profile-container {
 	font-family: "Arial", sans-serif;
-	background-color: #f9f9f9;
-	border: 1px solid #ddd;
+	border: 1px solid;
 	margin-right: 10px;
 	border-radius: 8px;
 	padding: 13px;
@@ -17,8 +16,7 @@
 }
 
 .profile-container:hover {
-	background-color: gray;
-	color: white;
+	background-color: #24292f;
 }
 
 .header {

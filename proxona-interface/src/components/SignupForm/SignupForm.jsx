@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./SignupForm.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { MainButton } from "../../pages/styles/DesignSystem";
 
 export const SignupForm = () => {
 	const [formData, setFormData] = useState({
 		handleId: "",
 	});
 	const [signIn, setSignIn] = useState(false);
+
 	const port = "http://localhost:8000/api";
 	const navigate = useNavigate();
 
@@ -35,12 +37,12 @@ export const SignupForm = () => {
 	};
 	useEffect(() => {
 		if (signIn && formData.handleId) {
-			navigate(`/persona/${formData.handleId}`);
+			navigate(`/${formData.handleId}/persona`);
 			console.log("login success");
 		}
 	}, [signIn]);
 	return (
-		<div className="form_container">
+		<div className="container form_container">
 			<form onSubmit={handleSubmit}>
 				<label for="handleId">
 					<input
@@ -51,7 +53,7 @@ export const SignupForm = () => {
 						placeholder="type your @handle id"
 					/>
 				</label>
-				<input type="submit" value="Start"></input>
+				<MainButton type="submit" value="Start"></MainButton>
 			</form>
 		</div>
 	);

@@ -3,10 +3,11 @@
 }
 
 .form_container input[type="text"] {
-	outline: 0;
-	border-width: 0 0 1px;
+	/* border-width: 0 0 1px; */
 	border-color: gray;
-	padding: 0.5rem;
+	padding: 0.3rem 0.9rem;
+	border-radius: 50px;
+	margin-right: 0.5rem;
 }
 
 .form_container input[type="text"]:focus {
@@ -16,7 +17,7 @@
 .form_container input[type="submit"] {
 	background-color: #da8dec;
 	border-radius: 10px;
-	padding: 10px 20px;
+	padding: 0.3rem 0.9rem;
 	border: none;
 	width: 80px;
 	color: white;

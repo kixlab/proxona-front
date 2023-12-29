@@ -1,0 +1,37 @@
+.persona_wrapper {
+	position: relative;
+	overflow: scroll;
+}
+
+.persona_container {
+	position: absolute;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.persona-col {
+}
+
+.persona_board {
+	padding: 1%;
+	/* align-self: flex-end; */
+	display: flex;
+	flex-direction: column;
+	width: inherit;
+}
+
+.signup_container {
+	text-align: center;
+	margin-top: 200px;
+}
+.signup_container h2 {
+	font-weight: 700;
+}
+
+.signup_container p {
+}
+
+a.more_button {
+	/* align-self: flex-start; */
+}

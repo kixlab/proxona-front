@@ -12,6 +12,9 @@ import { store } from "./redux/store";
 import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
 import DiscoverProxona from "./components/DiscoverProxonaModal/DiscoverProxona";
 import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./pages/styles/GlobalStyles";
+import { lightTheme, darkTheme } from "./pages/styles/Themes";
 
 const router = createBrowserRouter([
 	{
@@ -20,7 +23,7 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 	},
 	{
-		path: "/persona/:id",
+		path: ":id/persona/",
 		element: <App />,
 		children: [
 			{
@@ -38,7 +41,7 @@ const router = createBrowserRouter([
 		],
 	},
 	{
-		path: "/feedback/:id/*",
+		path: ":id/feedback/*",
 		element: <Feedback />,
 	},
 ]);
@@ -46,9 +49,14 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
-		<Provider store={store}>
-			<RouterProvider router={router} />
-		</Provider>
+		<ThemeProvider theme={darkTheme}>
+			<>
+				<GlobalStyles></GlobalStyles>
+				{/* <Provider store={store}> */}
+				<RouterProvider router={router} />
+				{/* </Provider> */}
+			</>
+		</ThemeProvider>
 	</React.StrictMode>
 );
 

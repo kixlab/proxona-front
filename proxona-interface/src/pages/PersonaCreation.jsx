@@ -78,7 +78,7 @@ function PersonaCreation() {
 											<Link
 												to={"similar/" + key}
 												role="button"
-												className="more_button btn btn-outline-secondary"
+												className="more_button btn btn-secondary"
 												type="button"
 												state={{
 													previousLocation: location,

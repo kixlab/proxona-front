@@ -1,14 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
-import { features } from "../../data/dummy";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import axios from "axios";
 import ProxonaProfile from "../ProxonaProfile/ProxonaProfile";
+import "./SimilarPersona.css";
+import { ModalWrapper } from "../../pages/styles/DesignSystem";
 
 const SimilarPersona = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const modalRef = useRef();
+	const [generated, setGenerated] = useState({
+		index: "",
+		username: "",
+		summary: "",
+		generated: true,
+		tags: [],
+	});
 
 	useEffect(() => {
 		const observerRefValue = modalRef.current;
@@ -19,9 +27,12 @@ const SimilarPersona = () => {
 			}
 		};
 	}, []);
-	console.log(location);
 
-	const addSimProfile = async (key) => {
+	useEffect(() => {
+		generateProfile(location.state.key);
+	}, [generated]);
+
+	const generateProfile = useCallback(async (key) => {
 		try {
 			const res = await axios.post(
 				"http://localhost:8000/persona",
@@ -33,34 +44,56 @@ const SimilarPersona = () => {
 				}
 			);
 			if (res) {
-				// setProfiles([...profiles, ...res.data]);
-				navigate(location.state.previousLocation.pathname);
+				setGenerated(res.data[0]);
 			}
 		} catch (err) {
 			console.error("Error fetching new profiles", err);
 		}
-	};
+	});
+
+	const addToList = () => {};
 
 	return (
-		<div className="container-bg">
-			<div className="container detailproxona_container d-flex flex-column p-5">
-				<div className="header">Get similar one</div>
-				<div>original persona</div>
-				<ProxonaProfile
-					index={location.state.items[0].index}
-					summary={location.state.items[0].summary}
-					generated={location.state.items[0].generated}
-					tags={location.state.items[0].tags}
-					username={location.state.items[0].username}
-				></ProxonaProfile>
-
-				<div>newly generated persona</div>
-				<button className="btn">Try another one</button>
-				<Link role="button" onClick={() => addSimProfile(location.state.key)}>
+		<ModalWrapper>
+			<div className="container similarPerona_container" ref={modalRef}>
+				<div className="row">Get similar one</div>
+				<div className="row">
+					<div className="col">
+						<div>original persona</div>
+						<ProxonaProfile
+							index={location.state.items[0].index}
+							summary={location.state.items[0].summary}
+							generated={location.state.items[0].generated}
+							tags={location.state.items[0].tags}
+							username={location.state.items[0].username}
+						></ProxonaProfile>
+					</div>
+					<div className="col">
+						<div>newly generated persona</div>
+						<ProxonaProfile
+							index={generated.index}
+							summary={generated.summary}
+							generated={generated.generated}
+							tags={generated.tags}
+							username={generated.username}
+						></ProxonaProfile>
+					</div>
+				</div>
+				<button
+					className="btn"
+					onClick={() => generateProfile(location.state.key)}
+				>
+					Try another one
+				</button>
+				<Link
+					className="btn"
+					role="button"
+					onClick={() => navigate(location.state.previousLocation.pathname)}
+				>
 					Add to list
 				</Link>
 			</div>
-		</div>
+		</ModalWrapper>
 	);
 };
 

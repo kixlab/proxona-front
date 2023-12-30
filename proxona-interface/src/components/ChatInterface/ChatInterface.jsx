@@ -6,14 +6,19 @@ import { textMessage } from "../../data/dummy";
 import { Link, useLocation } from "react-router-dom";
 
 //TODO
-// [ ] scroll bottom to top when chat messages reach the bottom of the page
-// [ ] suggestion : add suggestion messages
-// [ ] change background color style
+// [x] scroll bottom to top when chat messages reach the bottom of the page
+// [x] suggestion : add suggestion messages
+// [x] change background color style
+// [x] setloading
 
 export const ChatInterface = () => {
-	const [messages, setMessages] = useState(textMessage);
+	// const [messages, setMessages] = useState(textMessage);
+	const [messages, setMessages] = useState([]);
+
 	const [inputMessage, setInputMessage] = useState("");
 	const [initial, setInitial] = useState(true);
+	const chatContainerRef = useRef(null);
+	const [botIsLoading, setBotIsLoading] = useState(false);
 
 	const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
@@ -31,12 +36,13 @@ export const ChatInterface = () => {
 		}
 	};
 
-	const handleSubmit = (buttonRef) => {
-		setMessages([...messages, { who: "me", text: buttonRef.textContent }]);
-		setInitial(false);
-	};
+	// const handleSubmit = (buttonRef) => {
+	// 	setMessages([...messages, { who: "me", text: buttonRef.textContent }]);
+	// 	setInitial(false);
+	// };
 
 	const getMessages = useCallback(async () => {
+		setBotIsLoading(true);
 		axios
 			.post(
 				port + "chat",
@@ -49,6 +55,7 @@ export const ChatInterface = () => {
 			)
 			.then((res) => {
 				setMessages([...messages, ...res.data]);
+				setBotIsLoading(false);
 			});
 	}, [messages]);
 
@@ -57,6 +64,17 @@ export const ChatInterface = () => {
 			getMessages();
 		}
 	}, [getMessages]);
+
+	useEffect(() => {
+		const scrollToBottom = () => {
+			if (chatContainerRef.current) {
+				chatContainerRef.current.scrollTop =
+					chatContainerRef.current.scrollHeight;
+			}
+		};
+
+		scrollToBottom();
+	}, [messages]);
 
 	return (
 		<div className="container chat-container">
@@ -69,8 +87,10 @@ export const ChatInterface = () => {
 								key={key}
 								ref={(refele) => (buttonRef.current[key] = refele)}
 								type="button"
-								onClick={() => handleSubmit(buttonRef.current[key])}
-								className="btn btn-outline-secondary"
+								onClick={() =>
+									setInputMessage(buttonRef.current[key].textContent)
+								}
+								className="btn btn-secondary"
 							>
 								{element}
 							</button>
@@ -78,7 +98,7 @@ export const ChatInterface = () => {
 					})}
 				</div>
 			)}
-			<div className="chat-container-box">
+			<div className="chat-container-box" ref={chatContainerRef}>
 				{!initial &&
 					messages.map((message, idx) =>
 						message.who == "me" ? (
@@ -93,7 +113,12 @@ export const ChatInterface = () => {
 							</div>
 						) : (
 							<div className="chat-wrapper bot" key={idx}>
-								<Link role="button" className="btn chat-info">
+								<Link
+									to={`${message.who}`}
+									state={{ username: message.who }}
+									role="button"
+									className="btn chat-info"
+								>
 									<i class="bi bi-info-circle"></i>
 									<div className="chat-name bot">{message.who}</div>
 								</Link>
@@ -106,8 +131,21 @@ export const ChatInterface = () => {
 							</div>
 						)
 					)}
+				{botIsLoading ? (
+					<div className="chat-wrapper bot">
+						<div className="chat-message bot">Loading...</div>
+					</div>
+				) : (
+					""
+				)}
 			</div>
-			<div className="input-container">
+			<form
+				className="input-container"
+				onSubmit={(e) => {
+					e.preventDefault();
+					sendMessage(e.target.value);
+				}}
+			>
 				{!initial && !messages ? <div>질문을 해보세요</div> : <div></div>}
 				<input
 					value={inputMessage}
@@ -115,14 +153,10 @@ export const ChatInterface = () => {
 					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
 				/>
 
-				<button
-					type="submit"
-					className="btn btn-primary button-container"
-					onClick={sendMessage}
-				>
+				<button type="submit" className="btn btn-primary button-container">
 					<i class="bi bi-send"></i>
 				</button>
-			</div>
+			</form>
 		</div>
 	);
 };

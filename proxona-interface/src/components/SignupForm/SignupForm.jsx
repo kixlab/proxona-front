@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./SignupForm.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { MainButton } from "../../pages/styles/DesignSystem";
 
 export const SignupForm = () => {
 	const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export const SignupForm = () => {
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -27,20 +29,24 @@ export const SignupForm = () => {
 				.then((response) => {
 					setSignIn(true);
 					console.log("Success in response");
-					return response.json();
+					return;
 				});
 		} catch (error) {
 			console.error("Error submitting form", error);
 		}
 	};
+
 	useEffect(() => {
 		if (signIn && formData.handleId) {
-			navigate(`/persona/${formData.handleId}`);
+			navigate(`/${formData.handleId}`, {
+				state: { handleId: formData.handleId },
+			});
 			console.log("login success");
 		}
 	}, [signIn]);
+
 	return (
-		<div className="form_container">
+		<div className="container form_container">
 			<form onSubmit={handleSubmit}>
 				<label for="handleId">
 					<input
@@ -51,7 +57,10 @@ export const SignupForm = () => {
 						placeholder="type your @handle id"
 					/>
 				</label>
-				<input type="submit" value="Start"></input>
+				<MainButton type="submit" value="Start"></MainButton>
+				{signIn && !formData.handleId && (
+					<div>Please provide valid handle id (e.g., @HCI) </div>
+				)}
 			</form>
 		</div>
 	);

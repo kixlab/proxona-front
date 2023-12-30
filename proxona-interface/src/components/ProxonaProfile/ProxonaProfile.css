@@ -2,8 +2,7 @@
 
 .profile-container {
 	font-family: "Arial", sans-serif;
-	background-color: #f9f9f9;
-	border: 1px solid #ddd;
+	border: 1px solid;
 	margin-right: 10px;
 	border-radius: 8px;
 	padding: 13px;
@@ -17,8 +16,7 @@
 }
 
 .profile-container:hover {
-	background-color: gray;
-	color: white;
+	background-color: #24292f;
 }
 
 .header {
@@ -85,20 +83,6 @@ select {
 
 /* Add more styles as needed */
 
-.profile-detail-bg {
-	background-color: #555;
-	opacity: 90%;
-	height: 100%;
-	width: 100%;
-	color: white;
-	z-index: 100;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	cursor: pointer;
-	text-wrap: wrap;
-	display: flex;
-}
 .profile-detail-container {
 	border: 1px solid white;
 	margin: auto;

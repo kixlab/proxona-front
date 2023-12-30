@@ -18,6 +18,7 @@
 	/* align-self: flex-end; */
 	display: flex;
 	flex-direction: row;
+	width: inherit;
 }
 
 .signup_container {
@@ -32,5 +33,5 @@
 }
 
 a.more_button {
-	align-self: flex-end;
+	align-self: flex-start;
 }

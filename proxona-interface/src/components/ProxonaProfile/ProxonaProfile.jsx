@@ -27,35 +27,56 @@ function ProxonaProfile({ index, username, summary, generated, tags }) {
 	};
 
 	return (
-		<div className="profile-container" style={styles.index[index]}>
-			<Link
-				style={{ color: "inherit", textDecoration: "inherit" }}
-				to={username}
-				state={{
-					previousLocation: location,
-					username: username,
-					summary: summary,
-					tags: tags,
-				}}
+		<>
+			{generated ? (
+				<div
+					style={{
+						width: "30px",
+						borderBottom: "1px solid",
+						borderLeft: "1px solid",
+						height: "30px",
+						marginRight: "10px",
+					}}
+				></div>
+			) : (
+				<></>
+			)}
+			<div
+				className={`profile-container ${generated ? "generated" : ""}`}
+				style={styles.index[index]}
 			>
-				<div className="header">
-					<div className="user-info">
-						<div className="user-face">
-							<i className="bi bi-emoji-smile" style={styles.index[index]}></i>
-						</div>
-						<div className="user-name" style={styles.index[index]}>
-							{username}
+				<Link
+					style={{ color: "inherit", textDecoration: "inherit" }}
+					to={username}
+					state={{
+						previousLocation: location,
+						username: username,
+						summary: summary,
+						tags: tags,
+					}}
+				>
+					<div className="header">
+						<div className="user-info">
+							<div className="user-face">
+								<i
+									className="bi bi-emoji-smile"
+									style={styles.index[index]}
+								></i>
+							</div>
+							<div className="user-name" style={styles.index[index]}>
+								{username}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className="message">{summary}</div>
-				<div className="selectors">
-					{Object.values(tags).map((tag) => {
-						return <div>{tag}</div>;
-					})}
-				</div>
-			</Link>
-		</div>
+					<div className="message">{summary}</div>
+					<div className="selectors">
+						{Object.values(tags).map((tag) => {
+							return <div key={tag}>{tag}</div>;
+						})}
+					</div>
+				</Link>
+			</div>
+		</>
 	);
 }
 

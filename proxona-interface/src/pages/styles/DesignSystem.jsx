@@ -11,7 +11,7 @@ export const MainButton = styled.input`
 `;
 
 //modal wrapper
-export const Wrapper = styled.div`
+export const ModalWrapper = styled.div`
 	background-color: #555;
 	opacity: 90%;
 	height: 100%;

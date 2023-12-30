@@ -6,15 +6,19 @@ import { textMessage } from "../../data/dummy";
 import { Link, useLocation } from "react-router-dom";
 
 //TODO
-// [ ] scroll bottom to top when chat messages reach the bottom of the page
-// [ ] suggestion : add suggestion messages
-// [ ] change background color style
+// [x] scroll bottom to top when chat messages reach the bottom of the page
+// [x] suggestion : add suggestion messages
+// [x] change background color style
+// [x] setloading
 
 export const ChatInterface = () => {
-	const [messages, setMessages] = useState(textMessage);
+	// const [messages, setMessages] = useState(textMessage);
+	const [messages, setMessages] = useState([]);
+
 	const [inputMessage, setInputMessage] = useState("");
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
+	const [botIsLoading, setBotIsLoading] = useState(false);
 
 	const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
@@ -38,6 +42,7 @@ export const ChatInterface = () => {
 	// };
 
 	const getMessages = useCallback(async () => {
+		setBotIsLoading(true);
 		axios
 			.post(
 				port + "chat",
@@ -50,6 +55,7 @@ export const ChatInterface = () => {
 			)
 			.then((res) => {
 				setMessages([...messages, ...res.data]);
+				setBotIsLoading(false);
 			});
 	}, [messages]);
 
@@ -60,12 +66,15 @@ export const ChatInterface = () => {
 	}, [getMessages]);
 
 	useEffect(() => {
-		// Scroll to bottom when chat messages are added
-		if (chatContainerRef.current) {
-			chatContainerRef.current.scrollTop =
-				chatContainerRef.current.scrollHeight;
-		}
-	}, [chatContainerRef]);
+		const scrollToBottom = () => {
+			if (chatContainerRef.current) {
+				chatContainerRef.current.scrollTop =
+					chatContainerRef.current.scrollHeight;
+			}
+		};
+
+		scrollToBottom();
+	}, [messages]);
 
 	return (
 		<div className="container chat-container">
@@ -104,7 +113,12 @@ export const ChatInterface = () => {
 							</div>
 						) : (
 							<div className="chat-wrapper bot" key={idx}>
-								<Link role="button" className="btn chat-info">
+								<Link
+									to={`${message.who}`}
+									state={{ username: message.who }}
+									role="button"
+									className="btn chat-info"
+								>
 									<i class="bi bi-info-circle"></i>
 									<div className="chat-name bot">{message.who}</div>
 								</Link>
@@ -117,6 +131,13 @@ export const ChatInterface = () => {
 							</div>
 						)
 					)}
+				{botIsLoading ? (
+					<div className="chat-wrapper bot">
+						<div className="chat-message bot">Loading...</div>
+					</div>
+				) : (
+					""
+				)}
 			</div>
 			<form
 				className="input-container"

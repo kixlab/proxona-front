@@ -17,7 +17,7 @@
 	padding: 1%;
 	/* align-self: flex-end; */
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	width: inherit;
 }
 
@@ -33,5 +33,5 @@
 }
 
 a.more_button {
-	/* align-self: flex-start; */
+	align-self: flex-start;
 }

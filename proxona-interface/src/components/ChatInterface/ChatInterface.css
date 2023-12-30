@@ -20,6 +20,7 @@
 	display: flex;
 	justify-content: flex-end;
 	padding-right: 0;
+	color: white;
 }
 
 .chat-message {
@@ -44,13 +45,16 @@
 
 .input-container input {
 	width: 80%;
-	text-align: center;
 	border-width: 0 0 1px;
 	border-color: #ddd;
 	border-radius: 50px;
 	font-size: 0.8rem;
 	box-sizing: border-box;
 	padding: 12px 20px;
+}
+
+.input-container input::placeholder {
+	text-align: center;
 }
 
 .input-container input:focus {
@@ -70,12 +74,12 @@
 	bottom: 0;
 	height: 35%;
 }
-/* 
+
 .example-questions button {
 	display: block;
 	margin: 0.5rem 0;
 	border-color: #ddd;
-} */
+}
 
 .bot {
 	margin-left: 10px;

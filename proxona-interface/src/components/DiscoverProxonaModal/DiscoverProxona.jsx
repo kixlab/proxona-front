@@ -4,6 +4,7 @@ import "./DiscoverProxona.css";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { ModalWrapper } from "../../pages/styles/DesignSystem";
 
 const DiscoverProxona = () => {
 	const navigate = useNavigate();
@@ -41,7 +42,7 @@ const DiscoverProxona = () => {
 	// };
 
 	return (
-		<div className="container-bg">
+		<ModalWrapper>
 			<div className="container detailproxona_container">
 				<button
 					className="btn"
@@ -72,7 +73,7 @@ const DiscoverProxona = () => {
 				})}
 				<button className="btn btn-secondary">시청자 페르소나 만들기</button>
 			</div>
-		</div>
+		</ModalWrapper>
 	);
 };
 

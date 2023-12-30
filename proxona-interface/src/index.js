@@ -15,12 +15,17 @@ import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./pages/styles/GlobalStyles";
 import { lightTheme, darkTheme } from "./pages/styles/Themes";
+import IntroPage from "./pages/IntroPage";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Signup />,
 		errorElement: <ErrorPage />,
+	},
+	{
+		path: "/:id",
+		element: <IntroPage />,
 	},
 	{
 		path: ":id/persona/",
@@ -52,9 +57,9 @@ root.render(
 		<ThemeProvider theme={darkTheme}>
 			<>
 				<GlobalStyles></GlobalStyles>
-				{/* <Provider store={store}> */}
-				<RouterProvider router={router} />
-				{/* </Provider> */}
+				<Provider store={store}>
+					<RouterProvider router={router} />
+				</Provider>
 			</>
 		</ThemeProvider>
 	</React.StrictMode>

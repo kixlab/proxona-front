@@ -4,7 +4,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import axios from "axios";
 import ProxonaProfile from "../ProxonaProfile/ProxonaProfile";
 import "./SimilarPersona.css";
-import { Wrapper } from "../../pages/styles/DesignSystem";
+import { ModalWrapper } from "../../pages/styles/DesignSystem";
 
 const SimilarPersona = () => {
 	const navigate = useNavigate();
@@ -54,7 +54,7 @@ const SimilarPersona = () => {
 	const addToList = () => {};
 
 	return (
-		<Wrapper>
+		<ModalWrapper>
 			<div className="container similarPerona_container" ref={modalRef}>
 				<div className="row">Get similar one</div>
 				<div className="row">
@@ -93,7 +93,7 @@ const SimilarPersona = () => {
 					Add to list
 				</Link>
 			</div>
-		</Wrapper>
+		</ModalWrapper>
 	);
 };
 

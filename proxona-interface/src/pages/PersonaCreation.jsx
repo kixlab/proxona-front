@@ -4,8 +4,8 @@ import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
 import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
 import { dummy } from "../data/dummy.js";
 import axios from "axios";
-import "./_css/index.css";
-import { Link, useLocation } from "react-router-dom";
+import "./styles/index.css";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -32,6 +32,7 @@ function PersonaCreation() {
 		ishover: 0,
 	});
 	const location = useLocation();
+	const { id } = useParams();
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
@@ -121,7 +122,8 @@ function PersonaCreation() {
 					Discover more proxona
 					<i class="bi bi-compass"></i>
 				</Link>
-				<button
+				<Link
+					to={`/${id}/feedback`}
 					className="btn btn-primary"
 					style={{
 						marginRight: "80px",
@@ -131,7 +133,7 @@ function PersonaCreation() {
 				>
 					Let's get feedback
 					<i class="bi bi-people"></i>
-				</button>
+				</Link>
 			</div>
 		</div>
 	);

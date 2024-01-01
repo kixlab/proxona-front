@@ -6,11 +6,6 @@ import { textMessage } from "../../data/dummy";
 import { Link, useLocation } from "react-router-dom";
 import { Stack, Button, Input } from "@mui/material";
 
-//TODO
-// [ ] scroll bottom to top when chat messages reach the bottom of the page
-// [ ] suggestion : add suggestion messages
-// [ ] change background color style
-
 export const FeedbackChat = () => {
 	const [messages, setMessages] = useState(textMessage);
 	const [inputMessage, setInputMessage] = useState("");
@@ -30,11 +25,6 @@ export const FeedbackChat = () => {
 			setMessages([...messages, { who: "me", text: inputMessage }]);
 			setInputMessage(" ");
 		}
-	};
-
-	const handleSubmit = (buttonRef) => {
-		setMessages([...messages, { who: "me", text: buttonRef.textContent }]);
-		setInitial(false);
 	};
 
 	const getMessages = useCallback(async () => {
@@ -62,14 +52,16 @@ export const FeedbackChat = () => {
 	return (
 		<Stack flex={1}>
 			{initial && (
-				<Stack alignItems={'flex-start'} flex={1}>
+				<Stack alignItems={"flex-start"} flex={1}>
 					내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
 					{exampleQuestions.map((element, key) => {
 						return (
 							<Button
 								key={key}
 								ref={(refele) => (buttonRef.current[key] = refele)}
-								onClick={() => handleSubmit(buttonRef.current[key])}
+								onClick={() =>
+									setInputMessage(buttonRef.current[key].textContent)
+								}
 								variant={"outlined"}
 							>
 								{element}
@@ -78,8 +70,8 @@ export const FeedbackChat = () => {
 					})}
 				</Stack>
 			)}
-		
-			<Stack direction={'row'}>
+
+			<Stack direction={"row"}>
 				{!initial && !messages ? <div>질문을 해보세요</div> : <div></div>}
 				<Input
 					fullWidth
@@ -88,11 +80,7 @@ export const FeedbackChat = () => {
 					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
 				/>
 
-				<Button
-					type="submit"
-					variant="contained"
-					onClick={sendMessage}
-				>
+				<Button type="submit" variant="contained" onClick={sendMessage}>
 					<i class="bi bi-send"></i>
 				</Button>
 			</Stack>

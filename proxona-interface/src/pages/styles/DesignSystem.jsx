@@ -25,3 +25,10 @@ export const ModalWrapper = styled.div`
 	text-wrap: wrap;
 	display: flex;
 `;
+
+export const InputWrapper = styled.input`
+	position: fixed;
+	bottom: 0;
+	padding: 1rem 0.3rem 2rem 0.3rem;
+	margin: auto;
+`;

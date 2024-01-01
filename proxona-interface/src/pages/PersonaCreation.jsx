@@ -3,7 +3,7 @@ import { textContent } from "../data/textContent.js";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
 import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
 import { dummy } from "../data/dummy.js";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import "./styles/index.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 
@@ -26,6 +26,7 @@ function groupBy(array, key) {
 
 function PersonaCreation() {
 	const [filteredProfile, setFilteredProfile] = useState([]);
+	const personaList = useSelector((state) => state.personaList);
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [isHovering, setIsHovering] = useState({
 		key: "",
@@ -63,18 +64,21 @@ function PersonaCreation() {
 										key={key}
 										className={`${key}__persona persona_board  min-vw-100`}
 									>
-										{items.map((data, idx) => {
-											return (
-												<ProxonaProfile
-													key={idx}
-													index={data.index}
-													generated={data.generated}
-													username={data.username}
-													summary={data.summary}
-													tags={data.tags}
-												/>
-											);
-										})}
+										<div>
+											{items.map((data, idx) => {
+												return (
+													<ProxonaProfile
+														key={idx}
+														index={data.index}
+														generated={data.generated}
+														username={data.username}
+														summary={data.summary}
+														tags={data.tags}
+														board={true}
+													/>
+												);
+											})}
+										</div>
 										{isHovering.key == key && isHovering.ishover ? (
 											<Link
 												to={"similar/" + key}

@@ -5,11 +5,6 @@ import axios from "axios";
 import { textMessage } from "../../data/dummy";
 import { Link, useLocation } from "react-router-dom";
 
-//TODO
-// [x] scroll bottom to top when chat messages reach the bottom of the page
-// [x] suggestion : add suggestion messages
-// [x] change background color style
-// [x] setloading
 
 export const ChatInterface = () => {
 	// const [messages, setMessages] = useState(textMessage);
@@ -74,7 +69,7 @@ export const ChatInterface = () => {
 		};
 
 		scrollToBottom();
-	}, [messages]);
+	}, [messages, botIsLoading]);
 
 	return (
 		<div className="container chat-container">

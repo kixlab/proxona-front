@@ -56,10 +56,9 @@ const SimilarPersona = () => {
 	return (
 		<ModalWrapper>
 			<div className="container similarPerona_container" ref={modalRef}>
-				<div className="row">Get similar one</div>
-				<div className="row">
+				<div className="row align-items-center">
 					<div className="col">
-						<div>original persona</div>
+						<div className="m-3">original persona</div>
 						<ProxonaProfile
 							index={location.state.items[0].index}
 							summary={location.state.items[0].summary}
@@ -69,7 +68,10 @@ const SimilarPersona = () => {
 						></ProxonaProfile>
 					</div>
 					<div className="col">
-						<div>newly generated persona</div>
+						<i class="bi bi-arrow-right"></i>
+					</div>
+					<div className="col">
+						<div className="m-3">newly generated persona</div>
 						<ProxonaProfile
 							index={generated.index}
 							summary={generated.summary}
@@ -79,19 +81,21 @@ const SimilarPersona = () => {
 						></ProxonaProfile>
 					</div>
 				</div>
-				<button
-					className="btn"
-					onClick={() => generateProfile(location.state.key)}
-				>
-					Try another one
-				</button>
-				<Link
-					className="btn"
-					role="button"
-					onClick={() => navigate(location.state.previousLocation.pathname)}
-				>
-					Add to list
-				</Link>
+				<div className="d-flex flex-end justify-content-end mt-3">
+					<button
+						className="btn btn-secondary m-2"
+						onClick={() => generateProfile(location.state.key)}
+					>
+						Try another one
+					</button>
+					<Link
+						className="btn btn-secondary m-2"
+						role="button"
+						onClick={() => navigate(location.state.previousLocation.pathname)}
+					>
+						Add to list
+					</Link>
+				</div>
 			</div>
 		</ModalWrapper>
 	);

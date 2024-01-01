@@ -3,6 +3,7 @@ import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요
 import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { ModalWrapper } from "../../pages/styles/DesignSystem";
+import Video from "./Video";
 
 function ProxonaDetailModal() {
 	const navigate = useNavigate();
@@ -24,7 +25,7 @@ function ProxonaDetailModal() {
 		<ModalWrapper>
 			<div className="profile-detail-container">
 				<button
-					className="btn"
+					className="btn btn-primary"
 					ref={modalRef}
 					onClick={() => navigate(location.state.previousLocation.pathname)}
 				>
@@ -51,6 +52,11 @@ function ProxonaDetailModal() {
 							</div>
 						);
 					})}
+				</div>
+				<div className="video-container">
+					{/* {videoIds.map((videoId) => {
+						<Video videoId={videoId}></Video>;
+					})} */}
 				</div>
 			</div>
 		</ModalWrapper>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
 import { Link, useLocation } from "react-router-dom";
 
-function ProxonaProfile({ index, username, summary, generated, tags }) {
+function ProxonaProfile({ index, username, summary, generated, board, tags }) {
 	const location = useLocation();
 	const styles = {
 		index: {
@@ -27,14 +27,15 @@ function ProxonaProfile({ index, username, summary, generated, tags }) {
 	};
 
 	return (
-		<>
-			{generated ? (
+		<div style={{ display: "flex", flexDirection: "row" }}>
+			{generated && board ? (
 				<div
 					style={{
 						width: "30px",
 						borderBottom: "1px solid",
 						borderLeft: "1px solid",
 						height: "30px",
+						marginTop: "10px",
 						marginRight: "10px",
 					}}
 				></div>
@@ -42,7 +43,10 @@ function ProxonaProfile({ index, username, summary, generated, tags }) {
 				<></>
 			)}
 			<div
-				className={`profile-container ${generated ? "generated" : ""}`}
+				className={`profile-container ${
+					generated && board ? "generated " : ""
+				} ${!board ? "isDisabled" : ""}
+				${generated && !board ? " simcard " : ""}`}
 				style={styles.index[index]}
 			>
 				<Link
@@ -76,7 +80,7 @@ function ProxonaProfile({ index, username, summary, generated, tags }) {
 					</div>
 				</Link>
 			</div>
-		</>
+		</div>
 	);
 }
 

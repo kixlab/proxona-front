@@ -8,7 +8,7 @@ import Signup from "./pages/Signup";
 import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import store from "./redux/store";
 import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
 import DiscoverProxona from "./components/DiscoverProxonaModal/DiscoverProxona";
 import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";

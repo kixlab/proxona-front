@@ -11,11 +11,24 @@ export const dummy = [
 			말투: "비판 중",
 		},
 	},
+	{
+		index: 1,
+		username: "Bob",
+		summary: "실용적이고 신중한 구매자",
+		generated: true,
+		tags: {
+			성격: "신중한",
+			구매성향: "가격 대비 가치 중시",
+			현재상태: "구매 고려 중",
+			말투: "비판 중",
+		},
+	},
 
 	{
 		index: 3,
 		username: "Haram",
 		summary: "디자인과 성능에 중점을 두는 비판적 사용자",
+		generated: false,
 		tags: {
 			성격: "신중한",
 			구매성향: "가격 대비 가치 중시",

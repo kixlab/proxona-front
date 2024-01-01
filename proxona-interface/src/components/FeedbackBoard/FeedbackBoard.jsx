@@ -6,10 +6,9 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-
-import { FloatingMenuPlugin } from '../../plugins/FloatingMenuPlugin';
-import { FloatingMenu } from "../FloatingMenu/FloatingMenu";
 import FloatingToolbarPlugin from '../../plugins/FloatingToolbarPlugin';
+import { dummy } from '../../data/dummy';
+import { sleep } from '../../utils/sleep';
 
 function OnChangePlugin({ onChange }) {
 	const [editor] = useLexicalComposerContext();
@@ -24,11 +23,18 @@ function onError(error) {
 	console.error(error);
 }
 
+export const ACTION_TYPE = {
+	"append": "APPEND",
+	"switch": "SWITCH"
+}
+
 export default function FeedbackBoard() {
 	const initialConfig = {
 		namespace: 'MyEditor',
 		onError,
 	};
+
+	const actions = Object.keys(ACTION_TYPE) 
 
 	const [editorState, setEditorState] = useState();
 
@@ -44,13 +50,18 @@ export default function FeedbackBoard() {
 		setEditorState(editorState);
 	}
 
+	const handleAction = async (actionType, proxona, content) => {
+		await sleep(3000) // 함수는 여기에 
+		return proxona.username
+	}
+
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
 			<RichTextPlugin
 				placeholder={<div>Enter some text...</div>}
 				contentEditable={
-					<div ref={onRef} style={{height: '100%'}} >
-						<ContentEditable style={{height: '100%'}} />
+					<div ref={onRef} style={{position:'relative',height: '100%'}} >
+						<ContentEditable style={{ height: '100%'}} />
 					</div>
 					
 				}
@@ -59,6 +70,9 @@ export default function FeedbackBoard() {
 			{floatingAnchorElem && (
 				<FloatingToolbarPlugin
 					anchorElem={floatingAnchorElem}
+					onAction={handleAction}
+					proxonas={dummy}
+					actions={actions}
 				/>
 			)}
 			

@@ -58,10 +58,9 @@ export default function FeedbackBoard() {
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
 			<RichTextPlugin
-				placeholder={<div>Enter some text...</div>}
 				contentEditable={
 					<div ref={onRef} style={{position:'relative',height: '100%'}} >
-						<ContentEditable style={{ height: '100%'}} />
+						<ContentEditable style={{ height: '100%', padding: '16px'}} />
 					</div>
 					
 				}

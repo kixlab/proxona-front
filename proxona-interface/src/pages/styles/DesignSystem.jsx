@@ -10,6 +10,29 @@ export const MainButton = styled.input`
 	color: white;
 `;
 
+//button
+
+export const PrimButton = styled.button`
+	margin-top: 30px;
+	background-color: #6d53d3;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+	border: none;
+	color: white;
+`;
+
+export const CloseButton = styled.button`
+	color: white;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+`;
+
 //modal wrapper
 export const ModalWrapper = styled.div`
 	background-color: #555;

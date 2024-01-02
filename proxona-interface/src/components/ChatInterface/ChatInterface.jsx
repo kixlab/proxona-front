@@ -4,7 +4,17 @@ import "../ProxonaProfile/ProxonaProfile.css";
 import axios from "axios";
 import { textMessage } from "../../data/dummy";
 import { Link, useLocation } from "react-router-dom";
-
+import {
+	Button,
+	ButtonBase,
+	Stack,
+	Typography,
+	Paper,
+	InputBase,
+	Divider,
+	IconButton,
+} from "@mui/material";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export const ChatInterface = () => {
 	// const [messages, setMessages] = useState(textMessage);
@@ -30,11 +40,6 @@ export const ChatInterface = () => {
 			setInputMessage(" ");
 		}
 	};
-
-	// const handleSubmit = (buttonRef) => {
-	// 	setMessages([...messages, { who: "me", text: buttonRef.textContent }]);
-	// 	setInitial(false);
-	// };
 
 	const getMessages = useCallback(async () => {
 		setBotIsLoading(true);
@@ -72,86 +77,125 @@ export const ChatInterface = () => {
 	}, [messages, botIsLoading]);
 
 	return (
-		<div className="container chat-container">
-			{initial && (
-				<div className="example-questions">
-					내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
-					{exampleQuestions.map((element, key) => {
-						return (
-							<button
-								key={key}
-								ref={(refele) => (buttonRef.current[key] = refele)}
-								type="button"
-								onClick={() =>
-									setInputMessage(buttonRef.current[key].textContent)
-								}
-								className="btn btn-secondary"
-							>
-								{element}
-							</button>
-						);
-					})}
-				</div>
-			)}
-			<div className="chat-container-box" ref={chatContainerRef}>
-				{!initial &&
+		<Stack height={1} overflow={"hidden"}>
+			<Stack flex={1} overflow={"auto"}>
+				{initial ? (
+					<Stack spacing={20 / 8} alignSelf={"center"} py={40 / 8}>
+						<Typography variant="h6">
+							내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
+						</Typography>
+						<Stack spacing={10 / 8}>
+							{exampleQuestions.map((element, key) => {
+								return (
+									<Button
+										key={key}
+										ref={(refele) => (buttonRef.current[key] = refele)}
+										variant="outlined"
+										onClick={() =>
+											setInputMessage(buttonRef.current[key].textContent)
+										}
+									>
+										{element}
+									</Button>
+								);
+							})}
+						</Stack>
+					</Stack>
+				) : (
 					messages.map((message, idx) =>
 						message.who == "me" ? (
-							<div className="chat-wrapper" key={idx}>
-								<div className="chat-name">{message.who}</div>
-								<div className="chat-message">
-									<div className="user-face">
-										<i class="bi bi-emoji-smile"></i>
-									</div>
-									<p>{message.text}</p>
-								</div>
-							</div>
+							<Stack alignSelf={"flex-end"} alignItems={"flex-end"} key={idx}>
+								<Typography variant="caption">{message.who}</Typography>
+								<Typography
+									sx={{
+										bgcolor: "#fff",
+										color: "#1a1a1a",
+										borderRadius: 10 / 4,
+										px: 12 / 8,
+										py: 10 / 8,
+									}}
+									paragraph={true}
+								>
+									{message.text}
+								</Typography>
+							</Stack>
 						) : (
-							<div className="chat-wrapper bot" key={idx}>
-								<Link
+							<Stack
+								key={idx}
+								alignItems={"flex-start"}
+								spacing={4 / 8}
+								px={12 / 8}
+							>
+								<ButtonBase
+									LinkComponent={Link}
 									to={`${message.who}`}
 									state={{ username: message.who }}
-									role="button"
-									className="btn chat-info"
+									sx={{
+										color: "#fff",
+										px: 8 / 8,
+										ml: 4 / 8,
+										borderRadius: 20 / 8,
+										bgcolor: "#24292f",
+									}}
 								>
-									<i class="bi bi-info-circle"></i>
-									<div className="chat-name bot">{message.who}</div>
-								</Link>
-								<div className="chat-message bot">
-									<p dangerouslySetInnerHTML={{ __html: message.text }}></p>
-									<div className="bot-face bot">
+									<Typography variant="caption">{message.who}</Typography>
+									<i class="bi bi-info-circle" style={{ fontSize: 12 }}></i>
+								</ButtonBase>
+								<Stack direction={"row"}>
+									<Stack
+										sx={{
+											px: 12 / 8,
+										}}
+									>
 										<i class="bi bi-emoji-smile"></i>
-									</div>
-								</div>
-							</div>
+									</Stack>
+									<Typography
+										sx={{
+											bgcolor: "#24292f",
+											borderRadius: 10 / 4,
+											px: 12 / 8,
+											py: 10 / 8,
+										}}
+										paragraph={true}
+										dangerouslySetInnerHTML={{ __html: message.text }}
+									></Typography>
+								</Stack>
+							</Stack>
 						)
-					)}
-				{botIsLoading ? (
-					<div className="chat-wrapper bot">
-						<div className="chat-message bot">Loading...</div>
-					</div>
-				) : (
-					""
+					)
 				)}
-			</div>
-			<form
-				className="input-container"
+				{botIsLoading && (
+					<Stack className="chat-wrapper bot">
+						<Stack className="chat-message bot">Loading...</Stack>
+					</Stack>
+				)}
+			</Stack>
+			<Paper
+				component="form"
+				alignSelf="stretch"
+				sx={{ p: "2px 4px", display: "flex", alignItems: "center", m: 1 }}
 				onSubmit={(e) => {
 					e.preventDefault();
 					sendMessage(e.target.value);
 				}}
 			>
-				{!initial && !messages ? <div>질문을 해보세요</div> : <div></div>}
-				<input
+				<InputBase
+					sx={{ ml: 1, flex: 1 }}
+					fullWidth
+					inputProps={{ "aria-label": "search google maps" }}
 					value={inputMessage}
 					onChange={(e) => setInputMessage(e.target.value)}
 					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
 				/>
-
-				<button type="submit" className="btn btn-primary button-container">
-					<i class="bi bi-send"></i>
-				</button>
-			</form>
-		</div>
+				<IconButton
+					type="submit"
+					color="primary"
+					sx={{ p: "10px" }}
+					aria-label="search"
+				>
+					<KeyboardReturnIcon />
+				</IconButton>
+			</Paper>
+		</Stack>
 	);
 };

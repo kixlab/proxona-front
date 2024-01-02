@@ -6,6 +6,7 @@ import { dummy } from "../data/dummy.js";
 import { useSelector, useDispatch } from "react-redux";
 import "./styles/index.css";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { Button, Stack, Typography } from "@mui/material";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -26,7 +27,7 @@ function groupBy(array, key) {
 
 function PersonaCreation() {
 	const [filteredProfile, setFilteredProfile] = useState([]);
-	const personaList = useSelector((state) => state.personaList);
+	// const personaList = useSelector((state) => state.personaList);
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [isHovering, setIsHovering] = useState({
 		key: "",
@@ -41,105 +42,103 @@ function PersonaCreation() {
 	}, [profiles]);
 
 	return (
-		<div className="container pt-4">
-			<div className="row">
-				<div className="col-7">
+		<>
+			<Stack
+				direction="row"
+				spacing={40 / 8}
+				height={"100%"}
+				overflow={"hidden"}
+			>
+				<Stack flex={7} flexShrink={0} height={"100%"} overflow={"auto"}>
 					<ChatInterface />
-				</div>
-				<div className="col-5">
-					<div className="row">
-						<h4>
-							{textContent.subTitle} {profiles.length}
-						</h4>
-					</div>
-					<div className="vh-100 persona_wrapper">
-						<div className="persona_container">
-							{Object.entries(filteredProfile).map(([key, items]) => (
-								<div
-									className="persona-col"
-									onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
-									onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
-								>
-									<div
-										key={key}
-										className={`${key}__persona persona_board  min-vw-100`}
+				</Stack>
+				<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
+					<Typography variant="h6">
+						{textContent.subTitle} {profiles.length}
+					</Typography>
+
+					<Stack spacing={20 / 8}>
+						{Object.entries(filteredProfile).map(([key, items]) => (
+							<Stack
+								key={key}
+								className={`${key}__persona`}
+								flexDirection={"row"}
+								onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
+								onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
+							>
+								{items.map((data, idx) => {
+									return (
+										<ProxonaProfile
+											key={idx}
+											index={data.index}
+											generated={data.generated}
+											board={true}
+											username={data.username}
+											summary={data.summary}
+											tags={data.tags}
+										/>
+									);
+								})}
+								{isHovering.key == key && isHovering.ishover ? (
+									<Button
+										sx={{ alignSelf: "flex-start" }}
+										LinkComponent={Link}
+										to={"similar/" + key}
+										variant="outlined"
+										state={{
+											previousLocation: location,
+											key: key,
+											items: items,
+										}}
 									>
-										<div>
-											{items.map((data, idx) => {
-												return (
-													<ProxonaProfile
-														key={idx}
-														index={data.index}
-														generated={data.generated}
-														username={data.username}
-														summary={data.summary}
-														tags={data.tags}
-														board={true}
-													/>
-												);
-											})}
-										</div>
-										{isHovering.key == key && isHovering.ishover ? (
-											<Link
-												to={"similar/" + key}
-												role="button"
-												className="more_button btn btn-secondary"
-												type="button"
-												state={{
-													previousLocation: location,
-													key: key,
-													items: items,
-												}}
-											>
-												Add similar one
-												<i class="bi bi-plus"></i>
-											</Link>
-										) : (
-											""
-										)}
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-			</div>
-			<div
-				style={{
+										Add similar one
+										<i class="bi bi-plus"></i>
+									</Button>
+								) : (
+									""
+								)}
+							</Stack>
+						))}
+					</Stack>
+				</Stack>
+			</Stack>
+			<Stack
+				sx={{
 					position: "fixed",
 					bottom: 0,
 					right: 0,
 				}}
+				spacing={10 / 8}
+				mr={8}
+				direction={"row"}
 			>
-				<Link
+				<Button
+					LinkComponent={Link}
 					to={"discover"}
 					state={{ previousLocation: location }}
 					role="button"
-					className="btn btn-primary"
-					style={{
-						marginRight: "10px",
-						backgroundColor: "#ffffff",
-						borderColor: "#000000",
-						color: "#000000",
-					}}
+					variant="contained"
+					sx={(theme) => ({
+						background: "#fff",
+						color: theme.palette.primary.main,
+					})}
 				>
 					Discover more proxona
 					<i class="bi bi-compass"></i>
-				</Link>
-				<Link
+				</Button>
+				<Button
+					LinkComponent={Link}
 					to={`/${id}/feedback`}
-					className="btn btn-primary"
-					style={{
+					variant="contained"
+					sx={{
 						marginRight: "80px",
-						backgroundColor: "#A66FFF",
-						borderColor: "#A66FFF",
 					}}
 				>
 					Let's get feedback
 					<i class="bi bi-people"></i>
-				</Link>
-			</div>
-		</div>
+				</Button>
+			</Stack>
+		</>
 	);
 }
 

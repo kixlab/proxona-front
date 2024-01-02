@@ -10,7 +10,7 @@ import { darkTheme } from "./pages/styles/Themes.jsx";
 
 function App() {
 	// const darkTheme = createTheme({
-    //     palette: {
+	//     palette: {
 	// 		mode: 'dark',
 	// 		primary: {
 	// 		  main: '#6d53d3',
@@ -19,15 +19,14 @@ function App() {
 	// 		  main: '#f50057',
 	// 		},
 	// 	  },
-    //   });
+	//   });
 
 	return (
 		<>
 			<Outlet />
 			{/* <ThemeProvider theme={darkTheme}> */}
-				<PersonaCreation></PersonaCreation>
+			<PersonaCreation></PersonaCreation>
 			{/* </ThemeProvider> */}
-			
 		</>
 	);
 }

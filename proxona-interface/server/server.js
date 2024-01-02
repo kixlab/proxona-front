@@ -62,7 +62,6 @@ app.post("/persona", (req, res) => {
 });
 
 //send chat
-
 app.post("/chat", async (req, res) => {
 	const messages = [new HumanMessage({ content: req.body.text })];
 	const llmResult = await chatmodel.predictMessages(messages);

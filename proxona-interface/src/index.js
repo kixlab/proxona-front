@@ -8,11 +8,11 @@ import Signup from "./pages/Signup";
 import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import store from "./redux/store";
 import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
 import DiscoverProxona from "./components/DiscoverProxonaModal/DiscoverProxona";
 import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { GlobalStyles } from "./pages/styles/GlobalStyles";
 import { lightTheme, darkTheme } from "./pages/styles/Themes";
 import IntroPage from "./pages/IntroPage";
@@ -57,11 +57,11 @@ root.render(
 	<React.StrictMode>
 		<ThemeProvider theme={darkTheme}>
 			<>
-				<CssBaseline/>
+				<CssBaseline />
 				<GlobalStyles></GlobalStyles>
-				<Provider store={store}>
-					<RouterProvider router={router} />
-				</Provider>
+				{/* <Provider store={store}> */}
+				<RouterProvider router={router} />
+				{/* </Provider> */}
 			</>
 		</ThemeProvider>
 	</React.StrictMode>

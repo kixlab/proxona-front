@@ -4,7 +4,8 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import axios from "axios";
 import ProxonaProfile from "../ProxonaProfile/ProxonaProfile";
 import "./SimilarPersona.css";
-import { ModalWrapper } from "../../pages/styles/DesignSystem";
+import { ModalWrapper, PrimButton } from "../../pages/styles/DesignSystem";
+import { Stack } from "@mui/material";
 
 const SimilarPersona = () => {
 	const navigate = useNavigate();
@@ -55,10 +56,19 @@ const SimilarPersona = () => {
 
 	return (
 		<ModalWrapper>
-			<div className="container similarPerona_container" ref={modalRef}>
-				<div className="row">Get similar one</div>
-				<div className="row">
-					<div className="col">
+			<Stack
+				direction="column"
+				className="container similarPerona_container"
+				ref={modalRef}
+			>
+				<Stack>Get similar one</Stack>
+				<Stack
+					direction="row"
+					alignItems="center"
+					spacing={2}
+					justifyContent="center"
+				>
+					<Stack className="col">
 						<div>original persona</div>
 						<ProxonaProfile
 							index={location.state.items[0].index}
@@ -67,8 +77,11 @@ const SimilarPersona = () => {
 							tags={location.state.items[0].tags}
 							username={location.state.items[0].username}
 						></ProxonaProfile>
-					</div>
+					</Stack>
 					<div className="col">
+						<i class="bi bi-arrow-right"></i>
+					</div>
+					<Stack className="col">
 						<div>newly generated persona</div>
 						<ProxonaProfile
 							index={generated.index}
@@ -77,22 +90,29 @@ const SimilarPersona = () => {
 							tags={generated.tags}
 							username={generated.username}
 						></ProxonaProfile>
-					</div>
-				</div>
-				<button
-					className="btn"
-					onClick={() => generateProfile(location.state.key)}
+					</Stack>
+				</Stack>
+				<Stack
+					direction="row"
+					spacing={2}
+					justifyContent="flex-end"
+					paddingTop={2}
 				>
-					Try another one
-				</button>
-				<Link
-					className="btn"
-					role="button"
-					onClick={() => navigate(location.state.previousLocation.pathname)}
-				>
-					Add to list
-				</Link>
-			</div>
+					<PrimButton
+						className="button-next"
+						onClick={() => generateProfile(location.state.key)}
+					>
+						Try another one
+					</PrimButton>
+					<PrimButton
+						className="button-next"
+						role="button"
+						onClick={() => navigate(location.state.previousLocation.pathname)}
+					>
+						Add to list
+					</PrimButton>
+				</Stack>
+			</Stack>
 		</ModalWrapper>
 	);
 };

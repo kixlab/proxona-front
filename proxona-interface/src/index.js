@@ -17,6 +17,8 @@ import { GlobalStyles } from "./pages/styles/GlobalStyles";
 import { lightTheme, darkTheme } from "./pages/styles/Themes";
 import IntroPage from "./pages/IntroPage";
 import { CssBaseline } from "@mui/material";
+import SelectPersona from "./pages/SelectPersona";
+import SelectResult from "./pages/SelectResult";
 
 const router = createBrowserRouter([
 	{
@@ -28,6 +30,15 @@ const router = createBrowserRouter([
 		path: "/:id",
 		element: <IntroPage />,
 	},
+	{
+		path: "/:id/select",
+		element: <SelectPersona />,
+	},
+	{
+		path: "/:id/result",
+		element: <SelectResult />,
+	},
+
 	{
 		path: ":id/persona/",
 		element: <App />,

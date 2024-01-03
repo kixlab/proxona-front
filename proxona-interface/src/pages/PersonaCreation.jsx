@@ -62,9 +62,9 @@ function PersonaCreation() {
 							<Stack
 								key={key}
 								className={`${key}__persona`}
-								flexDirection={"row"}
+								flexDirection={"column"}
 								onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
-								onMouseOut={() => setIsHovering({ key: key, hover: 0 })}
+								onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
 							>
 								{items.map((data, idx) => {
 									return (

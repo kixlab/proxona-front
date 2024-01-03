@@ -24,14 +24,23 @@
 .signup_container {
 	text-align: center;
 	margin-top: 200px;
+	justify-content: center;
+	align-items: center;
 }
 .signup_container h2 {
 	font-weight: 700;
 }
 
-.signup_container p {
-}
-
 a.more_button {
 	align-self: flex-start;
+}
+
+.active {
+}
+
+.inactive {
+	text-decoration: none;
+	pointer-events: none;
+	cursor: not-allowed !important;
+	background-color: black;
 }

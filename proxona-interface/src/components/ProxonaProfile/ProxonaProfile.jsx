@@ -1,55 +1,29 @@
 import React, { useState } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
 import { Link, useLocation } from "react-router-dom";
+import { Avatar, Button, ButtonBase, Chip, Stack, Typography } from "@mui/material";
 
-function ProxonaProfile({ index, username, summary, generated, board, tags }) {
+function ProxonaProfile({ avatarImg, username, summary, tags, componentProps, disabled=false}) {
 	const location = useLocation();
-	const styles = {
-		index: {
-			1: {
-				borderColor: "#FFE8A3",
-				borderWidth: "5px",
-				color: "#FFE8A3",
-			},
-			2: {
-				borderColor: "#9EE7A0",
-				borderWidth: "5px",
-				color: "#9EE7A0",
-			},
-			3: {
-				borderColor: "#E4CCFF",
-				borderWidth: "5px",
-				color: "#E4CCFF",
-			},
-			// Add more index-color mappings as needed
-			// 또는 color 팔레트 사용하기
-		},
-	};
-
 	return (
-		<div style={{ display: "flex", flexDirection: "row" }}>
-			{generated && board ? (
-				<div
-					style={{
-						width: "30px",
-						borderBottom: "1px solid",
-						borderLeft: "1px solid",
-						height: "30px",
-						marginTop: "10px",
-						marginRight: "10px",
-					}}
-				></div>
-			) : (
-				<></>
-			)}
-			<div
-				className={`profile-container ${
-					generated && board ? "generated " : ""
-				} ${!board ? "isDisabled" : ""}
-				${generated && !board ? " simcard " : ""}`}
-				style={styles.index[index]}
-			>
-				<Link
+		<Stack 
+			component={ButtonBase} 
+			alignItems={'flex-start'}
+			sx={{
+				border: '1px solid #fff',
+				borderRadius: 2,
+				bgcolor: '#fff',
+				color: '#111',
+				p: 2,
+				transition: 'all .25s',
+				"&:hover": {
+					bgcolor: '#e1e1e7',
+				}
+			}}
+			disabled={disabled}
+			{...componentProps}
+		>
+			{/* <Link
 					style={{ color: "inherit", textDecoration: "inherit" }}
 					to={username}
 					state={{
@@ -58,8 +32,8 @@ function ProxonaProfile({ index, username, summary, generated, board, tags }) {
 						summary: summary,
 						tags: tags,
 					}}
-				>
-					<div className="header">
+				> */}
+					{/* <div className="header">
 						<div className="user-info">
 							<div className="user-face">
 								<i
@@ -71,16 +45,21 @@ function ProxonaProfile({ index, username, summary, generated, board, tags }) {
 								{username}
 							</div>
 						</div>
-					</div>
-					<div className="message">{summary}</div>
-					<div className="selectors">
-						{Object.values(tags).map((tag) => {
-							return <div key={tag}>{tag}</div>;
+					</div> */}
+					<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`}/>
+					<Typography variant="h6">{username}</Typography>
+					<Typography paragraph>{summary}</Typography>
+					<Stack direction={'row'} flexWrap={'wrap'} gap={10/8}>
+						{tags && Object.values(tags).map((tag) => {
+							// return <div key={tag}>{tag}</div>;
+							return <Chip label={`#${tag}`} color="primary" size="small"/>
 						})}
-					</div>
-				</Link>
-			</div>
-		</div>
+					</Stack>
+				{/* </Link> */}
+		</Stack>
+				
+		// 	</div>
+		// </div>
 	);
 }
 

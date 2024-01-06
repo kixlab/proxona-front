@@ -6,21 +6,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { ModalWrapper } from "../../pages/styles/DesignSystem";
 import SelectPersona from "../../pages/SelectPersona";
+import { Button, Dialog, DialogActions, DialogContent, Stack } from "@mui/material";
+import SelectAttributes from "../SelectAttributes/SelectAttributes";
 
 const DiscoverProxona = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const modalRef = useRef();
 
-	useEffect(() => {
-		const observerRefValue = modalRef.current;
-		disableBodyScroll(observerRefValue);
-		return () => {
-			if (observerRefValue) {
-				enableBodyScroll(observerRefValue);
-			}
-		};
-	}, []);
+	const [selectedDimension, setSelectedDimension] = useState(null)
+	
 	console.log(location);
 
 	// const addDiffProfile = async (e) => {
@@ -42,13 +36,43 @@ const DiscoverProxona = () => {
 	// 	}
 	// };
 
+	const handleClose = () => {
+		navigate(location.state.previousLocation.pathname)
+	}
+	
+	const handleSelect = (dimension) => {
+		setSelectedDimension(dimension)
+	}
+
+	const threshold = 2
+	const disabled = selectedDimension ? Object.values(selectedDimension).map((values) => values.filter(({selected}) => selected).length === 1).reduce((acc, curr) => acc + curr, 0) < threshold : true
+
+
 	return (
-		<ModalWrapper>
-			<div className="container detailproxona_container">
-				<SelectPersona />
-				<button>시청자 페르소나 만들기</button>
-			</div>
-		</ModalWrapper>
+		<Dialog
+			open={true}
+			onClose={handleClose}
+		>
+			{/* <div className="container detailproxona_container"> */}
+				<DialogContent>
+					{/* <SelectPersona extendable={true}/> */}
+					<SelectAttributes 
+						extendable={true}
+						onSelect={handleSelect}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>닫기</Button>
+					<Button 
+						variant="contained"
+						disabled={disabled}
+					>
+						{disabled ? `${threshold}개 이상의 특성을 골라주세요` : `프록소나 추가하기`}
+					</Button>
+				</DialogActions>
+				
+			{/* </div> */}
+		</Dialog>
 	);
 };
 

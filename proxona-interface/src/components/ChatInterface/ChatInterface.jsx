@@ -80,7 +80,7 @@ export const ChatInterface = () => {
 		<Stack height={1} overflow={"hidden"}>
 			<Stack flex={1} overflow={"auto"}>
 				{initial ? (
-					<Stack spacing={20 / 8} alignSelf={"center"} py={40 / 8}>
+					<Stack spacing={20 / 8} alignSelf={"center"}>
 						<Typography variant="h6">
 							내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
 						</Typography>

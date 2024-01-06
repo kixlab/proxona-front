@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./styles/index.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, Stack, Typography } from "@mui/material";
+import { avatars } from "../data/avatar.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -48,7 +49,9 @@ function PersonaCreation() {
 				spacing={40 / 8}
 				height={"100%"}
 				overflow={"hidden"}
+				justifyContent={'center'}
 			>
+				<Stack direction="row" maxWidth={1440} width={1}  py={40 / 8}>
 				<Stack flex={7} flexShrink={0} height={"100%"} overflow={"auto"}>
 					<ChatInterface />
 				</Stack>
@@ -62,45 +65,63 @@ function PersonaCreation() {
 							<Stack
 								key={key}
 								className={`${key}__persona`}
-								flexDirection={"column"}
 								onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
 								onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
 							>
 								{items.map((data, idx) => {
 									return (
-										<ProxonaProfile
-											key={idx}
-											index={data.index}
-											generated={data.generated}
-											board={true}
-											username={data.username}
-											summary={data.summary}
-											tags={data.tags}
-										/>
+										<Stack
+											ml={data.generated ? 2 : 0}
+											flexDirection={"row"}
+											gap={10 / 8}
+										>
+											<ProxonaProfile
+												key={idx}
+												index={data.index}
+												username={data.username}
+												summary={data.summary}
+												tags={data.tags}
+												avatarImg={avatars[data.index]}
+												componentProps={{
+													LinkComponent:Link,
+													to:data.username,
+													state: {
+														avatarImg: avatars[data.index],
+														previousLocation: location,
+														username: data.username,
+														summary: data.summary,
+														tags: data.tags,
+													}
+												}}
+											/>
+											{isHovering.key == key && isHovering.ishover && !data.generated ? (
+												<Button
+													sx={{ alignSelf: "flex-start" }}
+													LinkComponent={Link}
+													to={"similar/" + key}
+													variant="contained"
+													state={{
+														previousLocation: location,
+														key: key,
+														items: items,
+													}}
+												>
+													Add similar one
+													<i class="bi bi-plus"></i>
+												</Button>
+											) : (
+												""
+											)}
+										</Stack>
 									);
 								})}
-								{isHovering.key == key && isHovering.ishover ? (
-									<Button
-										sx={{ alignSelf: "flex-start" }}
-										LinkComponent={Link}
-										to={"similar/" + key}
-										variant="outlined"
-										state={{
-											previousLocation: location,
-											key: key,
-											items: items,
-										}}
-									>
-										Add similar one
-										<i class="bi bi-plus"></i>
-									</Button>
-								) : (
-									""
-								)}
+								
 							</Stack>
 						))}
 					</Stack>
 				</Stack>
+				</Stack>
+				
 			</Stack>
 			<Stack
 				sx={{

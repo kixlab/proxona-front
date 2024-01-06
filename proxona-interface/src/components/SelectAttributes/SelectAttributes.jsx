@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { features2 } from "../../data/dummy";
-import { Stack, Button, Box } from "@mui/material";
+import { features, features2 } from "../../data/dummy";
+import { Stack, Button, Box, Typography, ToggleButtonGroup, ToggleButton, Dialog, TextField, DialogActions, DialogContent } from "@mui/material";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import "../../pages/styles/index.css";
 
@@ -21,98 +21,148 @@ function groupBy(array, key) {
 	}, {}); // Initialize the result as an empty object
 }
 
-const SelectAttributes = () => {
-	const [personaEle, setPersonaEle] = useState(features2);
-	const [selectedEle, setSelectedEle] = useState(features2);
-	const [submittedEles, setSubmittedEles] = useState(null);
-	const navigate = useNavigate();
-	const { id } = useParams();
+const DimensionToggleGroup = ({ attributes, attribute, onChange, readonly }) => {
+	const handleChange = (event, newAttribute) => {
+		onChange(newAttribute)
+	}
+	return (
+		<ToggleButtonGroup
+			value={attribute?.value}
+			exclusive
+			onChange={handleChange}
+			disabled={readonly}
+		>
+			{attributes.map(attr => (
+				<ToggleButton value={attr}>
+					#{attr}
+				</ToggleButton>
+			))}
+		</ToggleButtonGroup>
+	)
+}
 
-	const clickEle = useCallback((feature, element) => {
-		// setSelectedEle(element);
-
-		const result = groupBy(selectedEle, feature);
-
-		setSelectedEle(result[element]);
-	}, []);
-
-	const mergedFeature = useMemo(() => {
-		const mergedFeatures = personaEle.reduce((acc, curr) => {
-			Object.entries(curr).forEach(([key, value]) => {
-				if (!acc[key]) {
-					acc[key] = [];
-				}
-				if (!acc[key].includes(value)) {
-					acc[key].push(value);
-				}
-			});
-			return acc;
-		}, {});
-		return mergedFeatures;
-	}, [personaEle]);
-
-	const mergedSelectFeature = useMemo(() => {
-		const mergedSelectFeatures = selectedEle.reduce((acc, curr) => {
-			Object.entries(curr).forEach(([key, value]) => {
-				if (!acc[key]) {
-					acc[key] = [];
-				}
-				if (!acc[key].includes(value)) {
-					acc[key].push(value);
-				}
-			});
-			return acc;
-		}, {});
-		return Object.values(mergedSelectFeatures).flat(1);
-	}, [selectedEle]);
-
-	useEffect(() => {
-		setSubmittedEles(mergedFeature);
-		console.log(selectedEle);
-	}, [selectedEle]);
+const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
+	const [value, setValue] = useState('')
 
 	return (
-		<Stack
-			sx={{
-				height: "100%",
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
-			<Box sx={{ textAlign: "center", m: 2 }}>
-				내 채널의 시청자들은 어떠한 다양한 면을 가지고 있을까요?{" "}
-			</Box>
-			<Box>
-				{Object.keys(mergedFeature).map((feature, key) => {
-					return (
-						<div key={key}>
-							<div>{feature}</div>
-							{mergedFeature[feature].map((element, key) => {
-								const isDisabled = mergedSelectFeature.includes(element)
-									? ""
-									: "disabled";
-								return (
-									<Button
-										sx={{ m: 2 }}
-										key={key}
-										variant="contained"
-										onClick={() => clickEle(feature, element)}
-										disabled={isDisabled}
-									>
-										{element}
+		<Dialog open={open} onClose={handleClose}>
+			<DialogContent p={2}>
+				<Typography gutterBottom><b style={{ textDecoration: 'underline' }}>{dimension}</b>에 추가할 특성을 적어보세요.</Typography>
+				<TextField
+					value={value}
+					onChange={(event) => {
+						setValue(event.target.value);
+					}}
+				/>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleClose}>닫기</Button>
+				<Button
+					variant="contained"
+					disabled={value.length === 0}
+					onClick={() => {
+						handleAdd(dimension, value)
+						setValue('')
+						handleClose()
+					}}>추가하기</Button>
+			</DialogActions>
+		</Dialog>
+	)
+}
+
+const SelectAttributes = ({
+	initValues,
+	onSelect,
+	readonly = false,
+	extendable = false,
+}) => {
+	const [dimensions, setDimensions] = useState(
+		Object.fromEntries(
+			Object.entries(features).map(([dimension, values]) => {
+				return [dimension, values.map(value => ({
+					value,
+					selected: initValues ? initValues[dimension] === value : false
+				}))]
+			})
+		)
+	);
+	const [targetDimension, setTargetDimension] = useState('')
+	const [addValueDialogOpen, setAddValueDialogOpen] = useState(false)
+
+	const addValues = (dimension, value) => {
+		setDimensions({
+			...dimensions,
+			[dimension]: [...dimensions[dimension].map(({ value }) => ({
+				value,
+				selected: false
+			})), { value, selected: true }]
+		})
+	}
+
+	const handleAddValueDialogClose = () => {
+		setAddValueDialogOpen(false)
+	}
+
+	useEffect(() => {
+		setDimensions(Object.fromEntries(
+			Object.entries(features).map(([dimension, values]) => {
+				return [dimension, values.map(value => ({
+					value,
+					selected: initValues ? initValues[dimension] === value : false
+				}))]
+			})
+		))
+	}, [initValues])
+
+	return (
+
+
+		<Stack spacing={2}>
+			{Object.entries(dimensions).map(([dimension, values]) => {
+				return (
+					<Stack key={dimension} spacing={1}>
+						<Typography>{dimension}</Typography>
+						<Stack direction={"row"} spacing={2} justifyContent={'space-between'}>
+							<DimensionToggleGroup
+								attributes={values.map(({ value }) => value)}
+								attribute={values.filter(({ selected }) => selected)[0]}
+								readonly={readonly}
+								onChange={(newAttribute) => {
+									const nextDim = {
+										...dimensions,
+										[dimension]: dimensions[dimension].map(({ value }) => ({
+											value,
+											selected: value === newAttribute
+										}))
+									}
+									setDimensions(nextDim)
+									onSelect(nextDim)
+								}}
+							/>
+							{extendable && (
+								<Stack spacing={0.5} direction={'row'} alignSelf={'center'}>
+									<Button color="primary" variant="contained" size="small">
+										제안받기
 									</Button>
-								);
-							})}
-						</div>
-					);
-				})}
-			</Box>
-			{/* {submittedEles.map((ele) => {
-				return <div> {ele}</div>;
-			})} */}
-			<Button LinkComponent={Link} to={`/${id}/result`}>
-				다음
-			</Button>
+									<Button color="primary" variant="contained" size="small" onClick={() => {
+										setTargetDimension(dimension)
+										setAddValueDialogOpen(true)
+									}}>
+										직접추가
+									</Button>
+								</Stack>
+							)}
+
+						</Stack>
+					</Stack>
+				)
+			})}
+			<AddValueDialog
+				open={addValueDialogOpen}
+				dimension={targetDimension}
+				handleClose={handleAddValueDialogClose}
+				handleAdd={addValues}
+			/>
 		</Stack>
 	);
 };

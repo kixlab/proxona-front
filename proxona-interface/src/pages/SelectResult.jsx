@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import { Stack, Button, Box } from "@mui/material";
+import { Stack, Button, Typography } from "@mui/material";
 import { dummy } from "../data/dummy";
+import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
+import { avatars } from "../data/avatar";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -25,6 +27,7 @@ const SelectResult = () => {
 	const { id } = useParams();
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
+	const [attribute, setAttribute] = useState(null)
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
@@ -32,29 +35,55 @@ const SelectResult = () => {
 	}, [profiles]);
 
 	return (
-		<div>
-			내 채널의 비디오는 각각 어떤 프록소나로부터 반응을 얻었을까요?
-			{Object.entries(filteredProfile).map(([key, items]) => (
-				<Stack key={key}>
-					{items.map((data, idx) => {
-						return (
-							<ProxonaProfile
-								key={idx}
-								index={data.index}
-								generated={data.generated}
-								board={true}
-								username={data.username}
-								summary={data.summary}
-								tags={data.tags}
-							/>
-						);
-					})}
+		<Stack
+			sx={{
+				height: "100%",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+			spacing={40 / 8}
+		>
+			<Stack alignItems={'center'}>
+				<Typography gutterBottom>
+					내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
+				</Typography>
+				<Typography variant="h6" gutterBottom>
+					내 채널의 대표적인 시청자를 눌러 특성을 확인해보세요.
+				</Typography>
+			</Stack>
+			<Stack direction={'row'} spacing={4}>
+				<SelectAttributes
+					initValues={attribute}
+					readonly={true}
+					extendable={false}
+				/>
+				<Stack alignItems={'stretch'} spacing={10 / 8}>
+					{Object.entries(filteredProfile).map(([key, items]) =>
+						items.map((data, idx) => {
+							return (
+								<ProxonaProfile
+									key={idx}
+									index={data.index}
+									generated={data.generated}
+									board={true}
+									username={data.username}
+									summary={data.summary}
+									avatarImg={avatars[data.index]}
+									componentProps={{
+										onClick: () => {
+											setAttribute(data.tags)
+										}
+									}}
+									// tags={data.tags}
+								/>
+							);
+						}
+
+						))}
 				</Stack>
-			))}
-			<Button LinkComponent={Link} to={`/${id}/persona`}>
-				다음
-			</Button>
-		</div>
+			</Stack>
+			<Button variant="contained" LinkComponent={Link} to={`/${id}/persona`}>다음</Button>
+		</Stack>
 	);
 };
 

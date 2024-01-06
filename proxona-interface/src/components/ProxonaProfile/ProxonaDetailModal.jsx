@@ -4,56 +4,43 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { ModalWrapper, CloseButton } from "../../pages/styles/DesignSystem";
 import Video from "./Video";
-import { Stack } from "@mui/material";
+import { Dialog, Stack, IconButton, Avatar } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import YouTube from "react-youtube";
 
 function ProxonaDetailModal() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const modalRef = useRef();
+	console.log(location)
+
 	const [videoIds, setVideoIds] = useState(["Zap4EGi88Jo", "u_8MEBiIFYg"]);
 
-	useEffect(() => {
-		const observerRefValue = modalRef.current;
-		disableBodyScroll(observerRefValue);
-		return () => {
-			if (observerRefValue) {
-				enableBodyScroll(observerRefValue);
-			}
-		};
-	}, []);
-
-	useEffect(() => {
-		// try {
-		// 	const response = axios.post("/videos", location.state.handleId, {
-		// 		headers: {
-		// 			"Content-Type": "application/json",
-		// 		},
-		// 	});
-		// 	if (response) {
-		// 		setVideoIds(response.video);
-		//setVideoIds(["Zap4EGi88Jo", "u_8MEBiIFYg", ...videoIds]);
-		// 	}
-		// } catch (e) {
-		// 	console.log(e);
-		// }
-	}, []);
+	const handleClose = () => {
+		navigate(location.state.previousLocation.pathname)
+	}
 
 	return (
-		<ModalWrapper>
+		<Dialog
+		open={true}
+		onClose={handleClose}
+		>
+			<IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
 			<Stack className="profile-detail-container">
-				<CloseButton
-					ref={modalRef}
-					onClick={() => navigate(location.state.previousLocation.pathname)}
-				>
-					<i class="bi bi-x-lg"></i>
-				</CloseButton>
 				<Stack className="header" padding={2}>
 					<div className="user-info">
-						<div className="user-face">
-							<i class="bi bi-emoji-smile"></i>
-						</div>
+						<Avatar variant="square" src={`/static/img/animal/${location.state.avatarImg}.png`}/>
 						<div className="user-name">{location.state.username}</div>
 					</div>
 				</Stack>
@@ -84,7 +71,7 @@ function ProxonaDetailModal() {
 					))}
 				</Stack>
 			</Stack>
-		</ModalWrapper>
+		</Dialog>
 	);
 }
 

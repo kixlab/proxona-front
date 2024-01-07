@@ -9,7 +9,7 @@ export const SignupForm = () => {
 		handleId: "",
 	});
 	const [signIn, setSignIn] = useState(false);
-	const port = "http://localhost:8000/api";
+	const port = "http://127.0.0.1:8000/"; //should be replaced to hosting address
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
@@ -21,14 +21,16 @@ export const SignupForm = () => {
 
 		try {
 			await axios
-				.post(port, formData, {
+				.get(port + "youtube_api/" + formData.handleId + "/channel/", {
 					headers: {
 						"Content-Type": "application/json",
 					},
 				})
 				.then((response) => {
-					setSignIn(true);
-					console.log("Success in response");
+					if (response.data[0].channel_handle == formData.handleId) {
+						setSignIn(true);
+						console.log("Success in response");
+					}
 					return;
 				});
 		} catch (error) {

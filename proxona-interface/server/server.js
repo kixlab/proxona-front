@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import axios from "axios";
 import { ChatOpenAI } from "langchain/chat_models/openai";
 import { HumanMessage } from "langchain/schema";
 

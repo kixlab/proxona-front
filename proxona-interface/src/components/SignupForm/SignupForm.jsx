@@ -9,7 +9,7 @@ export const SignupForm = () => {
 		handleId: "",
 	});
 	const [signIn, setSignIn] = useState(false);
-	const port = "http://127.0.0.1:8000/"; //should be replaced to hosting address
+	const port = "http://ec2-43-203-179-115.ap-northeast-2.compute.amazonaws.com:8000/"; //should be replaced to hosting address
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {

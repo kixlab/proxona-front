@@ -26,6 +26,7 @@ const IntroPage = () => {
 					},
 				})
 				.then((response) => {
+					console.log(response)
 					setInfo({
 						...info,
 						channel: response.data[0].channel_name,

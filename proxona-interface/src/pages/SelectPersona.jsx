@@ -7,6 +7,8 @@ import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
 
 const SelectPersona = ({extendable}) => {
 
+	const port = "http://43.203.179.115:8000/"; //should be replaced to hosting address
+	
 	const { id } = useParams();
 	return (
 		<Stack

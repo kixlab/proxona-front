@@ -13,6 +13,7 @@ export const SignupForm = () => {
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
+		setAlert(false);
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
@@ -29,17 +30,21 @@ export const SignupForm = () => {
 				.then((response) => {
 					if (response.data[0].channel_handle == formData.handleId) {
 						setSignIn(true);
+						setAlert(false);
 						console.log("Success in response");
+					} else {
+						setAlert(true);
 					}
 					return;
 				});
 		} catch (error) {
+			setAlert(true);
 			console.error("Error submitting form", error);
 		}
 	};
 
 	useEffect(() => {
-		if (signIn && formData.handleId) {
+		if (signIn && formData.handleId && !alert) {
 			navigate(`/${formData.handleId}`, {
 				state: { handleId: formData.handleId },
 			});
@@ -60,9 +65,7 @@ export const SignupForm = () => {
 					/>
 				</label>
 				<MainButton type="submit" value="Start"></MainButton>
-				{signIn && !formData.handleId && (
-					<div>Please provide valid handle id (e.g., @HCI) </div>
-				)}
+				{alert && <div>Please provide valid handle id (e.g., @HCI) </div>}
 			</form>
 		</div>
 	);

@@ -29,7 +29,7 @@ const DiscoverProxona = () => {
 		const dimval = {"성격특성" : "무심한", "구매특성" : "신중한"}
 		await axios
 			.post(
-				port + `youtube_api/${dimval}/create-persona-exp/`,
+				port + `youtube_api/${String(dimval)}/create-persona-exp/`,
 				JSON.stringify(selectedDimensionTrue),
 				{
 					headers: {

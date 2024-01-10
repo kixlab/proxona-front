@@ -12,6 +12,7 @@ import {
 	DialogContent,
 } from "@mui/material";
 import "../../pages/styles/index.css";
+import { features } from "../../data/dummy";
 
 const DimensionToggleGroup = ({
 	attributes,
@@ -37,16 +38,16 @@ const DimensionToggleGroup = ({
 					}
 					key={attr}
 				>
-					<span>
-						<ToggleButton value={attr} disabled={readonly}>
-							#
-							{attr.includes(")")
-								? attr.slice(0, attr.indexOf(")") + 1)
-								: attr.includes("-")
-								? attr.slice(0, attr.indexOf("-"))
-								: attr}
-						</ToggleButton>
-					</span>
+					{/* <span> */}
+					<ToggleButton value={attr} disabled={readonly}>
+						#
+						{attr.includes(")")
+							? attr.slice(0, attr.indexOf(")") + 1)
+							: attr.includes("-")
+							? attr.slice(0, attr.indexOf("-"))
+							: attr}
+					</ToggleButton>
+					{/* </span> */}
 				</Tooltip>
 			))}
 		</ToggleButtonGroup>

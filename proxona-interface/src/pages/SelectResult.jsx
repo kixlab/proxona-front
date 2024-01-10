@@ -29,7 +29,12 @@ const SelectResult = () => {
 	const { id } = useParams();
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
-	const [attribute, setAttribute] = useState(null);
+	const [attribute, setAttribute] = useState({
+		성격특성: ["비판적", "긍정적", "호기심 많은", "유머러스한"],
+		구매성향: ["가격 중시", "성능 중시", "디자인 중시", "브랜드 중시"],
+		구매경로: ["오프라인", "온라인", "SNS", "지인 추천"],
+		구매시기: ["매일", "매주", "매월", "계절마다"],
+	});
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");

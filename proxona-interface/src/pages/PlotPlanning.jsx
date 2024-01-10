@@ -14,7 +14,24 @@ import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
 
 function PlotPlanning() {
 	const { plotId } = useParams();
-	console.log(plotId);
+
+	const loadData = async (data) => {
+		try {
+			// await axios
+			// 	.get(port + `youtube_api/${location.state.handleId}/get-dim-val-set/`, {
+			// 		headers: { "Content-Type": "application/json" },
+			// 	})
+			// 	.then((response) => {
+			// 		setAttrubutes(response.data);
+			// 	});
+		} catch (error) {
+			console.error("Error submitting form", error);
+		}
+	};
+
+	useEffect(() => {
+		loadData();
+	}, []);
 
 	return (
 		<Stack height={1}>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { MainButton } from "./styles/DesignSystem";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/index.css";
+import { port } from "../data/port.js";
 import { Stack, Box, Button, Typography } from "@mui/material";
 import { PrimButton } from "./styles/DesignSystem";
 
@@ -15,7 +16,6 @@ const IntroPage = () => {
 		comment_count: "",
 	});
 	const navigate = useNavigate();
-	const port = "http://43.203.179.115:8000/"; //should be replaced to hosting address
 
 	const loadData = async () => {
 		try {
@@ -26,7 +26,6 @@ const IntroPage = () => {
 					},
 				})
 				.then((response) => {
-					console.log(response)
 					setInfo({
 						...info,
 						channel: response.data[0].channel_name,
@@ -41,7 +40,7 @@ const IntroPage = () => {
 
 	useEffect(() => {
 		loadData();
-	}, [info]);
+	}, []);
 
 	return (
 		<Stack sx={{ justifyContent: "center" }} className="signup_container">
@@ -57,7 +56,11 @@ const IntroPage = () => {
 				variant="contained"
 				sx={{ fontSize: 15, marginTop: 2 }}
 				className="more_button"
-				onClick={() => navigate(`/${info.handleId}/select`)}
+				onClick={() =>
+					navigate(`/${info.handleId}/select`, {
+						state: { handleId: location.state.handleId },
+					})
+				}
 			>
 				다음
 			</Button>

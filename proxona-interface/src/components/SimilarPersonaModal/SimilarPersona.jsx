@@ -6,7 +6,7 @@ import ProxonaProfile from "../ProxonaProfile/ProxonaProfile";
 import "./SimilarPersona.css";
 import { ModalWrapper, PrimButton } from "../../pages/styles/DesignSystem";
 import { Button, Dialog, Stack, Typography, IconButton } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import { avatars } from "../../data/avatar";
 
 const SimilarPersona = () => {
@@ -44,35 +44,29 @@ const SimilarPersona = () => {
 	});
 
 	const handleClose = () => {
-		navigate(location.state.previousLocation.pathname)
-	}
+		navigate(location.state.previousLocation.pathname);
+	};
 
 	const addToList = () => {
 		// add generated proxona to list
-		handleClose()	
-	}
+		handleClose();
+	};
 
 	return (
-		<Dialog 
-			open={true}
-			onClose={handleClose}
+		<Dialog open={true} onClose={handleClose}>
+			<IconButton
+				aria-label="close"
+				onClick={handleClose}
+				sx={{
+					position: "absolute",
+					right: 8,
+					top: 8,
+					color: (theme) => theme.palette.grey[500],
+				}}
 			>
-				<IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-			<Stack
-				direction="column"
-				className="container similarPerona_container"
-			>
+				<CloseIcon />
+			</IconButton>
+			<Stack direction="column" className="container similarPerona_container">
 				<Typography variant="h6">Get similar one</Typography>
 				<Stack
 					direction="row"
@@ -114,18 +108,16 @@ const SimilarPersona = () => {
 					justifyContent="flex-end"
 					paddingTop={2}
 				>
-					<Button variant="outlined"
+					<Button
+						variant="outlined"
 						onClick={() => generateProfile(location.state.key)}
 					>
 						Try another one
 					</Button>
 
-					<Button variant="contained"
-						onClick={addToList}
-					>
+					<Button variant="contained" onClick={addToList}>
 						Add to list
 					</Button>
-
 				</Stack>
 			</Stack>
 		</Dialog>

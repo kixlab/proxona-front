@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { features, features2 } from "../../data/dummy";
 import {
 	Stack,
+	Tooltip,
 	Button,
-	Box,
 	Typography,
 	ToggleButtonGroup,
 	ToggleButton,
@@ -28,10 +27,27 @@ const DimensionToggleGroup = ({
 			value={attribute?.value}
 			exclusive
 			onChange={handleChange}
-			disabled={readonly}
 		>
 			{attributes.map((attr) => (
-				<ToggleButton value={attr}>#{attr}</ToggleButton>
+				<Tooltip
+					title={
+						attr.split("-").length - 1 == 1 && attr.includes("-")
+							? attr.slice(attr.indexOf("-") + 1)
+							: attr
+					}
+					key={attr}
+				>
+					<span>
+						<ToggleButton value={attr} disabled={readonly}>
+							#
+							{attr.includes(")")
+								? attr.slice(0, attr.indexOf(")") + 1)
+								: attr.includes("-")
+								? attr.slice(0, attr.indexOf("-"))
+								: attr}
+						</ToggleButton>
+					</span>
+				</Tooltip>
 			))}
 		</ToggleButtonGroup>
 	);
@@ -73,6 +89,7 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 };
 
 const SelectAttributes = ({
+	attributes,
 	initValues,
 	onSelect,
 	readonly = false,
@@ -80,7 +97,7 @@ const SelectAttributes = ({
 }) => {
 	const [dimensions, setDimensions] = useState(
 		Object.fromEntries(
-			Object.entries(features).map(([dimension, values]) => {
+			Object.entries(attributes).map(([dimension, values]) => {
 				return [
 					dimension,
 					values.map((value) => ({
@@ -114,7 +131,7 @@ const SelectAttributes = ({
 	useEffect(() => {
 		setDimensions(
 			Object.fromEntries(
-				Object.entries(features).map(([dimension, values]) => {
+				Object.entries(attributes).map(([dimension, values]) => {
 					return [
 						dimension,
 						values.map((value) => ({

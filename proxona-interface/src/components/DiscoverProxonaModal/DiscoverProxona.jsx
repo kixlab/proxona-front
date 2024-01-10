@@ -20,14 +20,16 @@ const DiscoverProxona = () => {
 	};
 
 	const handleSelect = (dimension) => {
+		console.log(selectedDimensionTrue,"selected True!")
 		setSelectedDimension(dimension);
 	};
 
 	const loadPersona = async () => {
-		console.log(selectedDimensionTrue,"selected True!")
+		// console.log(selectedDimensionTrue,"selected True!")
+		const dimval = {"성격특성" : "무심한", "구매특성" : "신중한"}
 		await axios
 			.post(
-				port + `youtube_api/${id}/create-persona-exp/`,
+				port + `youtube_api/${dimval}/create-persona-exp/`,
 				JSON.stringify(selectedDimensionTrue),
 				{
 					headers: {

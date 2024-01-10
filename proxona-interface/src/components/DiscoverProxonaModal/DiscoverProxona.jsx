@@ -24,6 +24,7 @@ const DiscoverProxona = () => {
 	};
 
 	const loadPersona = async () => {
+		console.log(selectedDimensionTrue,"selected True!")
 		await axios
 			.post(
 				port + `youtube_api/${id}/create-persona-exp/`,

@@ -74,7 +74,13 @@ function PersonaCreation() {
 				justifyContent={"center"}
 			>
 				<Stack direction="row" maxWidth={1440} width={1} py={40 / 8}>
-					<Stack flex={7} flexShrink={0} height={"100%"} overflow={"auto"}>
+					<Stack
+						flex={7}
+						paddingRight={"50px"}
+						flexShrink={0}
+						height={"100%"}
+						overflow={"auto"}
+					>
 						<ChatInterface />
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>

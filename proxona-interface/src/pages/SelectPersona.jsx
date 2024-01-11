@@ -17,7 +17,8 @@ import { initAttribute } from "../redux/attributeList.js";
 
 const SelectPersona = ({ extendable }) => {
 	const location = useLocation();
-	const [attributes, setAttrubutes] = useState(null);
+	// const [attributes, setAttrubutes] = useState(null);
+	const [data, setData] = useState(false);
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const attributeList = useSelector((state) => state.attributeList.attributes);
@@ -29,7 +30,8 @@ const SelectPersona = ({ extendable }) => {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
-					setAttrubutes(response.data);
+					// setAttrubutes(response.data);
+					setData(true);
 					dispatch(initAttribute(response.data));
 				});
 		} catch (error) {
@@ -39,8 +41,7 @@ const SelectPersona = ({ extendable }) => {
 	useEffect(() => {
 		loadData();
 	}, []);
-
-	console.log(attributeList);
+	// console.log(attributes);
 
 	return (
 		<Container
@@ -64,9 +65,9 @@ const SelectPersona = ({ extendable }) => {
 						내 채널의 시청자들의 다양한 특성을 확인해보세요.
 					</Typography>
 				</Stack>
-				{attributes && (
+				{data && (
 					<SelectAttributes
-						attributes={attributes}
+						attributes={attributeList}
 						readonly={true}
 						extendable={false}
 					/>

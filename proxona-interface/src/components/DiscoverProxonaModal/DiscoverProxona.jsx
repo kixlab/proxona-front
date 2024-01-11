@@ -11,6 +11,7 @@ import { addPersona } from "../../redux/personaList.js";
 const DiscoverProxona = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { id } = useParams();
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
@@ -26,19 +27,10 @@ const DiscoverProxona = () => {
 
 	const loadPersona = async () => {
 		await axios
-			.post(
-				port +
-					`youtube_api/${JSON.stringify(
-						selectedDimensionTrue
-					)}/create-persona-exp/`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			)
+			.post(port + `youtube_api/${id}/create-persona-exp/`, {
+				dim_val: selectedDimensionTrue,
+			})
 			.then((response) => {
-				console.log(response.data);
 				dispatch(addPersona(response.data));
 				handleClose();
 			})

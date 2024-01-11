@@ -11,27 +11,35 @@ import {
 } from "@mui/material";
 import FeedbackBoard from "../components/FeedbackBoard/FeedbackBoard";
 import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
+import { port } from "../data/port";
 
-function PlotPlanning() {
-	const { plotId } = useParams();
+function PlotPlanning({ topic, draft }) {
+	// const { plotId } = useParams();
+	const { id } = useParams();
+	const [feedbackForm, setFeedbackForm] = useState({
+		text: "",
+		mode: "",
+		proxona: "",
+		video_topic: "",
+	});
 
-	const loadData = async (data) => {
-		try {
-			// await axios
-			// 	.get(port + `youtube_api/${location.state.handleId}/get-dim-val-set/`, {
-			// 		headers: { "Content-Type": "application/json" },
-			// 	})
-			// 	.then((response) => {
-			// 		setAttrubutes(response.data);
-			// 	});
-		} catch (error) {
-			console.error("Error submitting form", error);
-		}
+	const loadFeedback = async () => {
+		await axios
+			.post(
+				port + `youtube_api/${id}/get-feedback-on-plot/`,
+				JSON.stringify(feedbackForm)
+			)
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	useEffect(() => {
-		loadData();
-	}, []);
+		loadFeedback();
+	}, [feedbackForm]);
 
 	return (
 		<Stack height={1}>
@@ -45,7 +53,12 @@ function PlotPlanning() {
 						받아보세요.{" "}
 					</Typography>
 					<Paper sx={{ flex: 1, bgcolor: "#24292F" }} elevation={4}>
-						<FeedbackBoard />
+						<FeedbackBoard
+							topic={topic}
+							draft={draft}
+							setFeedbackForm={setFeedbackForm}
+							loadFeedback={loadFeedback}
+						/>
 					</Paper>
 				</Stack>
 				<Stack flex={1} p={2}>

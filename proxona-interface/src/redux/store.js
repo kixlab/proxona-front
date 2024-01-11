@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import personaList from "./personaList";
+import attributeList from "./attributeList";
 
 const store = configureStore({
 	reducer: {
 		persona: personaList,
+		attributeList: attributeList,
 	},
 });
 

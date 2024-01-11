@@ -12,6 +12,7 @@ function Feedback() {
 	const [topic, setTopic] = useState("");
 	const [plot, setPlot] = useState(null);
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
+	const [response, getResponse] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -37,7 +38,6 @@ function Feedback() {
 	const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 	const getDraft = async (topic, callback) => {
-		console.log(topic);
 		try {
 			setIsDraftLoading(true);
 			await sleep(1000);
@@ -46,18 +46,6 @@ function Feedback() {
 			 * id, topic, body
 			 */
 
-			// const res = { data: { id: 4, topic, body: "" } };
-			// const res = await axios.post(
-			// 	port + `youtube_api/${handleId}/plot-draft/`,
-			// 	{
-			// 		topic: topic,
-			// 	},
-			// 	{
-			// 		headers: {
-			// 			"Content-Type": "application/json",
-			// 		},
-			// 	}
-			// );
 			const res = await axios.post(
 				port + `youtube_api/${handleId}/plot-draft/`,
 				{
@@ -65,7 +53,6 @@ function Feedback() {
 				}
 			);
 			if (res) {
-				console.log(res);
 				setPlot(res.data);
 				callback();
 			}
@@ -106,14 +93,17 @@ function Feedback() {
 					<FeedbackDraft
 						channel={handleId}
 						topic={topic}
-						draft={plot?.body}
-						goToNext={() => navigate(`editor/${plot.id}`)}
-						goToPrev={() => navigate(`/feedback/${handleId}`)}
+						draft={plot?.draft}
+						goToNext={() => navigate(`editor/${handleId}`)}
+						goToPrev={() => navigate(`/${handleId}/feedback`)}
 						proxonas={proxonas}
 					/>
 				}
 			/>
-			<Route path="/editor/:plotId" element={<PlotPlanning />} />
+			<Route
+				path="/editor/:plotId"
+				element={<PlotPlanning topic={topic} draft={plot?.draft} />}
+			/>
 		</Routes>
 	);
 }

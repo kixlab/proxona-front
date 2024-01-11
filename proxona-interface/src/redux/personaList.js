@@ -4,7 +4,7 @@ import { dummy } from "../data/dummy";
 const personaListSlice = createSlice({
 	name: "personaList",
 	initialState: {
-		personas: [],
+		personas: dummy,
 	},
 	reducers: {
 		addPersona: (state, action) => {

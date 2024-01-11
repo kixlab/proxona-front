@@ -42,6 +42,7 @@ function PersonaCreation() {
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
+
 		setFilteredProfile(groupedData);
 	}, [profiles]);
 
@@ -82,64 +83,65 @@ function PersonaCreation() {
 						</Typography>
 
 						<Stack spacing={20 / 8}>
-							{Object.entries(filteredProfile).map(([key, items]) => (
-								<Stack
-									key={key}
-									className={`${key}__persona`}
-									onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
-									onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
-								>
-									{items.map((data, idx) => {
-										return (
-											<Stack
-												ml={data.generated ? 2 : 0}
-												flexDirection={"row"}
-												gap={10 / 8}
-											>
-												<ProxonaProfile
-													key={idx}
-													index={data.index}
-													username={data.username}
-													summary={data.summary}
-													tags={data.tags}
-													avatarImg={avatars[data.index]}
-													componentProps={{
-														LinkComponent: Link,
-														to: data.username,
-														state: {
-															avatarImg: avatars[data.index],
-															previousLocation: location,
-															username: data.username,
-															summary: data.summary,
-															tags: data.tags,
-														},
-													}}
-												/>
-												{isHovering.key == key &&
-												isHovering.ishover &&
-												!data.generated ? (
-													<Button
-														sx={{ alignSelf: "flex-start" }}
-														LinkComponent={Link}
-														to={"similar/" + key}
-														variant="contained"
-														state={{
-															previousLocation: location,
-															key: key,
-															items: items,
+							{filteredProfile &&
+								Object.entries(filteredProfile).map(([key, items]) => (
+									<Stack
+										key={key}
+										className={`${key}__persona`}
+										onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
+										onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
+									>
+										{items.map((data, idx) => {
+											return (
+												<Stack
+													ml={data.generated ? 2 : 0}
+													flexDirection={"row"}
+													gap={10 / 8}
+												>
+													<ProxonaProfile
+														key={idx}
+														index={data.index}
+														username={data.username}
+														summary={data.summary}
+														tags={data.tags}
+														avatarImg={avatars[data.index]}
+														componentProps={{
+															LinkComponent: Link,
+															to: data.username,
+															state: {
+																avatarImg: avatars[data.index],
+																previousLocation: location,
+																username: data.username,
+																summary: data.summary,
+																tags: data.tags,
+															},
 														}}
-													>
-														Add similar one
-														<i class="bi bi-plus"></i>
-													</Button>
-												) : (
-													""
-												)}
-											</Stack>
-										);
-									})}
-								</Stack>
-							))}
+													/>
+													{isHovering.key == key &&
+													isHovering.ishover &&
+													!data.generated ? (
+														<Button
+															sx={{ alignSelf: "flex-start" }}
+															LinkComponent={Link}
+															to={"similar/" + key}
+															variant="contained"
+															state={{
+																previousLocation: location,
+																key: key,
+																items: items,
+															}}
+														>
+															Add similar one
+															<i class="bi bi-plus"></i>
+														</Button>
+													) : (
+														""
+													)}
+												</Stack>
+											);
+										})}
+									</Stack>
+								))}
 						</Stack>
 					</Stack>
 				</Stack>

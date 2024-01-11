@@ -11,12 +11,10 @@ import { addPersona } from "../../redux/personaList.js";
 const DiscoverProxona = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	// const { id } = useParams();
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
 	const dispatch = useDispatch();
-	const personaList = useSelector((state) => state.personaList);
 
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
@@ -33,7 +31,6 @@ const DiscoverProxona = () => {
 					`youtube_api/${JSON.stringify(
 						selectedDimensionTrue
 					)}/create-persona-exp/`,
-				// JSON.stringify(selectedDimensionTrue),
 				{
 					headers: {
 						"Content-Type": "application/json",
@@ -54,7 +51,7 @@ const DiscoverProxona = () => {
 			});
 	};
 
-	console.log(personaList);
+	// console.log(personaList);
 	useEffect(() => {
 		if (selectedDimension) {
 			Object.entries(selectedDimension).forEach((values) => {
@@ -78,7 +75,7 @@ const DiscoverProxona = () => {
 		: true;
 
 	return (
-		<Dialog open={true} onClose={handleClose} sx={{ padding: "100px" }}>
+		<Dialog open={true} onClose={handleClose} sx={{ padding: "90px" }}>
 			<DialogContent>
 				{/* <SelectPersona extendable={true} /> */}
 				<SelectAttributes

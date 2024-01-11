@@ -12,11 +12,15 @@ import {
 // import "./styles/index.css";
 import axios from "axios";
 import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
+import { useDispatch, useSelector } from "react-redux";
+import { initAttribute } from "../redux/attributeList.js";
 
 const SelectPersona = ({ extendable }) => {
 	const location = useLocation();
 	const [attributes, setAttrubutes] = useState(null);
 	const { id } = useParams();
+	const dispatch = useDispatch();
+	const attributeList = useSelector((state) => state.attributeList.attributes);
 
 	const loadData = async () => {
 		try {
@@ -26,15 +30,17 @@ const SelectPersona = ({ extendable }) => {
 				})
 				.then((response) => {
 					setAttrubutes(response.data);
+					dispatch(initAttribute(response.data));
 				});
 		} catch (error) {
 			console.error("Error submitting form", error);
 		}
 	};
-
 	useEffect(() => {
 		loadData();
 	}, []);
+
+	console.log(attributeList);
 
 	return (
 		<Container
@@ -58,7 +64,6 @@ const SelectPersona = ({ extendable }) => {
 						내 채널의 시청자들의 다양한 특성을 확인해보세요.
 					</Typography>
 				</Stack>
-
 				{attributes && (
 					<SelectAttributes
 						attributes={attributes}

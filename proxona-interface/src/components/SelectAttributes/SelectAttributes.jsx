@@ -12,6 +12,11 @@ import {
 	DialogContent,
 } from "@mui/material";
 import "../../pages/styles/index.css";
+import axios from "axios";
+import { port } from "../../data/port";
+import { useDispatch, useSelector } from "react-redux";
+import { addAttribute } from "../../redux/attributeList.js";
+import { useParams } from "react-router-dom";
 
 // function CustomToggleButton(props) {
 // 	return <ToggleButton {...props} />;
@@ -31,6 +36,8 @@ const DimensionToggleGroup = ({
 			value={attribute?.value}
 			exclusive
 			onChange={handleChange}
+			// fullWidth="true"
+			size="small"
 		>
 			{attributes.map((attr) => (
 				<ToggleButton value={attr} disabled={readonly}>
@@ -56,6 +63,23 @@ const DimensionToggleGroup = ({
 
 const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 	const [value, setValue] = useState("");
+	// const attributeList = useSelector((state) => state.attributeList.attributes);
+	// const dispatch = useDispatch();
+	const { id } = useParams();
+
+	const addNewAtt = async () => {
+		try {
+			await axios.post(
+				port + `youtube_api/${id}/add-new-value/`,
+				JSON.stringify({
+					dimension: dimension,
+					value: value,
+				})
+			);
+		} catch (error) {
+			console.error("Error submitting form", error);
+		}
+	};
 
 	return (
 		<Dialog open={open} onClose={handleClose}>
@@ -79,6 +103,7 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 					onClick={() => {
 						handleAdd(dimension, value);
 						setValue("");
+						addNewAtt();
 						handleClose();
 					}}
 				>
@@ -129,7 +154,9 @@ const SelectAttributes = ({
 		setAddValueDialogOpen(false);
 	};
 
-	const handleSuggest = () => {};
+	const handleSuggest = () => {
+		// axios.get("");
+	};
 
 	useEffect(() => {
 		setDimensions(
@@ -148,12 +175,13 @@ const SelectAttributes = ({
 	}, [initValues]);
 
 	return (
-		<Stack spacing={2}>
+		<Stack spacing={5}>
 			{Object.entries(dimensions).map(([dimension, values]) => {
 				return (
 					<Stack key={dimension} spacing={1}>
 						<Typography>{dimension}</Typography>
 						<Stack
+							sx={{ width: "100%" }}
 							direction={"row"}
 							spacing={2}
 							justifyContent={"space-between"}

@@ -51,6 +51,7 @@ export default function FeedbackBoard({ topic, draft, setFeedbackForm }) {
 
 	const handleAction = async (actionType, proxona, content) => {
 		await sleep(3000);
+
 		setFeedbackForm({
 			mode: actionType,
 			video_topic: "sdfsdf",

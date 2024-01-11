@@ -16,25 +16,33 @@ import { port } from "../data/port";
 function PlotPlanning({ topic, draft }) {
 	// const { plotId } = useParams();
 	const { id } = useParams();
-	const [feedbackForm, setFeedbackForm] = useState({
-		text: "",
-		mode: "",
-		proxona: "",
-		video_topic: "",
-	});
+	const [feedbackForm, setFeedbackForm] = useState(null);
+	const [feedbackHistory, setFeedbackHistory] = useState([]);
 
 	const loadFeedback = async () => {
-		await axios
-			.post(
-				port + `youtube_api/${id}/get-feedback-on-plot/`,
-				JSON.stringify(feedbackForm)
-			)
-			.then((response) => {
-				console.log(response);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		if (feedbackForm) {
+			console.log(feedbackForm);
+
+			await axios
+				.post(port + `youtube_api/${id}/get-feedback-on-plot/`, {
+					mode: feedbackForm.mode,
+					video_topic: feedbackForm.video_topic,
+					proxona: feedbackForm.proxona,
+					text: feedbackForm.text,
+				})
+				.then((response) => {
+					setFeedbackHistory(...feedbackHistory, {
+						proxona: feedbackForm.proxona,
+						feedback: response.data.feedback,
+						text: feedbackForm.text,
+						video_topic: feedbackForm.video_topic,
+						mode: feedbackForm.mode,
+					});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 	};
 
 	useEffect(() => {

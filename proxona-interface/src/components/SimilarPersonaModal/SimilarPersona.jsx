@@ -26,15 +26,10 @@ const SimilarPersona = () => {
 
 	const generateProfile = useCallback(async (key) => {
 		try {
-			const res = await axios.post(
-				"http://localhost:8000/persona",
-				{ config: "similar", index: key },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
+			const res = await axios.post("http://localhost:8000/persona/", {
+				config: "similar",
+				index: key,
+			});
 			if (res) {
 				setGenerated(res.data[0]);
 			}

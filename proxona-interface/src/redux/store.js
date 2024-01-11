@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import personaList from "./personaList";
 import attributeList from "./attributeList";
+import plotHistory from "./plotHistory";
 
 const store = configureStore({
 	reducer: {
 		persona: personaList,
 		attributeList: attributeList,
+		plotHistory: plotHistory,
 	},
 });
 

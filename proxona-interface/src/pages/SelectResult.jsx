@@ -29,35 +29,28 @@ const SelectResult = () => {
 	const { id } = useParams();
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
-	const [attribute, setAttribute] = useState({
-		성격특성: ["비판적", "긍정적", "호기심 많은", "유머러스한"],
-		구매성향: ["가격 중시", "성능 중시", "디자인 중시", "브랜드 중시"],
-		구매경로: ["오프라인", "온라인", "SNS", "지인 추천"],
-		구매시기: ["매일", "매주", "매월", "계절마다"],
-	});
+	const [attribute, setAttribute] = useState({});
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
 		setFilteredProfile(groupedData);
 	}, [profiles]);
 
-	// const loadData = async () => {
-	// 	try {
-	// 		await axios
-	// 			.get(port + `youtube_api/${id}/get-dim-val-set/`, {
-	// 				headers: { "Content-Type": "application/json" },
-	// 			})
-	// 			.then((response) => {
-	// 				setAttribute(response.data);
-	// 			});
-	// 	} catch (error) {
-	// 		console.error("Error submitting form", error);
-	// 	}
-	// };
+	const loadData = async () => {
+		try {
+			await axios
+				.post(port + `youtube_api/${id}/create-persona-exp/`)
+				.then((response) => {
+					setAttribute(response.data);
+				});
+		} catch (error) {
+			console.error("Error submitting form", error);
+		}
+	};
 
-	// useEffect(() => {
-	// 	loadData();
-	// }, []);
+	useEffect(() => {
+		loadData();
+	}, []);
 
 	return (
 		<Stack

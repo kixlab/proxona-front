@@ -12,7 +12,10 @@ import {
 	DialogContent,
 } from "@mui/material";
 import "../../pages/styles/index.css";
-import { features } from "../../data/dummy";
+
+// function CustomToggleButton(props) {
+// 	return <ToggleButton {...props} />;
+// }
 
 const DimensionToggleGroup = ({
 	attributes,
@@ -30,25 +33,22 @@ const DimensionToggleGroup = ({
 			onChange={handleChange}
 		>
 			{attributes.map((attr) => (
-				<Tooltip
-					title={
-						attr.split("-").length - 1 == 1 && attr.includes("-")
-							? attr.slice(attr.indexOf("-") + 1)
-							: attr
-					}
-					key={attr}
-				>
-					{/* <span> */}
-					<ToggleButton value={attr} disabled={readonly}>
-						#
-						{attr.includes(")")
-							? attr.slice(0, attr.indexOf(")") + 1)
-							: attr.includes("-")
-							? attr.slice(0, attr.indexOf("-"))
-							: attr}
-					</ToggleButton>
-					{/* </span> */}
-				</Tooltip>
+				<ToggleButton value={attr} disabled={readonly}>
+					#
+					{attr.includes(")")
+						? attr.slice(0, attr.indexOf(")") + 1)
+						: attr.includes("-")
+						? attr.slice(0, attr.indexOf("-"))
+						: attr}
+					<Tooltip
+						title={
+							attr.split("-").length - 1 == 1 && attr.includes("-")
+								? attr.slice(attr.indexOf("-") + 1)
+								: attr
+						}
+						key={attr}
+					/>
+				</ToggleButton>
 			))}
 		</ToggleButtonGroup>
 	);
@@ -129,6 +129,8 @@ const SelectAttributes = ({
 		setAddValueDialogOpen(false);
 	};
 
+	const handleSuggest = () => {};
+
 	useEffect(() => {
 		setDimensions(
 			Object.fromEntries(
@@ -174,7 +176,12 @@ const SelectAttributes = ({
 							/>
 							{extendable && (
 								<Stack spacing={0.5} direction={"row"} alignSelf={"center"}>
-									<Button color="primary" variant="contained" size="small">
+									<Button
+										color="primary"
+										variant="contained"
+										size="small"
+										onClick={() => handleSuggest()}
+									>
 										제안받기
 									</Button>
 									<Button

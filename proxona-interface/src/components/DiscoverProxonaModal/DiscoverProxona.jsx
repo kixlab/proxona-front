@@ -5,15 +5,18 @@ import { port } from "../../data/port";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import SelectAttributes from "../SelectAttributes/SelectAttributes";
+import { useDispatch, useSelector } from "react-redux";
+import { addPersona } from "../../redux/personaList.js";
 
 const DiscoverProxona = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-
-	const { id } = useParams();
+	// const { id } = useParams();
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
+	const dispatch = useDispatch();
+	const personaList = useSelector((state) => state.personaList);
 
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
@@ -38,7 +41,8 @@ const DiscoverProxona = () => {
 				}
 			)
 			.then((response) => {
-				console.log(response);
+				console.log(response.data);
+				dispatch(addPersona(response.data));
 				handleClose();
 			})
 			.catch((error) => {
@@ -50,6 +54,7 @@ const DiscoverProxona = () => {
 			});
 	};
 
+	console.log(personaList);
 	useEffect(() => {
 		if (selectedDimension) {
 			Object.entries(selectedDimension).forEach((values) => {

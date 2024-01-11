@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -70,9 +70,9 @@ root.render(
 			<>
 				<CssBaseline />
 				<GlobalStyles></GlobalStyles>
-				{/* <Provider store={store}> */}
-				<RouterProvider router={router} />
-				{/* </Provider> */}
+				<Provider store={store}>
+					<RouterProvider router={router} />
+				</Provider>
 			</>
 		</ThemeProvider>
 	</React.StrictMode>

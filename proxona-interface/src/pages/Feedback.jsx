@@ -47,15 +47,21 @@ function Feedback() {
 			 */
 
 			// const res = { data: { id: 4, topic, body: "" } };
+			// const res = await axios.post(
+			// 	port + `youtube_api/${handleId}/plot-draft/`,
+			// 	{
+			// 		topic: topic,
+			// 	},
+			// 	{
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 		},
+			// 	}
+			// );
 			const res = await axios.post(
 				port + `youtube_api/${handleId}/plot-draft/`,
 				{
 					topic: topic,
-				},
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
 				}
 			);
 			if (res) {

@@ -4,6 +4,7 @@ import axios from "axios";
 import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
 import { FeedbackDraft } from "../components/FeedbackDraft/FeedbackDraft";
 import PlotPlanning from "./PlotPlanning";
+import { port } from "../data/port";
 
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
@@ -36,6 +37,7 @@ function Feedback() {
 	const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 	const getDraft = async (topic, callback) => {
+		console.log(topic);
 		try {
 			setIsDraftLoading(true);
 			await sleep(1000);
@@ -44,18 +46,20 @@ function Feedback() {
 			 * id, topic, body
 			 */
 
-			const res = { data: { id: 4, topic, body: "" } };
-
-			// const res = await axios.post(
-			// 	`http://localhost:8000/handle/${handleId}/plot`,
-			// 	{ topic },
-			// 	{
-			// 		headers: {
-			// 			"Content-Type": "application/json",
-			// 		},
-			// 	}
-			// );
+			// const res = { data: { id: 4, topic, body: "" } };
+			const res = await axios.post(
+				port + `youtube_api/${handleId}/plot-draft/`,
+				{
+					topic: topic,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
 			if (res) {
+				console.log(res);
 				setPlot(res.data);
 				callback();
 			}

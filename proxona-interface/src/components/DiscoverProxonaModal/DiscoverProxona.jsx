@@ -20,16 +20,16 @@ const DiscoverProxona = () => {
 	};
 
 	const handleSelect = (dimension) => {
-		console.log(selectedDimensionTrue,"selected True!")
 		setSelectedDimension(dimension);
 	};
 
 	const loadPersona = async () => {
-		// console.log(selectedDimensionTrue,"selected True!")
-		// const dimval = selectedDimensionTrue
 		await axios
 			.post(
-				port + `youtube_api/${JSON.stringify(selectedDimensionTrue)}/create-persona-exp/`,
+				port +
+					`youtube_api/${JSON.stringify(
+						selectedDimensionTrue
+					)}/create-persona-exp/`,
 				// JSON.stringify(selectedDimensionTrue),
 				{
 					headers: {

@@ -52,6 +52,14 @@ function Feedback() {
 				{
 					topic: topic,
 				},
+
+				// `${port}youtube_api/${handleId}/plot-draft/`, // `port`에 슬래시가 포함되어 있는지 확인
+				// { topic: topic },
+				// {
+				//   headers: {
+				// 	"Content-Type": "application/json",
+				//   },
+
 				{
 					headers: {
 						"Content-Type": "application/json",

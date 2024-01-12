@@ -50,8 +50,7 @@ function ProxonaProfile({ avatarImg, username, summary, tags, componentProps, di
 					<Typography variant="h6">{username}</Typography>
 					<Typography paragraph>{summary}</Typography>
 					<Stack direction={'row'} flexWrap={'wrap'} gap={10/8}>
-						{tags && Object.values(tags).map((tag) => {
-							// return <div key={tag}>{tag}</div>;
+						{tags && tags.map((tag) => tag['value']).map((tag) => {
 							return <Chip label={`#${tag}`} color="primary" size="small"/>
 						})}
 					</Stack>

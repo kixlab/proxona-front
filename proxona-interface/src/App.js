@@ -1,32 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
 import PersonaCreation from "./pages/PersonaCreation.jsx";
-import { Outlet } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
-import { createTheme } from "@mui/material";
-import { darkTheme } from "./pages/styles/Themes.jsx";
+import { Outlet, useParams } from "react-router-dom";
+import axios from "axios";
+import { port } from "./data/port.js";
 
 function App() {
-	// const darkTheme = createTheme({
-	//     palette: {
-	// 		mode: 'dark',
-	// 		primary: {
-	// 		  main: '#6d53d3',
-	// 		},
-	// 		secondary: {
-	// 		  main: '#f50057',
-	// 		},
-	// 	  },
-	//   });
+	const { id } = useParams();
+	const [proxonas, setProxonas] = useState([])
+
+	const loadProxona = async () => {
+		try {
+			await axios.get(port + `youtube_api/${id}/proxona/`)
+			.then((response) => {
+				setProxonas(response.data);
+			})
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		} 
+	}
+
+	useEffect(() => {
+		loadProxona();
+	}, [])
+
+	const onCreateProxona = newProxona => {
+		setProxonas([...proxonas, newProxona])
+	}
 
 	return (
 		<>
-			<Outlet />
-			{/* <ThemeProvider theme={darkTheme}> */}
-			<PersonaCreation></PersonaCreation>
-			{/* </ThemeProvider> */}
+			<Outlet context={{
+				proxonas,
+				onCreateProxona
+			}}/>
+			<PersonaCreation
+				proxonas={proxonas}
+				onCreateProxona={onCreateProxona}
+			/>
 		</>
 	);
 }

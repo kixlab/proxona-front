@@ -29,6 +29,7 @@ const SelectResult = () => {
 	const { id } = useParams();
 	const [profiles, setProfiles] = useState(dummy); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
+	const [attributes, setAttributes] = useState({});
 	const [attribute, setAttribute] = useState({});
 
 	useEffect(() => {
@@ -36,20 +37,46 @@ const SelectResult = () => {
 		setFilteredProfile(groupedData);
 	}, [profiles]);
 
-	const loadData = async () => {
+	// const loadData = async () => {
+	// 	try {
+	// 		await axios
+	// 			.post(port + `youtube_api/${id}/create-persona-exp/`)
+	// 			.then((response) => {
+	// 				setAttribute(response.data);
+	// 			});
+	// 	} catch (error) {
+	// 		console.error("Error submitting form", error);
+	// 	}
+	// };
+
+	const loadAttr = async () => {
 		try {
 			await axios
-				.post(port + `youtube_api/${id}/create-persona-exp/`)
+				.get(port + `youtube_api/${id}/get-dim-val-set/`, {
+					headers: { "Content-Type": "application/json" },
+				})
 				.then((response) => {
-					setAttribute(response.data);
+					setAttributes(response.data);
 				});
 		} catch (error) {
 			console.error("Error submitting form", error);
 		}
 	};
 
+	const loadProxona = async () => {
+		try {
+			await axios.get(port + `youtube_api/${id}/proxona/`)
+			.then((response) => {
+				setProfiles(response.data);
+			})
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		} 
+	}
+
 	useEffect(() => {
-		loadData();
+		loadAttr();
+		loadProxona();
 	}, []);
 
 	return (
@@ -72,6 +99,7 @@ const SelectResult = () => {
 			<Stack direction={"row"} spacing={4}>
 				<SelectAttributes
 					initValues={attribute}
+					attributes={attributes}
 					readonly={true}
 					extendable={false}
 				/>
@@ -81,18 +109,20 @@ const SelectResult = () => {
 							return (
 								<ProxonaProfile
 									key={idx}
-									index={data.index}
+									index={data.id}
 									generated={data.generated}
 									board={true}
-									username={data.username}
-									summary={data.summary}
-									avatarImg={avatars[data.index]}
+									username={data.name}
+									summary={data.description}
+									avatarImg={avatars[data.id]}
 									componentProps={{
 										onClick: () => {
-											setAttribute(data.tags);
+											setAttribute(
+												Object.assign({}, ...data.values.map(dv => ({[dv.dimension]:dv.value})))
+												
+											);
 										},
 									}}
-									// tags={data.tags}
 								/>
 							);
 						})

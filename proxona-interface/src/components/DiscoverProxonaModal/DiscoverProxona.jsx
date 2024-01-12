@@ -2,20 +2,19 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./DiscoverProxona.css";
 import axios from "axios";
 import { port } from "../../data/port";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation, useParams, useOutletContext } from "react-router-dom";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import SelectAttributes from "../SelectAttributes/SelectAttributes";
-import { useDispatch, useSelector } from "react-redux";
-import { addPersona } from "../../redux/personaList.js";
 
 const DiscoverProxona = () => {
+	const { onCreateProxona } = useOutletContext();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { id } = useParams();
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
@@ -25,13 +24,15 @@ const DiscoverProxona = () => {
 		setSelectedDimension(dimension);
 	};
 
-	const loadPersona = async () => {
+	const createProxona = async () => {
 		await axios
-			.post(port + `youtube_api/${id}/create-persona-exp/`, {
-				dim_val: selectedDimensionTrue,
+			.post(port + `youtube_api/${id}/proxona/`, {
+				name: 'test',
+				values: Object.entries(selectedDimensionTrue).map(([dimension, value]) => ({dimension, value})),
+				generated: true
 			})
 			.then((response) => {
-				dispatch(addPersona(response.data));
+				onCreateProxona(response.data);
 				handleClose();
 			})
 			.catch((error) => {
@@ -69,7 +70,6 @@ const DiscoverProxona = () => {
 	return (
 		<Dialog open={true} onClose={handleClose} sx={{ padding: "90px" }}>
 			<DialogContent>
-				{/* <SelectPersona extendable={true} /> */}
 				<SelectAttributes
 					attributes={location.state.attribute}
 					extendable={true}
@@ -81,7 +81,7 @@ const DiscoverProxona = () => {
 				<Button
 					variant="contained"
 					disabled={disabled}
-					onClick={() => loadPersona()}
+					onClick={() => createProxona()}
 				>
 					{disabled
 						? `${threshold}개 이상의 특성을 골라주세요`

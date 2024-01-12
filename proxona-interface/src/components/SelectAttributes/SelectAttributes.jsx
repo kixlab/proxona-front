@@ -71,11 +71,15 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 		try {
 			await axios.post(
 				port + `youtube_api/${id}/add-new-value/`,
-				JSON.stringify({
+				{
 					dimension: dimension,
-					value: value,
-				})
+					value,
+				}
 			);
+
+			handleAdd(dimension, value);
+			setValue("");
+						
 		} catch (error) {
 			console.error("Error submitting form", error);
 		}
@@ -101,8 +105,6 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 					variant="contained"
 					disabled={value.length === 0}
 					onClick={() => {
-						handleAdd(dimension, value);
-						setValue("");
 						addNewAtt();
 						handleClose();
 					}}
@@ -172,7 +174,7 @@ const SelectAttributes = ({
 				})
 			)
 		);
-	}, [initValues]);
+	}, [initValues, attributes]);
 
 	return (
 		<Stack spacing={5}>

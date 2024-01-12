@@ -27,10 +27,13 @@ function groupBy(array, key) {
 	}, {}); // Initialize the result as an empty object
 }
 
-function PersonaCreation() {
+function PersonaCreation({
+	proxonas,
+	onCreateProxona
+}) {
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	// const personaList = useSelector((state) => state.personaList);
-	const [profiles, setProfiles] = useState(dummy); //should replace
+	const [profiles, setProfiles] = useState(proxonas); //should replace
 	const [isHovering, setIsHovering] = useState({
 		key: "",
 		ishover: 0,
@@ -46,7 +49,7 @@ function PersonaCreation() {
 		setFilteredProfile(groupedData);
 	}, [profiles]);
 
-	const loadAtt = async () => {
+	const loadAttr = async () => {
 		try {
 			await axios
 				.get(port + `youtube_api/${id}/get-dim-val-set/`, {
@@ -60,8 +63,20 @@ function PersonaCreation() {
 		}
 	};
 
+	const loadProxona = async () => {
+		try {
+			await axios.get(port + `youtube_api/${id}/proxona/`)
+			.then((response) => {
+				setProfiles(response.data);
+			})
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		} 
+	}
+
 	useEffect(() => {
-		loadAtt();
+		loadAttr();
+		// loadProxona();
 	}, []);
 
 	return (
@@ -89,37 +104,37 @@ function PersonaCreation() {
 						</Typography>
 
 						<Stack spacing={20 / 8}>
-							{filteredProfile &&
-								Object.entries(filteredProfile).map(([key, items]) => (
-									<Stack
+							{proxonas &&
+								// Object.entries(filteredProfile).map(([key, items]) => (
+								
+									proxonas.map((data, key) => {
+											return (
+													<Stack
 										key={key}
 										className={`${key}__persona`}
 										onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
 										onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
 									>
-										{items.map((data, idx) => {
-											return (
 												<Stack
-													ml={data.generated ? 2 : 0}
 													flexDirection={"row"}
 													gap={10 / 8}
 												>
 													<ProxonaProfile
-														key={idx}
-														index={data.index}
-														username={data.username}
-														summary={data.summary}
-														tags={data.tags}
-														avatarImg={avatars[data.index]}
+														key={key}
+														index={data.id}
+														username={data.name}
+														summary={data.description}
+														tags={data.values}
+														avatarImg={avatars[data.id]}
 														componentProps={{
 															LinkComponent: Link,
-															to: data.username,
+															to: data.name,
 															state: {
-																avatarImg: avatars[data.index],
+																avatarImg: avatars[data.id],
 																previousLocation: location,
-																username: data.username,
-																summary: data.summary,
-																tags: data.tags,
+																username: data.name,
+																summary: data.description,
+																tags: data.values,
 															},
 														}}
 													/>
@@ -134,7 +149,7 @@ function PersonaCreation() {
 															state={{
 																previousLocation: location,
 																key: key,
-																items: items,
+																items: proxonas,
 															}}
 														>
 															Add similar one
@@ -144,10 +159,13 @@ function PersonaCreation() {
 														""
 													)}
 												</Stack>
+												</Stack>
 											);
 										})}
-									</Stack>
-								))}
+									{/* </Stack> */}
+								{/* ) */}
+								{/* ) */}
+								{/* } */}
 						</Stack>
 					</Stack>
 				</Stack>

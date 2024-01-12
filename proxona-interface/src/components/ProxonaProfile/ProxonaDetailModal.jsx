@@ -48,15 +48,13 @@ function ProxonaDetailModal() {
 					{location.state.summary}
 				</Stack>
 				<Stack className="selectors" padding={2}>
-					{Object.entries(location.state.tags).map((tag) => {
+					{location.state.tags.map((tag) => {
 						return (
 							<div className="detail">
-								<div className="detail-head">{tag[0]}</div>
-								{tag.slice(1).map((element) => {
-									return <div className="detail-tags">{element}</div>;
-								})}
+								<div className="detail-head">{tag['dimension']}</div>
+								<div className="detail-tags">{tag['value']}</div>
 							</div>
-						);
+						)
 					})}
 				</Stack>
 				<Stack

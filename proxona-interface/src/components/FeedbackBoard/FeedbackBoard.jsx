@@ -54,7 +54,7 @@ export default function FeedbackBoard({ topic, draft, setFeedbackForm }) {
 
 		setFeedbackForm({
 			mode: actionType,
-			video_topic: "sdfsdf",
+			video_topic: content,
 			proxona: proxona.username,
 			text: content,
 		});

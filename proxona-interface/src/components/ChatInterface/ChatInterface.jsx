@@ -43,6 +43,7 @@ export const ChatInterface = () => {
 
 	const getMessages = useCallback(async () => {
 		setBotIsLoading(true);
+
 		axios
 			.post(
 				port + "chat",
@@ -138,7 +139,9 @@ export const ChatInterface = () => {
 										bgcolor: "#24292f",
 									}}
 								>
-									<Typography variant="caption">{message.who}</Typography>
+									<Typography variant="caption" sx={{ paddingRight: "10px" }}>
+										{message.who}
+									</Typography>
 									<i class="bi bi-info-circle" style={{ fontSize: 12 }}></i>
 								</ButtonBase>
 								<Stack direction={"row"}>
@@ -180,6 +183,7 @@ export const ChatInterface = () => {
 				}}
 			>
 				<InputBase
+					disabled={botIsLoading ? true : false}
 					sx={{ ml: 1, flex: 1 }}
 					fullWidth
 					inputProps={{ "aria-label": "search google maps" }}
@@ -188,6 +192,7 @@ export const ChatInterface = () => {
 					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
 				/>
 				<IconButton
+					disabled={botIsLoading ? true : false}
 					type="submit"
 					color="primary"
 					sx={{ p: "10px" }}

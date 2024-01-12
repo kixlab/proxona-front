@@ -3,22 +3,29 @@ import { createSlice } from "@reduxjs/toolkit";
 const plotHistorySlice = createSlice({
 	name: "plotHistory",
 	initialState: {
-		topic: "",
-		original: "",
-		history: [],
+		topic: null,
+		mode: [],
+		draft: [],
+		proxona: [],
 	},
 	reducers: {
+		initializePlot: (state) => {
+			state.topic = null;
+			state.mode = [];
+			state.draft = [];
+			state.proxona = [];
+		},
 		setTopic: (state, action) => {
-			state.topic = action.payload;
+			state.topic = action.payload.topic;
 		},
-		setOriginal: (state, action) => {
-			state.original = action.payload;
+		setMode: (state, action) => {
+			state.mode = action.payload.mode;
 		},
-		addToHistory: (state, action) => {
-			state.history.push(action.payload);
+		setProxona: (state, action) => {
+			state.proxona = action.payload.proxona;
 		},
 	},
 });
 
-export const { setTopic, setOriginal, addToHistory } = plotHistorySlice.actions;
+export const { setTopic, setMode, setProxona } = plotHistorySlice.actions;
 export default plotHistorySlice.reducer;

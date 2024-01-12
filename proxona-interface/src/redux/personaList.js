@@ -7,6 +7,9 @@ const personaListSlice = createSlice({
 		personas: dummy,
 	},
 	reducers: {
+		initializePersona: (state) => {
+			state.personas = [];
+		},
 		addPersona: (state, action) => {
 			state.personas = [...state.personas, action.payload];
 		},

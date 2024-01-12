@@ -7,6 +7,8 @@ import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
 import { avatars } from "../data/avatar";
 import axios from "axios";
 import { port } from "../data/port";
+import { useDispatch, useSelector } from "react-redux";
+import { initializePersona, addPersona } from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -33,6 +35,7 @@ const SelectResult = () => {
 	const [attribute, setAttribute] = useState({});
 
 	useEffect(() => {
+		// const groupedData = groupBy(profiles, "index");
 		const groupedData = groupBy(profiles, "index");
 		setFilteredProfile(groupedData);
 	}, [profiles]);

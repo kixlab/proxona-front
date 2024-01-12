@@ -12,7 +12,6 @@ function Feedback() {
 	const [topic, setTopic] = useState("");
 	const [plot, setPlot] = useState(null);
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
-	const [response, getResponse] = useState(false);
 
 	const navigate = useNavigate();
 

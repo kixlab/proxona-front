@@ -12,12 +12,14 @@ import {
 import FeedbackBoard from "../components/FeedbackBoard/FeedbackBoard";
 import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
 import { port } from "../data/port";
+import { useDispatch, useSelector } from "react-redux";
 
 function PlotPlanning({ topic, draft }) {
 	// const { plotId } = useParams();
 	const { id } = useParams();
 	const [feedbackForm, setFeedbackForm] = useState(null);
 	const [feedbackHistory, setFeedbackHistory] = useState([]);
+	const dispatch = useDispatch();
 
 	const loadFeedback = async () => {
 		if (feedbackForm) {

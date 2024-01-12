@@ -2,11 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import { dummy } from "../data/dummy";
 
 const personaListSlice = createSlice({
-	name: "personaList",
+	name: "personaList", //state name
 	initialState: {
 		personas: dummy,
 	},
 	reducers: {
+		initializePersona: (state) => {
+			state.personas = dummy;
+		},
+		loadPersonas: (state) => {
+			state.personas = state.personas;
+		},
 		addPersona: (state, action) => {
 			state.personas = [...state.personas, action.payload];
 		},
@@ -18,6 +24,7 @@ const personaListSlice = createSlice({
 	},
 });
 
-export const { addPersona, removePersona } = personaListSlice.actions;
+export const { addPersona, removePersona, initializePersona, loadPersonas } =
+	personaListSlice.actions;
 
 export default personaListSlice.reducer;

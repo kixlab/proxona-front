@@ -9,6 +9,12 @@ import { Button, Stack, Typography } from "@mui/material";
 import { avatars } from "../data/avatar.js";
 import axios from "axios";
 import { port } from "../data/port.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	initializePersona,
+	loadPersonas,
+	addPersona,
+} from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -30,21 +36,22 @@ function groupBy(array, key) {
 function PersonaCreation() {
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	// const personaList = useSelector((state) => state.personaList);
-	const [profiles, setProfiles] = useState(dummy); //should replace
+	// const [profiles, setProfiles] = useState(dummy); //should replace
 	const [isHovering, setIsHovering] = useState({
 		key: "",
 		ishover: 0,
 	});
-	const [newPersona, setNewPersona] = useState([]);
 	const location = useLocation();
 	const [attribute, setAttribute] = useState(null);
 	const { id } = useParams();
+	const dispatch = useDispatch();
+	const { personas } = useSelector((state) => state.personaList);
 
 	useEffect(() => {
-		const groupedData = groupBy(profiles, "index");
-
+		// const groupedData = groupBy(profiles, "index");
+		const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
-	}, [profiles]);
+	}, [personas]);
 
 	const loadAtt = async () => {
 		try {
@@ -62,6 +69,7 @@ function PersonaCreation() {
 
 	useEffect(() => {
 		loadAtt();
+		dispatch(loadPersonas());
 	}, []);
 
 	return (
@@ -85,7 +93,7 @@ function PersonaCreation() {
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
 						<Typography variant="h6">
-							{textContent.subTitle} {profiles.length}
+							{textContent.subTitle} {personas.length}
 						</Typography>
 
 						<Stack spacing={20 / 8}>
@@ -173,7 +181,9 @@ function PersonaCreation() {
 						color: theme.palette.primary.main,
 					})}
 				>
-					Discover more proxona
+					<Typography sx={{ paddingRight: "8px" }}>
+						Discover more proxona
+					</Typography>
 					<i class="bi bi-compass"></i>
 				</Button>
 				<Button
@@ -184,7 +194,9 @@ function PersonaCreation() {
 						marginRight: "80px",
 					}}
 				>
-					Let's get feedback
+					<Typography sx={{ paddingRight: "8px" }}>
+						Let's get feedback
+					</Typography>
 					<i class="bi bi-people"></i>
 				</Button>
 			</Stack>

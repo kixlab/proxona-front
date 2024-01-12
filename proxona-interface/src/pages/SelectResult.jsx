@@ -7,6 +7,8 @@ import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
 import { avatars } from "../data/avatar";
 import axios from "axios";
 import { port } from "../data/port";
+import { useDispatch, useSelector } from "react-redux";
+import { initializePersona, addPersona } from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -27,30 +29,36 @@ function groupBy(array, key) {
 
 const SelectResult = () => {
 	const { id } = useParams();
-	const [profiles, setProfiles] = useState(dummy); //should replace
+	// const [profiles, setProfiles] = useState(dummy); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	const [attribute, setAttribute] = useState({});
+	const dispatch = useDispatch();
+	const { personas } = useSelector((state) => state.personaList);
+	const { attributes } = useSelector((state) => state.attributeList);
 
+	console.log(attributes);
 	useEffect(() => {
-		const groupedData = groupBy(profiles, "index");
+		// const groupedData = groupBy(profiles, "index");
+		const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
-	}, [profiles]);
+	}, [personas]);
 
 	const loadData = async () => {
-		try {
-			await axios
-				.post(port + `youtube_api/${id}/create-persona-exp/`)
-				.then((response) => {
-					setAttribute(response.data);
-				});
-		} catch (error) {
-			console.error("Error submitting form", error);
-		}
+		// try {
+		// 	await axios
+		// 		.post(port + `youtube_api/${id}/create-persona-exp/`)
+		// 		.then((response) => {
+		// 			setAttribute(response.data);
+		// 		});
+		// } catch (error) {
+		// 	console.error("Error submitting form", error);
+		// }
 	};
 
 	useEffect(() => {
-		loadData();
-	}, []);
+		// // loadData();
+		dispatch(initializePersona());
+	}, [dispatch]);
 
 	return (
 		<Stack
@@ -70,11 +78,15 @@ const SelectResult = () => {
 				</Typography>
 			</Stack>
 			<Stack direction={"row"} spacing={4}>
-				<SelectAttributes
-					initValues={attribute}
-					readonly={true}
-					extendable={false}
-				/>
+				{attributes.length >= 1 ? (
+					<SelectAttributes
+						initValues={attributes}
+						readonly={true}
+						extendable={false}
+					/>
+				) : (
+					<div></div>
+				)}
 				<Stack alignItems={"stretch"} spacing={10 / 8}>
 					{Object.entries(filteredProfile).map(([key, items]) =>
 						items.map((data, idx) => {

@@ -3,6 +3,7 @@ import "./SignupForm.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MainButton } from "../../pages/styles/DesignSystem";
+import { port } from "../../data/port.js";
 
 export const SignupForm = () => {
 	const [formData, setFormData] = useState({
@@ -10,7 +11,7 @@ export const SignupForm = () => {
 	});
 	const [alert, setAlert] = useState(false);
 	const [signIn, setSignIn] = useState(false);
-	const port = "http://43.203.179.115:8000/"; //should be replaced to hosting address
+	// const port = "http://43.203.179.115:8000/"; //should be replaced to hosting address
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
@@ -40,7 +41,7 @@ export const SignupForm = () => {
 				});
 		} catch (error) {
 			setAlert(true);
-			console.error("Error submitting form", error);
+			console.error(error);
 		}
 	};
 
@@ -66,7 +67,7 @@ export const SignupForm = () => {
 					/>
 				</label>
 				<MainButton type="submit" value="Start"></MainButton>
-				{alert && <div>Please provide valid handle id (e.g., @HCI) </div>}
+				{alert && <div>Please provide a valid handle-id (e.g., @HCI) </div>}
 			</form>
 		</div>
 	);

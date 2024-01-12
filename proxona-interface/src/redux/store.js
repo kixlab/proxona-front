@@ -5,7 +5,7 @@ import plotHistory from "./plotHistory";
 
 const store = configureStore({
 	reducer: {
-		persona: personaList,
+		personaList: personaList,
 		attributeList: attributeList,
 		plotHistory: plotHistory,
 	},

@@ -1,24 +1,37 @@
 import React, { useState } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
 import { Link, useLocation } from "react-router-dom";
-import { Avatar, Button, ButtonBase, Chip, Stack, Typography } from "@mui/material";
+import {
+	Avatar,
+	Button,
+	ButtonBase,
+	Chip,
+	Stack,
+	Typography,
+} from "@mui/material";
 
-function ProxonaProfile({ avatarImg, username, summary, tags, componentProps, disabled=false}) {
-	const location = useLocation();
+function ProxonaProfile({
+	avatarImg,
+	username,
+	summary,
+	tags,
+	componentProps,
+	disabled = false,
+}) {
 	return (
-		<Stack 
-			component={ButtonBase} 
-			alignItems={'flex-start'}
+		<Stack
+			component={ButtonBase}
+			alignItems={"flex-start"}
 			sx={{
-				border: '1px solid #fff',
+				border: "1px solid #fff",
 				borderRadius: 2,
-				bgcolor: '#fff',
-				color: '#111',
+				bgcolor: "#fff",
+				color: "#111",
 				p: 2,
-				transition: 'all .25s',
+				transition: "all .25s",
 				"&:hover": {
-					bgcolor: '#e1e1e7',
-				}
+					bgcolor: "#e1e1e7",
+				},
 			}}
 			disabled={disabled}
 			{...componentProps}
@@ -33,7 +46,7 @@ function ProxonaProfile({ avatarImg, username, summary, tags, componentProps, di
 						tags: tags,
 					}}
 				> */}
-					{/* <div className="header">
+			{/* <div className="header">
 						<div className="user-info">
 							<div className="user-face">
 								<i
@@ -46,17 +59,20 @@ function ProxonaProfile({ avatarImg, username, summary, tags, componentProps, di
 							</div>
 						</div>
 					</div> */}
-					<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`}/>
-					<Typography variant="h6">{username}</Typography>
-					<Typography paragraph>{summary}</Typography>
-					<Stack direction={'row'} flexWrap={'wrap'} gap={10/8}>
-						{tags && tags.map((tag) => tag['value']).map((tag) => {
-							return <Chip label={`#${tag}`} color="primary" size="small"/>
+			<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`} />
+			<Typography variant="h6">{username}</Typography>
+			<Typography paragraph>{summary}</Typography>
+			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
+				{tags &&
+					tags
+						.map((tag) => tag["value"])
+						.map((tag) => {
+							return <Chip label={`#${tag}`} color="primary" size="small" />;
 						})}
-					</Stack>
-				{/* </Link> */}
+			</Stack>
+			{/* </Link> */}
 		</Stack>
-				
+
 		// 	</div>
 		// </div>
 	);

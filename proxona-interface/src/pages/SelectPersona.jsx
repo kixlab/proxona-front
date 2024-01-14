@@ -1,15 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { port } from "../data/port";
 import { Stack, Button, Box, Typography, Container } from "@mui/material";
-import {
-	Link,
-	Route,
-	Routes,
-	useNavigate,
-	useLocation,
-	useParams,
-} from "react-router-dom";
-// import "./styles/index.css";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,7 +33,6 @@ const SelectPersona = ({ extendable }) => {
 	useEffect(() => {
 		loadData();
 	}, []);
-	// console.log(attributes);
 
 	return (
 		<Container

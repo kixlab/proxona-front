@@ -7,17 +7,32 @@ export const lightTheme = {
 	background: "#363537",
 };
 export const darkTheme = createTheme({
-	  palette: {
-		mode: 'dark',
+	palette: {
+		mode: "dark",
 		primary: {
-		  main: '#6d53d3',
+			main: "#6d53d3",
 		},
 		secondary: {
-		  main: '#f50057',
+			main: "#f50057",
 		},
 		background: {
-		  default: '#171a1e',
-		  paper: '#24292f',
+			default: "#171a1e",
+			paper: "#24292f",
 		},
-	  },
+	},
+	components: {
+		MuiToggleButton: {
+			styleOverrides: {
+				root: {
+					"&.Mui-disabled": {
+						color: "#fff",
+						border: "1px solid #fff",
+						// "&:hover": {
+						// 	backgroundColor: "#6d53d3",
+						// },
+					},
+				},
+			},
+		},
+	},
 });

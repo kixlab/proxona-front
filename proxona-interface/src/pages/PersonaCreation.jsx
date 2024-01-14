@@ -33,10 +33,7 @@ function groupBy(array, key) {
 	}, {}); // Initialize the result as an empty object
 }
 
-function PersonaCreation({
-	proxonas,
-	onCreateProxona
-}) {
+function PersonaCreation({ proxonas, onCreateProxona }) {
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	// const personaList = useSelector((state) => state.personaList);
 	const [profiles, setProfiles] = useState(proxonas); //should replace
@@ -72,18 +69,17 @@ function PersonaCreation({
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`)
-			.then((response) => {
+			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
 				setProfiles(response.data);
-			})
+			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
-		} 
-	}
+		}
+	};
 
 	useEffect(() => {
 		loadAttr();
-		// loadProxona();
+		loadProxona();
 	}, []);
 
 	return (
@@ -113,66 +109,65 @@ function PersonaCreation({
 						<Stack spacing={20 / 8}>
 							{proxonas &&
 								// Object.entries(filteredProfile).map(([key, items]) => (
-								
-									proxonas.map((data, key) => {
-											return (
-													<Stack
-										key={key}
-										className={`${key}__persona`}
-										onMouseOver={() => setIsHovering({ key: key, ishover: 1 })}
-										onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
-									>
-												<Stack
-													flexDirection={"row"}
-													gap={10 / 8}
-												>
-													<ProxonaProfile
-														key={key}
-														index={data.id}
-														username={data.name}
-														summary={data.description}
-														tags={data.values}
-														avatarImg={avatars[data.id]}
-														componentProps={{
-															LinkComponent: Link,
-															to: data.name,
-															state: {
-																avatarImg: avatars[data.id],
-																previousLocation: location,
-																username: data.name,
-																summary: data.description,
-																tags: data.values,
-															},
+
+								proxonas.map((data, key) => {
+									return (
+										<Stack
+											key={key}
+											className={`${key}__persona`}
+											onMouseOver={() =>
+												setIsHovering({ key: key, ishover: 1 })
+											}
+											onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
+										>
+											<Stack flexDirection={"row"} gap={10 / 8}>
+												<ProxonaProfile
+													key={key}
+													index={data.id}
+													username={data.name}
+													summary={data.description}
+													tags={data.values}
+													avatarImg={avatars[data.id]}
+													componentProps={{
+														LinkComponent: Link,
+														to: data.name,
+														state: {
+															avatarImg: avatars[data.id],
+															previousLocation: location,
+															username: data.name,
+															summary: data.description,
+															tags: data.values,
+														},
+													}}
+												/>
+												{isHovering.key == key &&
+												isHovering.ishover &&
+												!data.generated ? (
+													<Button
+														sx={{ alignSelf: "flex-start" }}
+														LinkComponent={Link}
+														to={"similar/" + key}
+														variant="contained"
+														state={{
+															previousLocation: location,
+															key: key,
+															items: proxonas,
 														}}
-													/>
-													{isHovering.key == key &&
-													isHovering.ishover &&
-													!data.generated ? (
-														<Button
-															sx={{ alignSelf: "flex-start" }}
-															LinkComponent={Link}
-															to={"similar/" + key}
-															variant="contained"
-															state={{
-																previousLocation: location,
-																key: key,
-																items: proxonas,
-															}}
-														>
-															Add similar one
-															<i class="bi bi-plus"></i>
-														</Button>
-													) : (
-														""
-													)}
-												</Stack>
-												</Stack>
-											);
-										})}
-									{/* </Stack> */}
-								{/* ) */}
-								{/* ) */}
-								{/* } */}
+													>
+														Add similar one
+														<i class="bi bi-plus"></i>
+													</Button>
+												) : (
+													""
+												)}
+											</Stack>
+										</Stack>
+									);
+								})}
+							{/* </Stack> */}
+							{/* ) */}
+							{/* ) */}
+							{/* } */}
 						</Stack>
 					</Stack>
 				</Stack>

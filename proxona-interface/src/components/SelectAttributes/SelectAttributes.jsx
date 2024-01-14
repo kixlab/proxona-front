@@ -18,10 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAttribute } from "../../redux/attributeList.js";
 import { useParams } from "react-router-dom";
 
-// function CustomToggleButton(props) {
-// 	return <ToggleButton {...props} />;
-// }
-
 const DimensionToggleGroup = ({
 	attributes,
 	attribute,
@@ -41,12 +37,6 @@ const DimensionToggleGroup = ({
 		>
 			{attributes.map((attr) => (
 				<ToggleButton value={attr} disabled={readonly}>
-					#
-					{attr.includes(")")
-						? attr.slice(0, attr.indexOf(")") + 1)
-						: attr.includes("-")
-						? attr.slice(0, attr.indexOf("-"))
-						: attr}
 					<Tooltip
 						title={
 							attr.split("-").length - 1 == 1 && attr.includes("-")
@@ -54,7 +44,14 @@ const DimensionToggleGroup = ({
 								: attr
 						}
 						key={attr}
-					/>
+					>
+						#
+						{attr.includes(")")
+							? attr.slice(0, attr.indexOf(")") + 1)
+							: attr.includes("-")
+							? attr.slice(0, attr.indexOf("-"))
+							: attr}
+					</Tooltip>
 				</ToggleButton>
 			))}
 		</ToggleButtonGroup>
@@ -69,17 +66,13 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 
 	const addNewAtt = async () => {
 		try {
-			await axios.post(
-				port + `youtube_api/${id}/add-new-value/`,
-				{
-					dimension: dimension,
-					value,
-				}
-			);
+			await axios.post(port + `youtube_api/${id}/add-new-value/`, {
+				dimension: dimension,
+				value,
+			});
 
 			handleAdd(dimension, value);
 			setValue("");
-						
 		} catch (error) {
 			console.error("Error submitting form", error);
 		}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { MainButton } from "./styles/DesignSystem";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/index.css";
 import { port } from "../data/port.js";
 import { Stack, Box, Button, Typography } from "@mui/material";
-import { PrimButton } from "./styles/DesignSystem";
+import { useDispatch, useSelector } from "react-redux";
+import { setChannel } from "../redux/channelInfo.js";
 
 const IntroPage = () => {
 	const location = useLocation();
@@ -16,6 +16,9 @@ const IntroPage = () => {
 		comment_count: "",
 	});
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { channel_name, video_count, comment_count, channel_handle } =
+		useSelector((state) => state.channelInfo);
 
 	const loadData = async () => {
 		try {
@@ -26,12 +29,13 @@ const IntroPage = () => {
 					},
 				})
 				.then((response) => {
-					setInfo({
-						...info,
-						channel: response.data[0].channel_name,
-						video_count: response.data[0].video_count,
-						comment_count: response.data[0].comment_count,
-					});
+					dispatch(setChannel(response.data[0]));
+					// setInfo({
+					// 	...info,
+					// 	channel: response.data[0].channel_name,
+					// 	video_count: response.data[0].video_count,
+					// 	comment_count: response.data[0].comment_count,
+					// });
 				});
 		} catch (error) {
 			console.error("Error submitting form", error);
@@ -45,20 +49,20 @@ const IntroPage = () => {
 	return (
 		<Stack sx={{ justifyContent: "center" }} className="signup_container">
 			<Box sx={{ fontSize: 25 }}>
-				{info.channel} 채널 크리에이터님, 안녕하세요.
+				{channel_name} 채널 크리에이터님, 안녕하세요.
 			</Box>
 			<Box sx={{ fontSize: 25 }}>
-				총 {info.video_count} 개의 비디오에 담긴 {info.comment_count} 개의
-				댓글을 기반으로 <br></br>
-				{info.channel} 채널의 시청자들을 추측해보았습니다.
+				총 {video_count} 개의 비디오에 담긴 {comment_count} 개의 댓글을 기반으로{" "}
+				<br></br>
+				{channel_name} 채널의 시청자들을 추측해보았습니다.
 			</Box>
 			<Button
 				variant="contained"
 				sx={{ fontSize: 15, marginTop: 2 }}
 				className="more_button"
 				onClick={() =>
-					navigate(`/${info.handleId}/select`, {
-						state: { handleId: location.state.handleId },
+					navigate(`/${channel_handle}/select`, {
+						state: { handleId: channel_handle },
 					})
 				}
 			>

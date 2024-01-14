@@ -33,12 +33,14 @@ const SelectResult = () => {
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	const [attributes, setAttributes] = useState({});
 	const [attribute, setAttribute] = useState({});
+	const dispatch = useDispatch();
+	const { personas } = useSelector((state) => state.personaList);
 
 	useEffect(() => {
 		// const groupedData = groupBy(profiles, "index");
-		const groupedData = groupBy(profiles, "index");
+		const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
-	}, [profiles]);
+	}, [personas]);
 
 	// const loadData = async () => {
 	// 	try {
@@ -68,14 +70,14 @@ const SelectResult = () => {
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`)
-			.then((response) => {
-				setProfiles(response.data);
-			})
+			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
+				// setProfiles(response.data);
+				dispatch(initializePersona(response.data));
+			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
-		} 
-	}
+		}
+	};
 
 	useEffect(() => {
 		loadAttr();
@@ -121,8 +123,12 @@ const SelectResult = () => {
 									componentProps={{
 										onClick: () => {
 											setAttribute(
-												Object.assign({}, ...data.values.map(dv => ({[dv.dimension]:dv.value})))
-												
+												Object.assign(
+													{},
+													...data.values.map((dv) => ({
+														[dv.dimension]: dv.value,
+													}))
+												)
 											);
 										},
 									}}

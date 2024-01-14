@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import personaList from "./personaList";
 import attributeList from "./attributeList";
 import plotHistory from "./plotHistory";
+import channelInfo from "./channelInfo";
 
 const store = configureStore({
 	reducer: {
 		personaList: personaList,
 		attributeList: attributeList,
 		plotHistory: plotHistory,
+		channelInfo: channelInfo,
 	},
 });
 

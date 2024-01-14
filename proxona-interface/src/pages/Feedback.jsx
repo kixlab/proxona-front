@@ -9,48 +9,48 @@ import { port } from "../data/port";
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
 	const { id: handleId } = useParams();
-	const [topic, setTopic] = useState("");
+	// const [topic, setTopic] = useState("");
 	const [plot, setPlot] = useState(null);
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
 
 	const navigate = useNavigate();
 
-	const getFinalProxonas = async () => {
+	const loadPlot = async () => {
 		try {
-			const res = await axios.get(
-				`http://localhost:8000/handle/${handleId}/proxonas/final/`,
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-			if (res) {
-				setProxonas([...res.data]);
+			const response = await axios.get(`${port}youtube_api/${handleId}/plot/`)
+			if (response.data !== "") {
+				setPlot(response.data)
 			}
-		} catch (err) {
-			console.error("Error fetching final proxonas", err);
+		} catch (error) {
+			console.error("Error loading plot", error);
 		}
-	};
+	}
 
-	// for testing..
-	const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 	const getDraft = async (topic, callback) => {
 		try {
 			setIsDraftLoading(true);
-			await sleep(1000);
 			/**
 			 * plot: Object
 			 * id, topic, body
 			 */
-
-			const res = await axios.post(
-				port + `youtube_api/${handleId}/plot-draft/`,
-				{
-					topic: topic,
-				}
-			);
+			let res;
+			if (plot.id) {
+				res = await axios.patch(
+					port + `youtube_api/${handleId}/plot/${plot.id}/`,
+					{
+						topic,
+					}
+				);	
+			} else {
+				res = await axios.post(
+					port + `youtube_api/${handleId}/plot/`,
+					{
+						topic,
+					}
+				);
+			}
+			
 			if (res) {
 				setPlot(res.data);
 				callback();
@@ -63,12 +63,27 @@ function Feedback() {
 	};
 
 	const createPlot = () => {
-		getDraft(topic, () => navigate("draft"));
+		getDraft(plot?.topic, () => navigate("draft"));
 		console.log("createPlot is here");
 	};
 
+	const loadProxona = async () => {
+		try {
+			await axios.get(port + `youtube_api/${handleId}/proxona/`)
+			.then((response) => {
+				setProxonas(response.data);
+			})
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		} 
+	}
+
 	useEffect(() => {
-		// getFinalProxonas();
+		loadProxona();
+	}, [])
+
+	useEffect(() => {
+		loadPlot();
 	}, []);
 
 	return (
@@ -77,8 +92,8 @@ function Feedback() {
 				path="/"
 				element={
 					<FeedbackIntro
-						topic={topic}
-						setTopic={setTopic}
+						topic={plot?.topic}
+						setTopic={(newTopic) => setPlot({...plot, topic:newTopic})}
 						isLoading={isDraftLoading}
 						goToNext={() => {
 							createPlot();
@@ -91,8 +106,7 @@ function Feedback() {
 				element={
 					<FeedbackDraft
 						channel={handleId}
-						topic={topic}
-						draft={plot?.draft}
+						plot={plot}
 						goToNext={() => navigate(`editor/${handleId}`)}
 						goToPrev={() => navigate(`/${handleId}/feedback`)}
 						proxonas={proxonas}
@@ -101,7 +115,7 @@ function Feedback() {
 			/>
 			<Route
 				path="/editor/:plotId"
-				element={<PlotPlanning topic={topic} draft={plot?.draft} />}
+				element={<PlotPlanning plot={plot} proxonas={proxonas} />}
 			/>
 		</Routes>
 	);

@@ -11,7 +11,7 @@ export const SignupForm = () => {
 	});
 	const [alert, setAlert] = useState(false);
 	const [signIn, setSignIn] = useState(false);
-	const port = "http://43.203.179.115:8000/"; //should be replaced to hosting address
+	const [plot, setPlot] = useState(null)
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
@@ -23,22 +23,19 @@ export const SignupForm = () => {
 		e.preventDefault();
 
 		try {
-			await axios
+			const response = await axios
 				.get(port + "youtube_api/" + formData.handleId + "/channel/", {
 					headers: {
 						"Content-Type": "application/json",
 					},
 				})
-				.then((response) => {
-					if (response.data[0].channel_handle == formData.handleId) {
-						setSignIn(true);
-						setAlert(false);
-						console.log("Success in response");
-					} else {
-						setAlert(true);
-					}
-					return;
-				});
+			if (response.data[0].channel_handle == formData.handleId) {
+				setSignIn(true);
+				setAlert(false);
+				console.log("Success in response");
+			} else {
+				setAlert(true);
+			}
 		} catch (error) {
 			setAlert(true);
 			console.error(error);
@@ -52,7 +49,7 @@ export const SignupForm = () => {
 			});
 			console.log("login success");
 		}
-	}, [signIn]);
+	}, [signIn, plot]);
 
 	return (
 		<div className="container form_container">

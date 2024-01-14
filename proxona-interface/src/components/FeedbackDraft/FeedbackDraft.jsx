@@ -5,12 +5,18 @@ import "./FeedbackDraft.css";
 
 export const FeedbackDraft = ({
 	channel,
-	topic,
-	draft,
+	plot,
 	proxonas,
 	goToNext,
 	goToPrev,
 }) => {
+	if (!plot || !plot.topic || !plot.draft) {
+		goToPrev()
+		return
+	}
+
+	const {topic, draft} = plot
+
 	return (
 		<div className="feedback-draft-container">
 			<>

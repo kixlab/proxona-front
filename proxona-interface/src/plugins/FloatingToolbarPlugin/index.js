@@ -222,7 +222,7 @@ function TextFormatFloatingToolbar({
                             }}
                             className={'popup-item'}
                             aria-label="Insert link">
-                            {proxona.username}
+                            {proxona.name}
                         </button>
                     ))) : (
                         actions.map(action => (

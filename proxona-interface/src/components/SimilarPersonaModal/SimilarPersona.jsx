@@ -8,6 +8,7 @@ import { ModalWrapper, PrimButton } from "../../pages/styles/DesignSystem";
 import { Button, Dialog, Stack, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { avatars } from "../../data/avatar";
+import { port } from "../../data/port";
 
 const SimilarPersona = () => {
 	const navigate = useNavigate();
@@ -26,7 +27,7 @@ const SimilarPersona = () => {
 
 	const generateProfile = useCallback(async (key) => {
 		try {
-			const res = await axios.post("http://localhost:8000/persona/", {
+			const res = await axios.post(`${port}persona/`, {
 				config: "similar",
 				index: key,
 			});

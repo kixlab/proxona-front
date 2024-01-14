@@ -14,42 +14,32 @@ import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
 import { port } from "../data/port";
 import { useDispatch, useSelector } from "react-redux";
 
-function PlotPlanning({ topic, draft }) {
+function PlotPlanning({ plot, proxonas }) {
 	// const { plotId } = useParams();
 	const { id } = useParams();
 	const [feedbackForm, setFeedbackForm] = useState(null);
 	const [feedbackHistory, setFeedbackHistory] = useState([]);
 	const dispatch = useDispatch();
 
-	const loadFeedback = async () => {
-		if (feedbackForm) {
-			console.log(feedbackForm);
-
-			await axios
-				.post(port + `youtube_api/${id}/get-feedback-on-plot/`, {
-					mode: feedbackForm.mode,
-					video_topic: feedbackForm.video_topic,
-					proxona: feedbackForm.proxona,
-					text: feedbackForm.text,
-				})
-				.then((response) => {
-					setFeedbackHistory(...feedbackHistory, {
-						proxona: feedbackForm.proxona,
-						feedback: response.data.feedback,
-						text: feedbackForm.text,
-						video_topic: feedbackForm.video_topic,
-						mode: feedbackForm.mode,
-					});
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
+	const createFeedback = async ({mode, proxona_id, highlighted}) => {
+        try {
+            const response = await axios
+                .post(port + `youtube_api/${id}/plot/${plot.id}/feedback/`, {
+                    mode,
+                    proxona: proxona_id,
+                    plot: plot.id,
+                    highlighted,
+                });
+            setFeedbackHistory([...feedbackHistory, response.data]);
+            return response
+        } catch (err) {
+            console.log(err);
+        }
 	};
 
-	useEffect(() => {
-		loadFeedback();
-	}, [feedbackForm]);
+	// useEffect(() => {
+	// 	createFeedback();
+	// }, [feedbackForm]);
 
 	return (
 		<Stack height={1}>
@@ -64,10 +54,9 @@ function PlotPlanning({ topic, draft }) {
 					</Typography>
 					<Paper sx={{ flex: 1, bgcolor: "#24292F" }} elevation={4}>
 						<FeedbackBoard
-							topic={topic}
-							draft={draft}
-							setFeedbackForm={setFeedbackForm}
-							loadFeedback={loadFeedback}
+							plot={plot}
+                            proxonas={proxonas}
+							createFeedback={createFeedback}
 						/>
 					</Paper>
 				</Stack>

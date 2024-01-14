@@ -27,39 +27,8 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 	},
 	{
-		path: "/:id",
+		path: "/:id/*",
 		element: <IntroPage />,
-	},
-	{
-		path: "/:id/select",
-		element: <SelectPersona />,
-	},
-	{
-		path: "/:id/result",
-		element: <SelectResult />,
-	},
-
-	{
-		path: ":id/persona/",
-		element: <App />,
-		children: [
-			{
-				path: ":persona",
-				element: <ProxonaDetailModal />,
-			},
-			{
-				path: "discover",
-				element: <DiscoverProxona />,
-			},
-			{
-				path: "similar/:id",
-				element: <SimilarPersona />,
-			},
-		],
-	},
-	{
-		path: ":id/feedback/*",
-		element: <Feedback />,
 	},
 ]);
 

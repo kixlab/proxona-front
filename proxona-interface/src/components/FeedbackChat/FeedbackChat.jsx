@@ -15,6 +15,7 @@ import {
 	IconButton,
 } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { port } from "../../data/port";
 
 //TODO
 // [x] scroll bottom to top when chat messages reach the bottom of the page
@@ -32,7 +33,6 @@ export const FeedbackChat = () => {
 	const chatContainerRef = useRef(null);
 	const [botIsLoading, setBotIsLoading] = useState(false);
 
-	const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
 		"어떤 비디오를 좋아해?",

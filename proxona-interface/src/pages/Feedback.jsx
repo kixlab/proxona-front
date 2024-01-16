@@ -18,7 +18,7 @@ function Feedback() {
 	const loadPlot = async () => {
 		try {
 			const response = await axios.get(`${port}youtube_api/${handleId}/plot/`)
-			if (response.data !== "") {
+			if (response.data !== "" && !response.data.completed) {
 				setPlot(response.data)
 			}
 		} catch (error) {

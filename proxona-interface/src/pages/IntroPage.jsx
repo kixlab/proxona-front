@@ -86,14 +86,17 @@ const IntroIndex = () => {
 const IntroPage = () => {
 	const {id} = useParams()
 	const [plot, setPlot] = useState(null)
+	const [plotLoading, setPlotLoading] = useState(true)
 
 	const navigate = useNavigate();
 
 	const loadPlot = async () => {
 		try {
 			const response = await axios.get(`${port}youtube_api/${id}/plot/`)
-			setPlot(response.data)
-			if (response.data !== "") {
+			
+			if (response.data !== "" && !response.data.completed) {
+				setPlot(response.data)
+				setPlotLoading(false)
 				navigate(`/${id}/feedback/editor/${id}`)
 			}
 		} catch (error) {
@@ -102,8 +105,10 @@ const IntroPage = () => {
 	}
 
 	useEffect(() => {
-		loadPlot();
-	}, [])
+		if (plotLoading) {
+			loadPlot();
+		}
+	}, [plotLoading])
 
 	return (
 		<Routes>

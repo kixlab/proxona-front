@@ -71,7 +71,7 @@ const DiscoverProxona = () => {
 		<Dialog open={true} onClose={handleClose} sx={{ padding: "90px" }}>
 			<DialogContent>
 				<SelectAttributes
-					attributes={location.state.attribute}
+					attributes={location?.state?.attribute}
 					extendable={true}
 					onSelect={handleSelect}
 				/>

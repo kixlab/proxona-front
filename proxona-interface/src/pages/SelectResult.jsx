@@ -71,8 +71,8 @@ const SelectResult = () => {
 	const loadProxona = async () => {
 		try {
 			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				setProfiles(response.data);
-				// dispatch(initializePersonaList(response.data));
+				// setProfiles(response.data);
+				dispatch(initializePersonaList(response.data));
 			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);

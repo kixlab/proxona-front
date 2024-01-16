@@ -26,6 +26,7 @@ export const ChatInterface = () => {
 	const chatContainerRef = useRef(null);
 	const [botIsLoading, setBotIsLoading] = useState(false);
 
+	// const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
 		"어떤 비디오를 좋아해?",

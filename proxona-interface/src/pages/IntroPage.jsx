@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { MainButton } from "./styles/DesignSystem";
-import { Route, Routes, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+	Route,
+	Routes,
+	useLocation,
+	useNavigate,
+	useParams,
+} from "react-router-dom";
 import axios from "axios";
 import "./styles/index.css";
 import { port } from "../data/port.js";
@@ -18,7 +24,7 @@ import { setChannel } from "../redux/channelInfo.js";
 
 const IntroIndex = () => {
 	const location = useLocation();
-	const {id} = useParams();
+	const { id } = useParams();
 	const [info, setInfo] = useState({
 		handleId: id,
 		channel: "",
@@ -79,73 +85,48 @@ const IntroIndex = () => {
 				다음
 			</Button>
 		</Stack>
-	)
-}
-
+	);
+};
 
 const IntroPage = () => {
-	const {id} = useParams()
-	const [plot, setPlot] = useState(null)
-	const [plotLoading, setPlotLoading] = useState(true)
+	const { id } = useParams();
+	const [plot, setPlot] = useState(null);
+	const [plotLoading, setPlotLoading] = useState(true);
 
 	const navigate = useNavigate();
 
 	const loadPlot = async () => {
 		try {
-			const response = await axios.get(`${port}youtube_api/${id}/plot/`)
-			
+			const response = await axios.get(`${port}youtube_api/${id}/plot/`);
+
 			if (response.data !== "" && !response.data.completed) {
-				setPlot(response.data)
-				setPlotLoading(false)
-				navigate(`/${id}/feedback/editor/${id}`)
+				setPlot(response.data);
+				setPlotLoading(false);
+				navigate(`/${id}/feedback/editor/${id}`);
 			}
 		} catch (error) {
 			console.error("Error loading plot", error);
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (plotLoading) {
 			loadPlot();
 		}
-	}, [plotLoading])
+	}, [plotLoading]);
 
 	return (
 		<Routes>
-			<Route
-				path="/"
-				element={<IntroIndex/>}/>
-			<Route
-				path="/select"
-				element={<SelectPersona/>}
-				/>
-			<Route
-				path="/result"
-				element={<SelectResult/>}
-				/>
-			<Route
-				path="/persona/"
-				element={<App/>}
-				>
-					<Route
-						path=":persona"
-						element={<ProxonaDetailModal/>}
-					/>
-					<Route
-						path="discover"
-						element={<DiscoverProxona/>}
-					/>
-					<Route
-						path="similar/:id"
-						element={<SimilarPersona/>}
-					/>
+			<Route path="/" element={<IntroIndex />} />
+			<Route path="/select" element={<SelectPersona />} />
+			<Route path="/result" element={<SelectResult />} />
+			<Route path="/persona/" element={<App />}>
+				<Route path=":persona" element={<ProxonaDetailModal />} />
+				<Route path="discover" element={<DiscoverProxona />} />
+				<Route path="similar/:id" element={<SimilarPersona />} />
 			</Route>
-			<Route
-				path="/feedback/*"
-				element={<Feedback/>}
-			/>
+			<Route path="/feedback/*" element={<Feedback />} />
 		</Routes>
-		
 	);
 };
 

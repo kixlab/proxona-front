@@ -5,27 +5,31 @@ import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
 import { FeedbackDraft } from "../components/FeedbackDraft/FeedbackDraft";
 import PlotPlanning from "./PlotPlanning";
 import { port } from "../data/port";
+import SelectFeedbackPersona from "./SelectFeedbackPersona";
 
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
 	const { id: handleId } = useParams();
 	// const [topic, setTopic] = useState("");
-	const [plot, setPlot] = useState(null);
+	const [plot, setPlot] = useState({
+		id: 1,
+		topic: null,
+		body: null,
+	});
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
 
 	const navigate = useNavigate();
 
 	const loadPlot = async () => {
 		try {
-			const response = await axios.get(`${port}youtube_api/${handleId}/plot/`)
+			const response = await axios.get(`${port}youtube_api/${handleId}/plot/`);
 			if (response.data !== "" && !response.data.completed) {
-				setPlot(response.data)
+				setPlot(response.data);
 			}
 		} catch (error) {
 			console.error("Error loading plot", error);
 		}
-	}
-
+	};
 
 	const getDraft = async (topic, callback) => {
 		try {
@@ -35,22 +39,20 @@ function Feedback() {
 			 * id, topic, body
 			 */
 			let res;
+
 			if (plot.id) {
 				res = await axios.patch(
 					port + `youtube_api/${handleId}/plot/${plot.id}/`,
 					{
 						topic,
 					}
-				);	
-			} else {
-				res = await axios.post(
-					port + `youtube_api/${handleId}/plot/`,
-					{
-						topic,
-					}
 				);
+			} else {
+				res = await axios.post(port + `youtube_api/${handleId}/plot/`, {
+					topic,
+				});
 			}
-			
+
 			if (res) {
 				setPlot(res.data);
 				callback();
@@ -69,18 +71,19 @@ function Feedback() {
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${handleId}/proxona/`)
-			.then((response) => {
-				setProxonas(response.data);
-			})
+			await axios
+				.get(port + `youtube_api/${handleId}/proxona/`)
+				.then((response) => {
+					setProxonas(response.data);
+				});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
-		} 
-	}
+		}
+	};
 
 	useEffect(() => {
 		loadProxona();
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		loadPlot();
@@ -93,7 +96,7 @@ function Feedback() {
 				element={
 					<FeedbackIntro
 						topic={plot?.topic}
-						setTopic={(newTopic) => setPlot({...plot, topic:newTopic})}
+						setTopic={(newTopic) => setPlot({ ...plot, topic: newTopic })}
 						isLoading={isDraftLoading}
 						goToNext={() => {
 							createPlot();

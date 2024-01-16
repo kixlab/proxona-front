@@ -2,19 +2,26 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./DiscoverProxona.css";
 import axios from "axios";
 import { port } from "../../data/port";
-import { useNavigate, useLocation, useParams, useOutletContext } from "react-router-dom";
-import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	Typography,
+} from "@mui/material";
 import SelectAttributes from "../SelectAttributes/SelectAttributes";
+import { useDispatch, useSelector } from "react-redux";
+import { addPersona } from "../../redux/personaList.js";
 
 const DiscoverProxona = () => {
-	const { onCreateProxona } = useOutletContext();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { id } = useParams();
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
@@ -24,15 +31,13 @@ const DiscoverProxona = () => {
 		setSelectedDimension(dimension);
 	};
 
-	const createProxona = async () => {
+	const loadPersona = async () => {
 		await axios
-			.post(port + `youtube_api/${id}/proxona/`, {
-				name: 'test',
-				values: Object.entries(selectedDimensionTrue).map(([dimension, value]) => ({dimension, value})),
-				generated: true
+			.post(port + `youtube_api/${id}/create-persona-exp/`, {
+				dim_val: selectedDimensionTrue,
 			})
 			.then((response) => {
-				onCreateProxona(response.data);
+				dispatch(addPersona(response.data));
 				handleClose();
 			})
 			.catch((error) => {
@@ -44,7 +49,6 @@ const DiscoverProxona = () => {
 			});
 	};
 
-	// console.log(personaList);
 	useEffect(() => {
 		if (selectedDimension) {
 			Object.entries(selectedDimension).forEach((values) => {
@@ -68,8 +72,18 @@ const DiscoverProxona = () => {
 		: true;
 
 	return (
-		<Dialog open={true} onClose={handleClose} sx={{ padding: "90px" }}>
+		<Dialog
+			open={true}
+			onClose={handleClose}
+			fullWidth={true}
+			maxWidth={"lg"}
+			sx={{ padding: "50px" }}
+		>
 			<DialogContent>
+				<Typography variant="h5" gutterBottom>
+					Discover more proxona
+				</Typography>
+				{/* <SelectPersona extendable={true} /> */}
 				<SelectAttributes
 					attributes={location?.state?.attribute}
 					extendable={true}
@@ -81,7 +95,7 @@ const DiscoverProxona = () => {
 				<Button
 					variant="contained"
 					disabled={disabled}
-					onClick={() => createProxona()}
+					onClick={() => loadPersona()}
 				>
 					{disabled
 						? `${threshold}개 이상의 특성을 골라주세요`

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
-import { Stack, Button, Typography } from "@mui/material";
+import { Stack, Button, Typography, Box } from "@mui/material";
 import { dummy } from "../data/dummy";
 import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
 import { avatars } from "../data/avatar";
 import axios from "axios";
 import { port } from "../data/port";
 import { useDispatch, useSelector } from "react-redux";
-import { initializePersona, addPersona } from "../redux/personaList.js";
+import { initializePersonaList, addPersona } from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -37,10 +37,10 @@ const SelectResult = () => {
 	const { personas } = useSelector((state) => state.personaList);
 
 	useEffect(() => {
-		// const groupedData = groupBy(profiles, "index");
-		const groupedData = groupBy(personas, "index");
+		const groupedData = groupBy(profiles, "index");
+		// const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
-	}, [personas]);
+	}, [profiles]);
 
 	// const loadData = async () => {
 	// 	try {
@@ -71,12 +71,13 @@ const SelectResult = () => {
 	const loadProxona = async () => {
 		try {
 			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				// setProfiles(response.data);
-				dispatch(initializePersona(response.data));
+				setProfiles(response.data);
+				// dispatch(initializePersonaList(response.data));
 			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
+		dispatch(initializePersonaList());
 	};
 
 	useEffect(() => {
@@ -85,63 +86,69 @@ const SelectResult = () => {
 	}, []);
 
 	return (
-		<Stack
-			sx={{
-				height: "100%",
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-			spacing={40 / 8}
-		>
-			<Stack alignItems={"center"}>
-				<Typography gutterBottom>
-					내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
-				</Typography>
-				<Typography variant="h6" gutterBottom>
-					내 채널의 대표적인 시청자를 눌러 특성을 확인해보세요.
-				</Typography>
-			</Stack>
-			<Stack direction={"row"} spacing={4}>
-				<SelectAttributes
-					initValues={attribute}
-					attributes={attributes}
-					readonly={true}
-					extendable={false}
-				/>
-				<Stack alignItems={"stretch"} spacing={10 / 8}>
-					{Object.entries(filteredProfile).map(([key, items]) =>
-						items.map((data, idx) => {
-							return (
-								<ProxonaProfile
-									key={idx}
-									index={data.id}
-									generated={data.generated}
-									board={true}
-									username={data.name}
-									summary={data.description}
-									avatarImg={avatars[data.id]}
-									componentProps={{
-										onClick: () => {
-											setAttribute(
-												Object.assign(
-													{},
-													...data.values.map((dv) => ({
-														[dv.dimension]: dv.value,
-													}))
-												)
-											);
-										},
-									}}
-								/>
-							);
-						})
-					)}
+		<Box sx={{ padding: "3%" }}>
+			<Stack
+				sx={{
+					height: "100%",
+					justifyContent: "center",
+					alignItems: "center",
+					padding: "2em",
+					margin: "auto",
+				}}
+				spacing={40 / 8}
+			>
+				<Stack alignItems={"center"}>
+					<Typography gutterBottom>
+						내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
+					</Typography>
+					<Typography variant="h6" gutterBottom>
+						내 채널의 대표적인 시청자를 눌러 특성을 확인해보세요.
+					</Typography>
 				</Stack>
+				<Stack direction={"row"} spacing={4}>
+					<Stack flex={7}>
+						<SelectAttributes
+							initValues={attribute}
+							attributes={attributes}
+							readonly={true}
+							extendable={false}
+						/>
+					</Stack>
+					<Stack flex={5} alignItems={"stretch"} spacing={10 / 8}>
+						{Object.entries(filteredProfile).map(([key, items]) =>
+							items.map((data, idx) => {
+								return (
+									<ProxonaProfile
+										key={idx}
+										index={data.id}
+										generated={data.generated}
+										board={true}
+										username={data.name}
+										summary={data.description}
+										avatarImg={avatars[data.id]}
+										componentProps={{
+											onClick: () => {
+												setAttribute(
+													Object.assign(
+														{},
+														...data.values.map((dv) => ({
+															[dv.dimension]: dv.value,
+														}))
+													)
+												);
+											},
+										}}
+									/>
+								);
+							})
+						)}
+					</Stack>
+				</Stack>
+				<Button variant="contained" LinkComponent={Link} to={`/${id}/persona`}>
+					다음
+				</Button>
 			</Stack>
-			<Button variant="contained" LinkComponent={Link} to={`/${id}/persona`}>
-				다음
-			</Button>
-		</Stack>
+		</Box>
 	);
 };
 

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//store channel info state
 const channelInfoSlice = createSlice({
 	name: "channelInfo",
 	initialState: {

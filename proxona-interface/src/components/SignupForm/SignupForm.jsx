@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { MainButton } from "../../pages/styles/DesignSystem";
 import { port } from "../../data/port.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setChannel } from "../../redux/channelInfo.js";
 
 export const SignupForm = () => {
 	const [formData, setFormData] = useState({
@@ -11,8 +13,9 @@ export const SignupForm = () => {
 	});
 	const [alert, setAlert] = useState(false);
 	const [signIn, setSignIn] = useState(false);
-	const [plot, setPlot] = useState(null)
+	const [plot, setPlot] = useState(null);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setAlert(false);
@@ -21,14 +24,15 @@ export const SignupForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		try {
-			const response = await axios
-				.get(port + "youtube_api/" + formData.handleId + "/channel/", {
+			const response = await axios.get(
+				port + "youtube_api/" + formData.handleId + "/channel/",
+				{
 					headers: {
 						"Content-Type": "application/json",
 					},
-				})
+				}
+			);
 			if (response.data[0].channel_handle == formData.handleId) {
 				setSignIn(true);
 				setAlert(false);

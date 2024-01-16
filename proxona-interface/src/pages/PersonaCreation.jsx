@@ -11,7 +11,7 @@ import axios from "axios";
 import { port } from "../data/port.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	initializePersona,
+	initializePersonaList,
 	loadPersonas,
 	addPersona,
 } from "../redux/personaList.js";
@@ -79,7 +79,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 
 	useEffect(() => {
 		loadAttr();
-		loadProxona();
+		// loadProxona();
 	}, []);
 
 	return (

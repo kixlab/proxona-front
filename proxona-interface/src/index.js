@@ -9,16 +9,11 @@ import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import ProxonaDetailModal from "./components/ProxonaProfile/ProxonaDetailModal";
-import DiscoverProxona from "./components/DiscoverProxonaModal/DiscoverProxona";
-import SimilarPersona from "./components/SimilarPersonaModal/SimilarPersona";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { GlobalStyles } from "./pages/styles/GlobalStyles";
 import { lightTheme, darkTheme } from "./pages/styles/Themes";
 import IntroPage from "./pages/IntroPage";
 import { CssBaseline } from "@mui/material";
-import SelectPersona from "./pages/SelectPersona";
-import SelectResult from "./pages/SelectResult";
 
 const router = createBrowserRouter([
 	{

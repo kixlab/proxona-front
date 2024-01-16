@@ -7,7 +7,7 @@ const personaListSlice = createSlice({
 		personas: dummy,
 	},
 	reducers: {
-		initializePersona: (state) => {
+		initializePersonaList: (state) => {
 			state.personas = dummy;
 		},
 		loadPersonas: (state) => {
@@ -24,7 +24,11 @@ const personaListSlice = createSlice({
 	},
 });
 
-export const { addPersona, removePersona, initializePersona, loadPersonas } =
-	personaListSlice.actions;
+export const {
+	addPersona,
+	removePersona,
+	initializePersonaList,
+	loadPersonas,
+} = personaListSlice.actions;
 
 export default personaListSlice.reducer;

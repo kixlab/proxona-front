@@ -3,7 +3,7 @@ import "./ChatInterface.css";
 import "../ProxonaProfile/ProxonaProfile.css";
 import axios from "axios";
 import { textMessage } from "../../data/dummy";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { port } from "../../data/port";
 import {
 	Button,
@@ -26,6 +26,7 @@ export const ChatInterface = () => {
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
 	const [botIsLoading, setBotIsLoading] = useState(false);
+	const { id } = useParams();
 
 	// const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
@@ -43,21 +44,23 @@ export const ChatInterface = () => {
 		}
 	};
 
+	const filterMessage = (msg) => {
+		const lastIndex = msg.lastIndexOf("AIMessage(content='");
+		return lastIndex;
+	};
+
 	const getMessages = useCallback(async () => {
 		setBotIsLoading(true);
-
 		axios
-			.post(
-				port + "chat",
-				{ text: messages[messages.length - 1].text },
-				{
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			)
+			.post(port + `youtube_api/${id}/generate_response/`, {
+				user_question: messages[messages.length - 1].text,
+			})
 			.then((res) => {
-				setMessages([...messages, ...res.data]);
+				const mappedMessages = Object.entries(res.data).map((message) => ({
+					who: message[0],
+					text: message[1].substring(filterMessage(message[1] + 13)),
+				}));
+				setMessages([...messages, ...mappedMessages]);
 				setBotIsLoading(false);
 			});
 	}, [messages]);

@@ -65,7 +65,10 @@ function Feedback() {
 	};
 
 	const createPlot = () => {
-		getDraft(plot?.topic, () => navigate("draft"));
+		if (plot) {
+			getDraft(plot?.topic, () => navigate("draft"));
+		}
+		navigate("draft");
 		console.log("createPlot is here");
 	};
 
@@ -74,6 +77,7 @@ function Feedback() {
 			await axios
 				.get(port + `youtube_api/${handleId}/proxona/`)
 				.then((response) => {
+					console.log(response);
 					setProxonas(response.data);
 				});
 		} catch (error) {
@@ -91,8 +95,9 @@ function Feedback() {
 
 	return (
 		<Routes>
+			<Route path="/" element={<SelectFeedbackPersona proxonas={proxonas} />} />
 			<Route
-				path="/"
+				path={`/topic`}
 				element={
 					<FeedbackIntro
 						topic={plot?.topic}

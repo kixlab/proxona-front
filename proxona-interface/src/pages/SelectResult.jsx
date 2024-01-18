@@ -33,7 +33,7 @@ function groupBy(array, key) {
 
 const SelectResult = () => {
 	const { id } = useParams();
-	const [profiles, setProfiles] = useState(dummy); //should replace
+	const [profiles, setProfiles] = useState([]); //should replace
 	const [filteredProfile, setFilteredProfile] = useState([]);
 	const [attributes, setAttributes] = useState({});
 	const [attribute, setAttribute] = useState({});
@@ -41,7 +41,7 @@ const SelectResult = () => {
 	const { personas } = useSelector((state) => state.personaList);
 
 	useEffect(() => {
-		const groupedData = groupBy(profiles, "index");
+		const groupedData = groupBy(profiles, "id");
 		// const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
 	}, [profiles]);
@@ -82,7 +82,6 @@ const SelectResult = () => {
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
-		dispatch(initializePersonaList());
 	};
 
 	useEffect(() => {

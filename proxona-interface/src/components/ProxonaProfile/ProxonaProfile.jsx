@@ -17,13 +17,13 @@ function ProxonaProfile({
 	tags,
 	componentProps,
 	disabled = false,
-	// revisable = false,
 }) {
 	return (
 		<Stack
 			component={ButtonBase}
 			alignItems={"flex-start"}
 			sx={{
+				maxWidth: "300px",
 				border: "1px solid #fff",
 				borderRadius: 2,
 				bgcolor: "#fff",
@@ -71,7 +71,7 @@ function ProxonaProfile({
 							return <Chip label={`#${tag}`} color="primary" size="small" />;
 						})}
 			</Stack>
-			{/* {revisable && <Button>기획에서 빼기</Button>} */}
+
 			{/* </Link> */}
 		</Stack>
 

@@ -4,14 +4,15 @@ import { dummy } from "../data/dummy";
 const personaListSlice = createSlice({
 	name: "personaList", //state name
 	initialState: {
-		personas: dummy,
+		personas: [],
 	},
 	reducers: {
 		initializePersonaList: (state) => {
 			state.personas = dummy;
 		},
-		loadPersonas: (state) => {
-			state.personas = state.personas;
+		loadPersonas: (state, action) => {
+			state.personas = action.playload;
+			console.log("loaded");
 		},
 		addPersona: (state, action) => {
 			state.personas = [...state.personas, action.payload];

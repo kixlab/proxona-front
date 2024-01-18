@@ -17,7 +17,7 @@ function ProxonaProfile({
 	tags,
 	componentProps,
 	disabled = false,
-	revisable = false,
+	// revisable = false,
 }) {
 	return (
 		<Stack
@@ -71,7 +71,7 @@ function ProxonaProfile({
 							return <Chip label={`#${tag}`} color="primary" size="small" />;
 						})}
 			</Stack>
-			{revisable && <Button>기획에서 빼기</Button>}
+			{/* {revisable && <Button>기획에서 빼기</Button>} */}
 			{/* </Link> */}
 		</Stack>
 

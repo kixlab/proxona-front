@@ -48,10 +48,10 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const { personas } = useSelector((state) => state.personaList);
 
 	useEffect(() => {
-		// const groupedData = groupBy(profiles, "index");
-		const groupedData = groupBy(personas, "index");
+		const groupedData = groupBy(profiles, "index");
+		// const groupedData = groupBy(personas, "index");
 		setFilteredProfile(groupedData);
-	}, [personas]);
+	}, [profiles]);
 
 	const loadAttr = async () => {
 		try {
@@ -103,7 +103,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
 						<Typography variant="h6">
-							{textContent.subTitle} {personas.length}
+							{textContent.subTitle} {proxonas.length}
 						</Typography>
 
 						<Stack spacing={20 / 8}>

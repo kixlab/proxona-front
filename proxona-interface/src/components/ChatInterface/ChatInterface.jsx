@@ -56,6 +56,7 @@ export const ChatInterface = () => {
 				user_question: messages[messages.length - 1].text,
 			})
 			.then((res) => {
+				console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
 					text: message[1].substring(filterMessage(message[1] + 13)),

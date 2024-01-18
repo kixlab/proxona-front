@@ -23,14 +23,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setChannel } from "../redux/channelInfo.js";
 
 const IntroIndex = () => {
-	const location = useLocation();
+	// const location = useLocation();
 	const { id } = useParams();
-	const [info, setInfo] = useState({
-		handleId: id,
-		channel: "",
-		video_count: "",
-		comment_count: "",
-	});
+	// const [info, setInfo] = useState({
+	// 	handleId: id,
+	// 	channel: "",
+	// 	video_count: "",
+	// 	comment_count: "",
+	// });
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { channel_name, video_count, comment_count, channel_handle } =
@@ -95,25 +95,28 @@ const IntroPage = () => {
 
 	const navigate = useNavigate();
 
-	const loadPlot = async () => {
-		try {
-			const response = await axios.get(`${port}youtube_api/${id}/plot/`);
+	// const loadPlot = async () => {
+	// 	try {
+	// 		const response = await axios.get(`${port}youtube_api/${id}/plot/`);
 
-			if (response.data !== "" && !response.data.completed) {
-				setPlot(response.data);
-				setPlotLoading(false);
-				navigate(`/${id}/feedback/editor/${id}`);
-			}
-		} catch (error) {
-			console.error("Error loading plot", error);
-		}
-	};
+	// 		// console.log(response);
+	// 		if (response.data !== "" && response.data.completed) {
+	// 			// TODO: !response.data.completed
+	// 			setPlot(response.data);
+	// 			setPlotLoading(false);
+	// 			navigate(`/${id}/feedback/editor/${id}`);
+	// 			console.log("Plot is loaded successfully");
+	// 		}
+	// 	} catch (error) {
+	// 		console.error("Error loading plot", error);
+	// 	}
+	// };
 
-	useEffect(() => {
-		if (plotLoading) {
-			loadPlot();
-		}
-	}, [plotLoading]);
+	// useEffect(() => {
+	// 	if (plotLoading) {
+	// 		loadPlot();
+	// 	}
+	// }, [plotLoading]);
 
 	return (
 		<Routes>

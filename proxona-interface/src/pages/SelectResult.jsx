@@ -8,7 +8,11 @@ import { avatars } from "../data/avatar";
 import axios from "axios";
 import { port } from "../data/port";
 import { useDispatch, useSelector } from "react-redux";
-import { initializePersonaList, addPersona } from "../redux/personaList.js";
+import {
+	initializePersonaList,
+	addPersona,
+	loadPersonas,
+} from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -71,8 +75,9 @@ const SelectResult = () => {
 	const loadProxona = async () => {
 		try {
 			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				// setProfiles(response.data);
-				dispatch(initializePersonaList(response.data));
+				setProfiles(response.data);
+				// console.log(response.data);
+				// dispatch(loadPersonas(response.data));
 			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);

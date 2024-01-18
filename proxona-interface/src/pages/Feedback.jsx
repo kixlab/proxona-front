@@ -40,18 +40,18 @@ function Feedback() {
 			 */
 			let res;
 
-			if (plot.id) {
-				res = await axios.patch(
-					port + `youtube_api/${handleId}/plot/${plot.id}/`,
-					{
-						topic,
-					}
-				);
-			} else {
-				res = await axios.post(port + `youtube_api/${handleId}/plot/`, {
-					topic,
-				});
-			}
+			// if (plot.id) {
+			// 	res = await axios.patch(
+			// 		port + `youtube_api/${handleId}/plot/${plot.id}/`,
+			// 		{
+			// 			topic,
+			// 		}
+			// 	);
+			// } else {
+			res = await axios.post(port + `youtube_api/${handleId}/plot/`, {
+				topic,
+			});
+			// }
 
 			if (res) {
 				setPlot(res.data);

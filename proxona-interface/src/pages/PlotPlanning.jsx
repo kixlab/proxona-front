@@ -54,7 +54,6 @@ function PlotPlanning({ plot, proxonas }) {
 	// useEffect(() => {
 	// 	createFeedback();
 	// }, [feedbackForm]);
-	console.log(proxonas);
 
 	return (
 		<Stack height={1}>

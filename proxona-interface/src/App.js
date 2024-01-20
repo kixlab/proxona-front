@@ -9,37 +9,35 @@ import { port } from "./data/port.js";
 
 function App() {
 	const { id } = useParams();
-	const [proxonas, setProxonas] = useState([])
+	const [proxonas, setProxonas] = useState([]);
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`)
-			.then((response) => {
+			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
 				setProxonas(response.data);
-			})
+			});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
-		} 
-	}
+		}
+	};
 
 	useEffect(() => {
 		loadProxona();
-	}, [])
+	}, [proxonas]);
 
-	const onCreateProxona = newProxona => {
-		setProxonas([...proxonas, newProxona])
-	}
+	const onCreateProxona = (newProxona) => {
+		setProxonas([...proxonas, newProxona]);
+	};
 
 	return (
 		<>
-			<Outlet context={{
-				proxonas,
-				onCreateProxona
-			}}/>
-			<PersonaCreation
-				proxonas={proxonas}
-				onCreateProxona={onCreateProxona}
+			<Outlet
+				context={{
+					proxonas,
+					onCreateProxona,
+				}}
 			/>
+			<PersonaCreation proxonas={proxonas} onCreateProxona={onCreateProxona} />
 		</>
 	);
 }

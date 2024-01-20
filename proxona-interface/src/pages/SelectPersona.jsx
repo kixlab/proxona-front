@@ -9,7 +9,7 @@ import { initAttribute } from "../redux/attributeList.js";
 
 const SelectPersona = ({ extendable }) => {
 	const location = useLocation();
-	// const [attributes, setAttrubutes] = useState(null);
+	const [attributes, setAttrubutes] = useState(null);
 	const [data, setData] = useState(false);
 	const { id } = useParams();
 	const dispatch = useDispatch();
@@ -22,7 +22,8 @@ const SelectPersona = ({ extendable }) => {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
-					// setAttrubutes(response.data);
+					console.log(response.data);
+					setAttrubutes(response.data);
 					setData(true);
 					dispatch(initAttribute(response.data));
 				});
@@ -49,10 +50,10 @@ const SelectPersona = ({ extendable }) => {
 				spacing={40 / 8}
 			>
 				<Stack alignItems={"center"}>
-					<Typography gutterBottom>
+					<Typography variant="h5" gutterBottom>
 						내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
 					</Typography>
-					<Typography variant="h6" gutterBottom>
+					<Typography variant="h4" gutterBottom>
 						내 채널의 시청자들의 다양한 특성을 확인해보세요.
 					</Typography>
 				</Stack>

@@ -102,10 +102,10 @@ const SelectResult = () => {
 				spacing={40 / 8}
 			>
 				<Stack alignItems={"center"}>
-					<Typography gutterBottom>
+					<Typography variant="h5" gutterBottom>
 						내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
 					</Typography>
-					<Typography variant="h6" gutterBottom>
+					<Typography variant="h4" gutterBottom>
 						내 채널의 대표적인 시청자를 눌러 특성을 확인해보세요.
 					</Typography>
 				</Stack>

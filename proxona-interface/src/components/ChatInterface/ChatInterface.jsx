@@ -85,7 +85,7 @@ export const ChatInterface = () => {
 
 	return (
 		<Stack height={1} overflow={"hidden"}>
-			<Stack flex={1} overflow={"auto"}>
+			<Stack flex={1} overflow={"auto"} ref={chatContainerRef}>
 				{initial ? (
 					<Stack spacing={20 / 8} alignSelf={"center"}>
 						<Typography variant="h6">

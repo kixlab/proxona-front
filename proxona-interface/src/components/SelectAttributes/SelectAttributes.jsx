@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+	useState,
+	useEffect,
+	useCallback,
+	useMemo,
+	useRef,
+} from "react";
 import {
 	Stack,
 	Tooltip,
@@ -27,6 +33,15 @@ const DimensionToggleGroup = ({
 	const handleChange = (event, newAttribute) => {
 		onChange(newAttribute);
 	};
+	// const [displayExpla, setDisplayExpla] = useState(null);
+	// const explaValue = (attr) => {
+	// 	if (attr.split("-").length - 1 == 1 && attr.includes("-")) {
+	// 		return attr.slice(attr.indexOf("-") + 1);
+	// 	} else {
+	// 		return attr;
+	// 	}
+	// };
+
 	return (
 		<ToggleButtonGroup
 			value={attribute?.value}
@@ -67,6 +82,7 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 	const addNewAtt = async () => {
 		try {
 			await axios.post(port + `youtube_api/${id}/add-new-value/`, {
+				mode: "manual",
 				dimension: dimension,
 				value,
 			});
@@ -116,6 +132,7 @@ const SelectAttributes = ({
 	readonly = false,
 	extendable = false,
 }) => {
+	const { id } = useParams();
 	const [dimensions, setDimensions] = useState(
 		Object.fromEntries(
 			Object.entries(attributes).map(([dimension, values]) => {
@@ -131,6 +148,7 @@ const SelectAttributes = ({
 	);
 	const [targetDimension, setTargetDimension] = useState("");
 	const [addValueDialogOpen, setAddValueDialogOpen] = useState(false);
+	const [isGenerating, setIsGenerating] = useState(null);
 
 	const addValues = (dimension, value) => {
 		setDimensions({
@@ -149,8 +167,27 @@ const SelectAttributes = ({
 		setAddValueDialogOpen(false);
 	};
 
-	const handleSuggest = () => {
-		// axios.get("");
+	const handleSuggest = async (dimension) => {
+		setIsGenerating(dimension);
+		try {
+			const response = await axios.post(
+				port + "youtube_api/" + id + "/add-new-value/",
+				{
+					mode: "auto",
+					dimension: dimension,
+				}
+			);
+			if (response) {
+				addValues(
+					Object.entries(response.data["new values"])[0][0],
+					Object.entries(response.data["new values"])[0][1]
+				);
+
+				setIsGenerating("");
+			}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	useEffect(() => {
@@ -200,12 +237,13 @@ const SelectAttributes = ({
 							{extendable && (
 								<Stack spacing={0.5} direction={"row"} alignSelf={"center"}>
 									<Button
+										key={dimension}
 										color="primary"
 										variant="contained"
 										size="small"
-										onClick={() => handleSuggest()}
+										onClick={() => handleSuggest(dimension)}
 									>
-										제안받기
+										{isGenerating == dimension ? "제안 중..." : "제안받기"}
 									</Button>
 									<Button
 										color="primary"

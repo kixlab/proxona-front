@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { textContent } from "../data/textContent.js";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile.jsx";
 import { ChatInterface } from "../components/ChatInterface/ChatInterface.jsx";
-import { dummy } from "../data/dummy.js";
+// import { dummy } from "../data/dummy.js";
 import "./styles/index.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, Stack, Typography } from "@mui/material";
@@ -10,11 +10,11 @@ import { avatars } from "../data/avatar.js";
 import axios from "axios";
 import { port } from "../data/port.js";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	initializePersonaList,
-	loadPersonas,
-	addPersona,
-} from "../redux/personaList.js";
+// import {
+// 	initializePersonaList,
+// 	loadPersonas,
+// 	addPersona,
+// } from "../redux/personaList.js";
 
 function groupBy(array, key) {
 	return array.reduce((result, currentItem) => {
@@ -44,8 +44,9 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const location = useLocation();
 	const [attribute, setAttribute] = useState(null);
 	const { id } = useParams();
-	const dispatch = useDispatch();
-	const { personas } = useSelector((state) => state.personaList);
+	// const dispatch = useDispatch();
+	// const { personas } = useSelector((state) => state.personaList);
+	const proxonaContainerRef = useRef(null);
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
@@ -81,6 +82,18 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 		loadAttr();
 		// loadProxona();
 	}, []);
+
+	useEffect(() => {
+		const scrollToBottom = () => {
+			if (proxonaContainerRef.current) {
+				proxonaContainerRef.current.scrollTop =
+					proxonaContainerRef.current.scrollHeight;
+			}
+		};
+		console.log(proxonaContainerRef);
+
+		scrollToBottom();
+	}, [proxonaContainerRef]);
 
 	return (
 		<>
@@ -120,7 +133,11 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 											}
 											onMouseOut={() => setIsHovering({ key: key, ishover: 0 })}
 										>
-											<Stack flexDirection={"row"} gap={10 / 8}>
+											<Stack
+												flexDirection={"row"}
+												gap={10 / 8}
+												ref={proxonaContainerRef}
+											>
 												<ProxonaProfile
 													key={key}
 													index={data.id}

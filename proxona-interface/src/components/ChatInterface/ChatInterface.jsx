@@ -16,19 +16,21 @@ import {
 	IconButton,
 } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-// import { port } from "../../data/port";
+import { MentionsInput, Mention } from "react-mentions";
+import { useSelector } from "react-redux";
+import defaultStyle from "./defaultStyle";
 
-export const ChatInterface = () => {
+export const ChatInterface = ({ proxonas }) => {
 	// const [messages, setMessages] = useState(textMessage);
 	const [messages, setMessages] = useState([]);
 
 	const [inputMessage, setInputMessage] = useState("");
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
+	const mentionRef = useRef(null);
 	const [botIsLoading, setBotIsLoading] = useState(false);
 	const { id } = useParams();
 
-	// const port = "http://localhost:8000/";
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
 		"어떤 비디오를 좋아해?",
@@ -56,7 +58,7 @@ export const ChatInterface = () => {
 				user_question: messages[messages.length - 1].text,
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
 					text: message[1].substring(filterMessage(message[1] + 13)),
@@ -71,17 +73,6 @@ export const ChatInterface = () => {
 			getMessages();
 		}
 	}, [getMessages]);
-
-	useEffect(() => {
-		const scrollToBottom = () => {
-			if (chatContainerRef.current) {
-				chatContainerRef.current.scrollTop =
-					chatContainerRef.current.scrollHeight;
-			}
-		};
-
-		scrollToBottom();
-	}, [messages, botIsLoading]);
 
 	return (
 		<Stack height={1} overflow={"hidden"}>
@@ -188,7 +179,7 @@ export const ChatInterface = () => {
 					sendMessage(e.target.value);
 				}}
 			>
-				<InputBase
+				{/* <InputBase
 					disabled={botIsLoading ? true : false}
 					sx={{ ml: 1, flex: 1 }}
 					fullWidth
@@ -196,7 +187,29 @@ export const ChatInterface = () => {
 					value={inputMessage}
 					onChange={(e) => setInputMessage(e.target.value)}
 					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
-				/>
+				> */}
+				{proxonas.length > 0 && (
+					<MentionsInput
+						disabled={botIsLoading ? true : false}
+						singleLine
+						value={inputMessage}
+						onChange={(e) => setInputMessage(e.target.value)}
+						style={defaultStyle}
+						placeholder={"Mention people using '@'"}
+						a11ySuggestionsListLabel={"Suggested mentions"}
+						inputRef={mentionRef}
+					>
+						<Mention
+							data={proxonas.map((proxona) => ({
+								id: proxona.name + "_" + proxona.id,
+								display: proxona.name,
+							}))}
+							trigger="@"
+							style={{ backgroundColor: "#6d53d3" }}
+						/>
+					</MentionsInput>
+				)}
+				{/* </InputBase> */}
 				<IconButton
 					disabled={botIsLoading ? true : false}
 					type="submit"

@@ -112,7 +112,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 						height={"100%"}
 						overflow={"auto"}
 					>
-						<ChatInterface />
+						<ChatInterface proxonas={proxonas} />
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
 						<Typography variant="h6">

@@ -31,8 +31,8 @@ const personaListSlice = createSlice({
 			state.personas = [];
 		},
 		loadPersonas: (state, action) => {
-			const groupedData = groupBy(action.playload, "id");
-			state.personas = groupedData;
+			// const groupedData = groupBy(action.playload, "id");
+			state.personas = action.payload;
 			console.log("loaded");
 		},
 		addPersona: (state, action) => {

@@ -178,8 +178,9 @@ const SelectAttributes = ({
 				}
 			);
 			if (response) {
+				console.log(response);
 				addValues(
-					Object.entries(response.data["new values"])[0][0],
+					Object.entries(response.data["new values"])[0][0], //should be replaced to 'new_value'
 					Object.entries(response.data["new values"])[0][1]
 				);
 

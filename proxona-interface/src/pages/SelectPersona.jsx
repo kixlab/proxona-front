@@ -22,9 +22,10 @@ const SelectPersona = ({ extendable }) => {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
-					console.log(response.data);
 					setAttrubutes(response.data);
-					setData(true);
+					if (Object.keys(response.data).length > 0) {
+						setData(true);
+					}
 					dispatch(initAttribute(response.data));
 				});
 		} catch (error) {
@@ -57,12 +58,14 @@ const SelectPersona = ({ extendable }) => {
 						내 채널의 시청자들의 다양한 특성을 확인해보세요.
 					</Typography>
 				</Stack>
-				{data && (
+				{data ? (
 					<SelectAttributes
 						attributes={attributeList}
 						readonly={true}
 						extendable={false}
 					/>
+				) : (
+					<div>no data loaded</div>
 				)}
 
 				<Button variant="contained" LinkComponent={Link} to={`/${id}/result`}>

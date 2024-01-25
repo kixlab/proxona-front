@@ -49,8 +49,6 @@ const DiscoverProxona = () => {
 			});
 	};
 
-	
-
 	useEffect(() => {
 		if (selectedDimension) {
 			Object.entries(selectedDimension).forEach((values) => {

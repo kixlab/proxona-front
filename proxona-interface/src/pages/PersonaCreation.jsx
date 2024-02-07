@@ -70,9 +70,12 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				setProfiles(response.data);
-			});
+			await axios
+				.get(port + `youtube_api/${id}/current-persona/`)
+				.then((response) => {
+					console.log(response.data);
+					setProfiles(response.data);
+				});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
@@ -80,7 +83,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 
 	useEffect(() => {
 		loadAttr();
-		// loadProxona();
+		loadProxona();
 	}, []);
 
 	useEffect(() => {
@@ -144,16 +147,17 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 													username={data.name}
 													summary={data.description}
 													tags={data.values}
-													avatarImg={avatars[data.id]}
+													avatarImg={avatars[key]}
 													componentProps={{
 														LinkComponent: Link,
 														to: data.name,
 														state: {
-															avatarImg: avatars[data.id],
+															avatarImg: avatars[key],
 															previousLocation: location,
 															username: data.name,
 															summary: data.description,
 															tags: data.values,
+															videos: data.videos,
 														},
 													}}
 												/>
@@ -162,17 +166,18 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 												!data.generated ? (
 													<Button
 														sx={{ alignSelf: "flex-start" }}
-														LinkComponent={Link}
-														to={"similar/" + key}
+														// LinkComponent={Link}
+														// to={"similar/" + key}
 														variant="contained"
+														disabled
 														state={{
 															previousLocation: location,
 															key: key,
 															items: proxonas,
 														}}
 													>
-														Add similar one
-														<i class="bi bi-plus"></i>
+														{data.name}를 더 잘 알아보고 싶다면?
+														{/* <i class="bi bi-plus"></i> */}
 													</Button>
 												) : (
 													""

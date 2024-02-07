@@ -75,13 +75,16 @@ const SelectResult = () => {
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				setProfiles(response.data);
-				dispatch(loadPersonas(response.data));
-				if (response.data.length > 0) {
-					setData(true);
-				}
-			});
+			await axios
+				.get(port + `youtube_api/${id}/current-persona/`)
+				.then((response) => {
+					console.log(response);
+					setProfiles(response.data);
+					dispatch(loadPersonas(response.data));
+					if (response.data.length > 0) {
+						setData(true);
+					}
+				});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
@@ -123,33 +126,31 @@ const SelectResult = () => {
 					</Stack>
 					<Stack flex={5} alignItems={"stretch"} spacing={10 / 8}>
 						{data ? (
-							Object.entries(filteredProfile).map(([key, items]) =>
-								items.map((data, idx) => {
-									return (
-										<ProxonaProfile
-											key={idx}
-											index={data.id}
-											generated={data.generated}
-											board={true}
-											username={data.name}
-											summary={data.description}
-											avatarImg={avatars[data.id]}
-											componentProps={{
-												onClick: () => {
-													setAttribute(
-														Object.assign(
-															{},
-															...data.values.map((dv) => ({
-																[dv.dimension]: dv.value,
-															}))
-														)
-													);
-												},
-											}}
-										/>
-									);
-								})
-							)
+							profiles.map((profile, i) => {
+								return (
+									<ProxonaProfile
+										key={i}
+										index={profile.id}
+										generated={profile.generated}
+										board={true}
+										username={profile.name}
+										summary={profile.description}
+										avatarImg={avatars[i]}
+										componentProps={{
+											onClick: () => {
+												setAttribute(
+													Object.assign(
+														{},
+														...profile.values.map((dv) => ({
+															[dv.dimension]: dv.value,
+														}))
+													)
+												);
+											},
+										}}
+									/>
+								);
+							})
 						) : (
 							<div>no data loaded</div>
 						)}

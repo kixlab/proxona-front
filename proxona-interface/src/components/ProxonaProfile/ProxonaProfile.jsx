@@ -62,7 +62,11 @@ function ProxonaProfile({
 					</div> */}
 			<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`} />
 			<Typography variant="h6">{username}</Typography>
-			<Typography paragraph>{summary}</Typography>
+			<Typography paragraph>
+				{summary.replace(/(['"])([^'"]*?)\1/g, function (match, p1, p2) {
+					return p1 === '"' ? "'" + p2 + "'" : '"' + p2 + '"';
+				})}
+			</Typography>
 			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
 				{tags &&
 					tags

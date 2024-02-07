@@ -13,9 +13,11 @@ function App() {
 
 	const loadProxona = async () => {
 		try {
-			await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-				setProxonas(response.data);
-			});
+			await axios
+				.get(port + `youtube_api/${id}/current-persona/`)
+				.then((response) => {
+					setProxonas(response.data);
+				});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}

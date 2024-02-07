@@ -31,6 +31,13 @@ export const darkTheme = createTheme({
 						// 	backgroundColor: "#6d53d3",
 						// },
 					},
+					"&.Mui-selected": {
+						backgroundColor: "#6d53d3",
+						color: "1px solid #fff",
+						// "&:hover": {
+						// 	backgroundColor: "#6d53d3",
+						// },
+					},
 				},
 			},
 		},

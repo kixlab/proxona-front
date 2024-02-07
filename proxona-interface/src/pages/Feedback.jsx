@@ -75,9 +75,8 @@ function Feedback() {
 	const loadProxona = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${handleId}/proxona/`)
+				.get(port + `youtube_api/${handleId}/current-persona/`)
 				.then((response) => {
-					console.log(response);
 					setProxonas(response.data);
 				});
 		} catch (error) {

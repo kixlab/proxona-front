@@ -30,6 +30,7 @@ export const ChatInterface = ({ proxonas }) => {
 	const mentionRef = useRef(null);
 	const [botIsLoading, setBotIsLoading] = useState(false);
 	const { id } = useParams();
+	const [values, setValues] = useState("");
 
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
@@ -41,30 +42,46 @@ export const ChatInterface = ({ proxonas }) => {
 	const sendMessage = (e) => {
 		if (inputMessage) {
 			setInitial(false);
+
 			setMessages([...messages, { who: "me", text: inputMessage }]);
 			setInputMessage(" ");
 		}
 	};
 
 	const filterMessage = (msg) => {
-		const lastIndex = msg.lastIndexOf("AIMessage(content='");
-		return lastIndex;
+		const lastIndex = msg.lastIndexOf("content=");
+		const bracketIndex = msg.lastIndexOf(")");
+		return [lastIndex, bracketIndex];
 	};
 
 	const getMessages = useCallback(async () => {
+		const regex = /@\w+/g;
+		console.log(values);
+
 		setBotIsLoading(true);
 		axios
 			.post(port + `youtube_api/${id}/generate_response/`, {
 				user_question: messages[messages.length - 1].text,
+				mention: values.length > 0 ? true : false,
+				whom:
+					values.length > 0
+						? values.map(({ display }) => {
+								return display;
+						  })
+						: "none",
 			})
 			.then((res) => {
-				// console.log(res.data);
+				console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
-					text: message[1].substring(filterMessage(message[1] + 13)),
+					text: message[1].substring(
+						filterMessage(message[1])[0] + 9,
+						filterMessage(message[1])[1] - 3
+					),
 				}));
 				setMessages([...messages, ...mappedMessages]);
 				setBotIsLoading(false);
+				setValues("");
 			});
 	}, [messages]);
 
@@ -83,25 +100,23 @@ export const ChatInterface = ({ proxonas }) => {
 							내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
 						</Typography>
 						<Stack spacing={10 / 8}>
-							{exampleQuestions.map((element, key) => {
-								return (
-									<Button
-										key={key}
-										ref={(refele) => (buttonRef.current[key] = refele)}
-										variant="outlined"
-										onClick={() =>
-											setInputMessage(buttonRef.current[key].textContent)
-										}
-									>
-										{element}
-									</Button>
-								);
-							})}
+							{exampleQuestions.map((element, key) => (
+								<Button
+									key={key}
+									ref={(refele) => (buttonRef.current[key] = refele)}
+									variant="outlined"
+									onClick={() =>
+										setInputMessage(buttonRef.current[key].textContent)
+									}
+								>
+									{element}
+								</Button>
+							))}
 						</Stack>
 					</Stack>
 				) : (
 					messages.map((message, idx) =>
-						message.who == "me" ? (
+						message.who === "me" ? (
 							<Stack alignSelf={"flex-end"} alignItems={"flex-end"} key={idx}>
 								<Typography variant="caption">{message.who}</Typography>
 								<Typography
@@ -125,9 +140,18 @@ export const ChatInterface = ({ proxonas }) => {
 								px={12 / 8}
 							>
 								<ButtonBase
-									LinkComponent={Link}
+									component={Link}
 									to={`${message.who}`}
-									state={{ username: message.who }}
+									state={proxonas
+										.filter((proxona) => proxona.name.includes(message.who))
+										.map(({ name, videos, description, values }) => {
+											return {
+												name,
+												videos,
+												summary: description,
+												tags: values,
+											};
+										})}
 									sx={{
 										color: "#fff",
 										px: 8 / 8,
@@ -139,15 +163,16 @@ export const ChatInterface = ({ proxonas }) => {
 									<Typography variant="caption" sx={{ paddingRight: "10px" }}>
 										{message.who}
 									</Typography>
-									<i class="bi bi-info-circle" style={{ fontSize: 12 }}></i>
+									<i className="bi bi-info-circle" style={{ fontSize: 12 }}></i>
 								</ButtonBase>
+
 								<Stack direction={"row"}>
 									<Stack
 										sx={{
 											px: 12 / 8,
 										}}
 									>
-										<i class="bi bi-emoji-smile"></i>
+										<i className="bi bi-emoji-smile"></i>
 									</Stack>
 									<Typography
 										sx={{
@@ -166,7 +191,7 @@ export const ChatInterface = ({ proxonas }) => {
 				)}
 				{botIsLoading && (
 					<Stack className="chat-wrapper bot">
-						<Stack className="chat-message bot">Loading...</Stack>
+						<Stack className="chat-message bot">Typing...</Stack>
 					</Stack>
 				)}
 			</Stack>
@@ -179,21 +204,15 @@ export const ChatInterface = ({ proxonas }) => {
 					sendMessage(e.target.value);
 				}}
 			>
-				{/* <InputBase
-					disabled={botIsLoading ? true : false}
-					sx={{ ml: 1, flex: 1 }}
-					fullWidth
-					inputProps={{ "aria-label": "search google maps" }}
-					value={inputMessage}
-					onChange={(e) => setInputMessage(e.target.value)}
-					placeholder="또는, 내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!"
-				> */}
 				{proxonas.length > 0 && (
 					<MentionsInput
 						disabled={botIsLoading ? true : false}
 						singleLine
 						value={inputMessage}
-						onChange={(e) => setInputMessage(e.target.value)}
+						onChange={(e, newValue, newPlainTextValue, mentions) => {
+							setValues([...mentions, ...values]);
+							setInputMessage(newPlainTextValue);
+						}}
 						style={defaultStyle}
 						placeholder={"Mention people using '@'"}
 						a11ySuggestionsListLabel={"Suggested mentions"}
@@ -202,14 +221,14 @@ export const ChatInterface = ({ proxonas }) => {
 						<Mention
 							data={proxonas.map((proxona) => ({
 								id: proxona.name + "_" + proxona.id,
-								display: proxona.name,
+								display: "@" + proxona.name,
 							}))}
+							appendSpaceOnAdd={true}
 							trigger="@"
 							style={{ backgroundColor: "#6d53d3" }}
 						/>
 					</MentionsInput>
 				)}
-				{/* </InputBase> */}
 				<IconButton
 					disabled={botIsLoading ? true : false}
 					type="submit"

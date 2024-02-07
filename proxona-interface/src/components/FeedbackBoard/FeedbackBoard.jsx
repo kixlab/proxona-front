@@ -10,38 +10,34 @@ import FloatingToolbarPlugin from "../../plugins/FloatingToolbarPlugin";
 // import { dummy } from "../../data/dummy";
 import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import { Typography } from "@mui/material";
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 import axios from "axios";
 import { port } from "../../data/port";
 import { useParams } from "react-router-dom";
 
-function useDebouncedLexicalOnChange(
-	getEditorState,
-	callback,
-	delay
-  ) {
+function useDebouncedLexicalOnChange(getEditorState, callback, delay) {
 	const lastPayloadRef = React.useRef(null);
 	const callbackRef = React.useRef(callback);
 	React.useEffect(() => {
-	  callbackRef.current = callback;
+		callbackRef.current = callback;
 	}, [callback]);
 	const callCallbackWithLastPayload = React.useCallback(() => {
-	  if (lastPayloadRef.current) {
-		callbackRef.current?.(lastPayloadRef.current);
-	  }
+		if (lastPayloadRef.current) {
+			callbackRef.current?.(lastPayloadRef.current);
+		}
 	}, []);
 	const call = useDebouncedCallback(callCallbackWithLastPayload, delay);
 	const onChange = React.useCallback(
-	  (editorState) => {
-		editorState.read(() => {
-		  lastPayloadRef.current = getEditorState(editorState);
-		  call();
-		});
-	  },
-	  [call, getEditorState]
+		(editorState) => {
+			editorState.read(() => {
+				lastPayloadRef.current = getEditorState(editorState);
+				call();
+			});
+		},
+		[call, getEditorState]
 	);
 	return onChange;
-  }
+}
 
 function OnChangePlugin({ onChange }) {
 	const [editor] = useLexicalComposerContext();
@@ -62,32 +58,27 @@ export const ACTION_TYPE = {
 };
 
 export default function FeedbackBoard(props) {
-	const {plot} = props
-	const {handleId} = useParams()
+	const { plot } = props;
+	const { handleId } = useParams();
 
 	if (!plot || !plot.draft) {
-		return <Typography>loading..</Typography>
+		return <Typography>loading..</Typography>;
 	}
-	return (
-		<Editor
-			handleId={handleId}
-			{...props}
-		/>
-	)
-	
+	return <Editor handleId={handleId} {...props} />;
 }
 
-const Editor = ({handleId, plot, proxonas, createFeedback}) => {
-	const {draft} = plot
+const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
+	console.log(plot);
+	const { draft } = plot;
 
 	const initEditor = (editor) => {
 		if (draft) {
-			const root = $getRoot()
-			const p = $createParagraphNode()
-			p.append($createTextNode(draft))
-			root.append(p)
+			const root = $getRoot();
+			const p = $createParagraphNode();
+			p.append($createTextNode(draft));
+			root.append(p);
 		}
-	  };
+	};
 
 	const initialConfig = {
 		editorState: initEditor,
@@ -113,16 +104,16 @@ const Editor = ({handleId, plot, proxonas, createFeedback}) => {
 				proxona_id: proxona.id,
 				highlighted: content,
 			});
-			return res.data.body
+			return res.data.body;
 		} catch (err) {
-            console.log(err);
-        }
+			console.log(err);
+		}
 	};
 
 	const getEditorState = (editorState) => ({
 		text: $getRoot().getTextContent(false),
-		stateJson: JSON.stringify(editorState)
-	  });
+		stateJson: JSON.stringify(editorState),
+	});
 
 	const savePlot = async (draft) => {
 		const res = await axios.patch(
@@ -130,20 +121,20 @@ const Editor = ({handleId, plot, proxonas, createFeedback}) => {
 			{
 				draft,
 			}
-		);	
-	}
+		);
+	};
 
 	const debouncedOnChange = useCallback((value) => {
-		console.log(new Date(), value);
+		// console.log(new Date(), value);
 		// TODO: send to server
-		savePlot(value.text)
-	  }, []);
+		savePlot(value.text);
+	}, []);
 
-	  const onChange = useDebouncedLexicalOnChange(
+	const onChange = useDebouncedLexicalOnChange(
 		getEditorState,
 		debouncedOnChange,
 		1000
-	  );
+	);
 
 	return (
 		<LexicalComposer initialConfig={initialConfig}>
@@ -155,7 +146,7 @@ const Editor = ({handleId, plot, proxonas, createFeedback}) => {
 				}
 			/>
 			<HistoryPlugin />
-			<OnChangePlugin onChange={onChange}/>
+			<OnChangePlugin onChange={onChange} />
 			{floatingAnchorElem && (
 				<FloatingToolbarPlugin
 					anchorElem={floatingAnchorElem}
@@ -166,4 +157,4 @@ const Editor = ({handleId, plot, proxonas, createFeedback}) => {
 			)}
 		</LexicalComposer>
 	);
-}
+};

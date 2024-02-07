@@ -34,6 +34,7 @@ function PlotPlanning({ plot, proxonas }) {
 	const open = Boolean(anchorEl);
 
 	const createFeedback = async ({ mode, proxona_id, highlighted }) => {
+		console.log({ mode, proxona_id, plot, highlighted });
 		try {
 			const response = await axios.post(
 				port + `youtube_api/${id}/plot/${plot.id}/feedback/`,
@@ -44,7 +45,7 @@ function PlotPlanning({ plot, proxonas }) {
 					highlighted,
 				}
 			);
-			setFeedbackHistory([...feedbackHistory, response.data]);
+			setFeedbackHistory([...feedbackHistory, response.data.body]);
 			return response;
 		} catch (err) {
 			console.log(err);

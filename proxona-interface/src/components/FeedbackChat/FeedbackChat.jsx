@@ -54,8 +54,9 @@ export const FeedbackChat = () => {
 	// };
 
 	const filterMessage = (msg) => {
-		const lastIndex = msg.lastIndexOf("AIMessage(content='");
-		return lastIndex;
+		const lastIndex = msg.lastIndexOf("content=");
+		const bracketIndex = msg.lastIndexOf(")");
+		return [lastIndex, bracketIndex];
 	};
 
 	const getMessages = useCallback(async () => {
@@ -68,7 +69,10 @@ export const FeedbackChat = () => {
 				console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
-					text: message[1].substring(filterMessage(message[1])),
+					text: message[1].substring(
+						filterMessage(message[1])[0] + 9,
+						filterMessage(message[1])[1] - 3
+					),
 				}));
 				setMessages([...messages, ...mappedMessages]);
 				setBotIsLoading(false);

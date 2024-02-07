@@ -62,19 +62,23 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	const [targetPersona, setTargetPersona] = useState();
 	// const [profiles, setProfiles] = useState();
 
-	// const loadProxona = async () => {
-	// 	try {
-	// 		await axios.get(port + `youtube_api/${id}/proxona/`).then((response) => {
-	// 			setProfiles(response.data);
-	// 			console.log(response.data);
-	// 		});
-	// 	} catch (error) {
-	// 		console.error("Error loading proxonas", error);
-	// 	}
-	// };
+	const removePersona = async () => {
+		try {
+			await axios
+				.get(port + `youtube_api/${id}/excluding-persona/`, {
+					params: { excluding_name: targetPersona },
+				})
+				.then((response) => {
+					// setProfiles(response.data);
+					// console.log(response.data);
+				});
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		}
+	};
 
 	useEffect(() => {
-		//removePersona
+		removePersona();
 	}, [targetPersona]);
 
 	return (
@@ -82,14 +86,14 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 			<Stack spacing={40 / 8} sx={{ m: "5rem" }}>
 				<Typography variant="h4">어떤 프록소나와 기획을 해볼까요?</Typography>
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
-					{proxonas.map((proxona) => (
+					{proxonas.map((proxona, key) => (
 						<div>
 							<ProxonaProfile
 								username={proxona.name}
 								summary={proxona.description}
 								generated={proxona.generated}
 								tags={proxona.values}
-								avatarImg={avatars[proxona.id]}
+								avatarImg={avatars[key]}
 								revisable={true}
 							></ProxonaProfile>
 							<Button

@@ -4,43 +4,42 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { ModalWrapper, CloseButton } from "../../pages/styles/DesignSystem";
 import Video from "./Video";
-import { Dialog, Stack, IconButton, Avatar } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
-import axios from "axios";
-import YouTube from "react-youtube";
+import { Dialog, Stack, IconButton, Avatar, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 function ProxonaDetailModal() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	console.log(location)
 
-	const [videoIds, setVideoIds] = useState(["Zap4EGi88Jo", "u_8MEBiIFYg"]);
+	// const [videoIds, setVideoIds] = useState(["Zap4EGi88Jo", "u_8MEBiIFYg"]);
+
+	console.log(location.state);
 
 	const handleClose = () => {
-		navigate(location.state.previousLocation.pathname)
-	}
+		navigate(location.state.previousLocation.pathname);
+	};
 
 	return (
-		<Dialog
-		open={true}
-		onClose={handleClose}
-		>
+		<Dialog open={true} onClose={handleClose}>
 			<IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
+				aria-label="close"
+				onClick={handleClose}
+				sx={{
+					position: "absolute",
+					right: 8,
+					top: 8,
+					color: (theme) => theme.palette.grey[500],
+				}}
+			>
+				<CloseIcon />
+			</IconButton>
 			<Stack className="profile-detail-container">
 				<Stack className="header" padding={2}>
 					<div className="user-info">
-						<Avatar variant="square" src={`/static/img/animal/${location.state.avatarImg}.png`}/>
+						<Avatar
+							variant="square"
+							src={`/static/img/animal/${location.state.avatarImg}.png`}
+						/>
 						<div className="user-name">{location.state.username}</div>
 					</div>
 				</Stack>
@@ -51,12 +50,16 @@ function ProxonaDetailModal() {
 					{location.state.tags.map((tag) => {
 						return (
 							<div className="detail">
-								<div className="detail-head">{tag['dimension']}</div>
-								<div className="detail-tags">{tag['value']}</div>
+								<div className="detail-head">{tag["dimension"]}</div>
+								<div className="detail-tags">{tag["value"]}</div>
 							</div>
-						)
+						);
 					})}
 				</Stack>
+				<Typography paragraph>
+					{location.state.username} 가 자주 보는 비디오
+				</Typography>
+
 				<Stack
 					padding={2}
 					direction="row"
@@ -64,8 +67,8 @@ function ProxonaDetailModal() {
 					useFlexGap
 					flexWrap="wrap"
 				>
-					{videoIds.map((videoId) => (
-						<Video videoId={videoId} />
+					{location.state.videos.map(({ origin_id, title }) => (
+						<Video videoId={origin_id} />
 					))}
 				</Stack>
 			</Stack>

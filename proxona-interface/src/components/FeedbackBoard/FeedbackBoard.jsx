@@ -68,7 +68,6 @@ export default function FeedbackBoard(props) {
 }
 
 const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
-	console.log(plot);
 	const { draft } = plot;
 
 	const initEditor = (editor) => {

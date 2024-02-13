@@ -28,10 +28,14 @@ const DimensionToggleGroup = ({
 	attributes,
 	attribute,
 	onChange,
+	dimension,
+	setDisplayExplain,
 	readonly,
 }) => {
 	const handleChange = (event, newAttribute) => {
 		onChange(newAttribute);
+
+		setDisplayExplain({ [dimension]: newAttribute });
 	};
 	// const [displayExpla, setDisplayExpla] = useState(null);
 	// const explaValue = (attr) => {
@@ -47,26 +51,26 @@ const DimensionToggleGroup = ({
 			value={attribute?.value}
 			exclusive
 			onChange={handleChange}
-			// fullWidth="true"
+			fullWidth="true"
 			size="small"
 		>
 			{attributes.map((attr) => (
 				<ToggleButton value={attr} disabled={readonly}>
-					<Tooltip
+					{/* <Tooltip
 						title={
 							attr.split("-").length - 1 == 1 && attr.includes("-")
 								? attr.slice(attr.indexOf("-") + 1)
 								: attr
 						}
 						key={attr}
-					>
-						#
-						{attr.includes(")")
-							? attr.slice(0, attr.indexOf(")") + 1)
-							: attr.includes("-")
-							? attr.slice(0, attr.indexOf("-"))
-							: attr}
-					</Tooltip>
+					> */}
+					#{attr.split(":")[0]}
+					{/* {attr.includes(")")
+						? attr.slice(0, attr.indexOf(")") + 1)
+						: attr.includes("-")
+						? attr.slice(0, attr.indexOf("-"))
+						: attr} */}
+					{/* </Tooltip> */}
 				</ToggleButton>
 			))}
 		</ToggleButtonGroup>
@@ -129,17 +133,19 @@ const SelectAttributes = ({
 	attributes,
 	initValues,
 	onSelect,
+	explainable,
 	readonly = false,
 	extendable = false,
 }) => {
 	const { id } = useParams();
+
 	const [dimensions, setDimensions] = useState(
 		Object.fromEntries(
 			Object.entries(attributes).map(([dimension, values]) => {
 				return [
 					dimension,
 					values.map((value) => ({
-						value,
+						value: value,
 						selected: initValues ? initValues[dimension] === value : false,
 					})),
 				];
@@ -149,6 +155,7 @@ const SelectAttributes = ({
 	const [targetDimension, setTargetDimension] = useState("");
 	const [addValueDialogOpen, setAddValueDialogOpen] = useState(false);
 	const [isGenerating, setIsGenerating] = useState(null);
+	const [displayExplain, setDisplayExplain] = useState({});
 
 	const addValues = (dimension, value) => {
 		setDimensions({
@@ -178,10 +185,9 @@ const SelectAttributes = ({
 				}
 			);
 			if (response) {
-			
 				addValues(
-					Object.entries(response.data["new values"])[0][0], //should be replaced to 'new_value'
-					Object.entries(response.data["new values"])[0][1]
+					Object.entries(response.data["new_value"])[0][0], //should be replaced to 'new_value'
+					Object.entries(response.data["new_value"])[0][1]
 				);
 
 				setIsGenerating("");
@@ -198,7 +204,7 @@ const SelectAttributes = ({
 					return [
 						dimension,
 						values.map((value) => ({
-							value,
+							value: value,
 							selected: initValues ? initValues[dimension] === value : false,
 						})),
 					];
@@ -212,7 +218,17 @@ const SelectAttributes = ({
 			{Object.entries(dimensions).map(([dimension, values]) => {
 				return (
 					<Stack key={dimension} spacing={1}>
-						<Typography>{dimension}</Typography>
+						<Stack direction={"row"}>
+							<Typography variant="h6">{dimension}</Typography>
+							<Typography sx={{ ml: 3, color: "#6d53d3" }}>
+								{dimension === Object.keys(displayExplain)[0] &&
+								Object.values(displayExplain)[0]?.includes(":")
+									? Object.values(displayExplain)[0].split(":")[0] +
+									  "|" +
+									  Object.values(displayExplain)[0].split(":")[1]
+									: ""}
+							</Typography>
+						</Stack>
 						<Stack
 							sx={{ width: "100%" }}
 							direction={"row"}
@@ -223,6 +239,8 @@ const SelectAttributes = ({
 								attributes={values.map(({ value }) => value)}
 								attribute={values.filter(({ selected }) => selected)[0]}
 								readonly={readonly}
+								dimension={dimension}
+								setDisplayExplain={setDisplayExplain}
 								onChange={(newAttribute) => {
 									const nextDim = {
 										...dimensions,

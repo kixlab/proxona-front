@@ -12,18 +12,14 @@ import {
 	Paper,
 	InputBase,
 	Divider,
+	Avatar,
 	IconButton,
 } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { port } from "../../data/port";
+import { avatars } from "../../data/avatar";
 
-//TODO
-// [x] scroll bottom to top when chat messages reach the bottom of the page
-// [x] suggestion : add suggestion messages
-// [x] change background color style
-// [x] setloading
-
-export const FeedbackChat = () => {
+export const FeedbackChat = ({ proxonas }) => {
 	// const [messages, setMessages] = useState(textMessage);
 	const [messages, setMessages] = useState([]);
 	const { id } = useParams();
@@ -172,7 +168,17 @@ export const FeedbackChat = () => {
 											px: 12 / 8,
 										}}
 									>
-										<i class="bi bi-emoji-smile"></i>
+										<Avatar
+											sx={{ width: 30, height: 30 }}
+											variant="square"
+											src={`/static/img/animal/${
+												avatars[
+													proxonas.filter((proxona) =>
+														proxona.name.includes(message.who)
+													)[0]["cluster_id"]
+												]
+											}.png`}
+										/>
 									</Stack>
 									<Typography
 										sx={{

@@ -50,13 +50,14 @@ function ProxonaDetailModal() {
 					{location.state.tags.map((tag) => {
 						return (
 							<div className="detail">
-								<div className="detail-head">{tag["dimension"]}</div>
-								<div className="detail-tags">{tag["value"]}</div>
+								<div className="detail-head">{tag["dimension_name"]}</div>
+								<div className="detail-tags">{tag["name"]}</div>
 							</div>
 						);
 					})}
 				</Stack>
 				<Typography paragraph>
+					<i class="bi bi-chat-right-dots-fill"></i>
 					{location.state.username} 가 자주 보는 비디오
 				</Typography>
 

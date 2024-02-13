@@ -11,18 +11,21 @@ import {
 	Stack,
 	Typography,
 	Paper,
+	Avatar,
 	InputBase,
 	Divider,
 	IconButton,
 } from "@mui/material";
+import { avatars } from "../../data/avatar";
+
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { MentionsInput, Mention } from "react-mentions";
 import { useSelector } from "react-redux";
 import defaultStyle from "./defaultStyle";
 
 export const ChatInterface = ({ proxonas }) => {
-	// const [messages, setMessages] = useState(textMessage);
 	const [messages, setMessages] = useState([]);
+	const location = useLocation();
 
 	const [inputMessage, setInputMessage] = useState("");
 	const [initial, setInitial] = useState(true);
@@ -55,25 +58,18 @@ export const ChatInterface = ({ proxonas }) => {
 	};
 
 	const getMessages = useCallback(async () => {
-		const regex = /@\w+/g;
-		console.log(values);
-
 		setBotIsLoading(true);
 		axios
 			.post(port + `youtube_api/${id}/generate_response/`, {
 				user_question: messages[messages.length - 1].text,
 				mention: values.length > 0 ? true : false,
-				whom:
-					values.length > 0
-						? values.map(({ display }) => {
-								return display;
-						  })
-						: "none",
+				whom: values.length > 0 ? values[0] : "none",
 			})
 			.then((res) => {
 				console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
+
 					text: message[1].substring(
 						filterMessage(message[1])[0] + 9,
 						filterMessage(message[1])[1] - 3
@@ -90,6 +86,17 @@ export const ChatInterface = ({ proxonas }) => {
 			getMessages();
 		}
 	}, [getMessages]);
+
+	useEffect(() => {
+		const scrollToBottom = () => {
+			if (chatContainerRef.current) {
+				chatContainerRef.current.scrollTop =
+					chatContainerRef.current.scrollHeight;
+			}
+		};
+
+		scrollToBottom();
+	}, [messages, botIsLoading]);
 
 	return (
 		<Stack height={1} overflow={"hidden"}>
@@ -142,16 +149,22 @@ export const ChatInterface = ({ proxonas }) => {
 								<ButtonBase
 									component={Link}
 									to={`${message.who}`}
-									state={proxonas
-										.filter((proxona) => proxona.name.includes(message.who))
-										.map(({ name, videos, description, values }) => {
-											return {
-												name,
-												videos,
-												summary: description,
-												tags: values,
-											};
-										})}
+									state={
+										proxonas
+											.filter((proxona) => proxona.name.includes(message.who))
+											.map(
+												({ name, cluster_id, videos, description, values }) => {
+													return {
+														username: name,
+														videos: videos,
+														summary: description,
+														tags: values,
+														avatarImg: avatars[cluster_id],
+														previousLocation: location,
+													};
+												}
+											)[0]
+									}
 									sx={{
 										color: "#fff",
 										px: 8 / 8,
@@ -172,7 +185,16 @@ export const ChatInterface = ({ proxonas }) => {
 											px: 12 / 8,
 										}}
 									>
-										<i className="bi bi-emoji-smile"></i>
+										<Avatar
+											variant="square"
+											src={`/static/img/animal/${
+												avatars[
+													proxonas.filter((proxona) =>
+														proxona.name.includes(message.who)
+													)[0]["cluster_id"]
+												]
+											}.png`}
+										/>
 									</Stack>
 									<Typography
 										sx={{
@@ -210,7 +232,12 @@ export const ChatInterface = ({ proxonas }) => {
 						singleLine
 						value={inputMessage}
 						onChange={(e, newValue, newPlainTextValue, mentions) => {
-							setValues([...mentions, ...values]);
+							if (mentions.length > 0) {
+								mentions.map(({ display }) => {
+									const removeAt = display.replace("@", "");
+									setValues([removeAt, ...values]);
+								});
+							}
 							setInputMessage(newPlainTextValue);
 						}}
 						style={defaultStyle}

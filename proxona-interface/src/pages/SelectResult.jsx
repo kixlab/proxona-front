@@ -47,18 +47,6 @@ const SelectResult = () => {
 		setFilteredProfile(groupedData);
 	}, [profiles]);
 
-	// const loadData = async () => {
-	// 	try {
-	// 		await axios
-	// 			.post(port + `youtube_api/${id}/create-persona-exp/`)
-	// 			.then((response) => {
-	// 				setAttribute(response.data);
-	// 			});
-	// 	} catch (error) {
-	// 		console.error("Error submitting form", error);
-	// 	}
-	// };
-
 	const loadAttr = async () => {
 		try {
 			await axios
@@ -78,7 +66,7 @@ const SelectResult = () => {
 			await axios
 				.get(port + `youtube_api/${id}/current-persona/`)
 				.then((response) => {
-					console.log(response);
+					console.log(response.data);
 					setProfiles(response.data);
 					dispatch(loadPersonas(response.data));
 					if (response.data.length > 0) {
@@ -135,14 +123,20 @@ const SelectResult = () => {
 										board={true}
 										username={profile.name}
 										summary={profile.description}
-										avatarImg={avatars[i]}
+										avatarImg={
+											avatars[
+												profile.cluster_id
+													? profile.cluster_id
+													: Math.floor(Math.random() * 11)
+											]
+										}
 										componentProps={{
 											onClick: () => {
 												setAttribute(
 													Object.assign(
 														{},
 														...profile.values.map((dv) => ({
-															[dv.dimension]: dv.value,
+															[dv.dimension_name]: dv.name,
 														}))
 													)
 												);

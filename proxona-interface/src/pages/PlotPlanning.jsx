@@ -45,6 +45,7 @@ function PlotPlanning({ plot, proxonas }) {
 					highlighted,
 				}
 			);
+
 			setFeedbackHistory([...feedbackHistory, response.data.body]);
 			return response;
 		} catch (err) {
@@ -52,22 +53,17 @@ function PlotPlanning({ plot, proxonas }) {
 		}
 	};
 
-	// useEffect(() => {
-	// 	createFeedback();
-	// }, [feedbackForm]);
-
 	return (
 		<Stack height={1}>
 			<Stack direction="row" sx={{ width: "100%", height: "100%" }} flex={1}>
 				<Stack flex={2} p={2} spacing={10 / 8} height={1}>
-					<Typography variant="h6">
+					<Typography variant="h5">
 						이제 PROXONA의 피드백을 받아 비디오를 구체적으로 기획해봅시다.
 					</Typography>
 					<Typography>
 						아래 Text Editor 를 자유롭게 편집하고, PROXONA의 피드백을
 						받아보세요.{" "}
 					</Typography>
-
 					{proxonas.length > 0 && (
 						<Stack flexDirection={"row"}>
 							현재 함께 참여하고 있는 Proxona: {proxonas.length}
@@ -96,12 +92,14 @@ function PlotPlanning({ plot, proxonas }) {
 									},
 								}}
 							>
-								{proxonas.map((proxona) => (
+								{proxonas.map((proxona, key) => (
 									<MenuItem onClick={handleClose}>
 										<Avatar
 											sx={{ width: 24, height: 24, marginRight: "10px" }}
 											variant="square"
-											src={`/static/img/animal/${avatars[proxona.id]}.png`}
+											src={`/static/img/animal/${
+												avatars[proxona.cluster_id]
+											}.png`}
 										/>
 										{proxona.name} : {proxona.description}
 									</MenuItem>
@@ -110,7 +108,10 @@ function PlotPlanning({ plot, proxonas }) {
 						</Stack>
 					)}
 
-					<Paper sx={{ flex: 1, bgcolor: "#24292F" }} elevation={4}>
+					<Paper
+						sx={{ overflowY: "scroll", flex: 1, bgcolor: "#24292F" }}
+						elevation={4}
+					>
 						<FeedbackBoard
 							plot={plot}
 							proxonas={proxonas}
@@ -119,7 +120,7 @@ function PlotPlanning({ plot, proxonas }) {
 					</Paper>
 				</Stack>
 				<Stack flex={1} p={2}>
-					<FeedbackChat />
+					<FeedbackChat proxonas={proxonas} />
 				</Stack>
 			</Stack>
 

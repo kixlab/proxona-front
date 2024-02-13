@@ -115,7 +115,10 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 						height={"100%"}
 						overflow={"auto"}
 					>
-						<ChatInterface proxonas={proxonas} />
+						<ChatInterface
+							proxonas={proxonas}
+							componentProps={{ previousLocation: location }}
+						/>
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
 						<Typography variant="h6">
@@ -147,12 +150,12 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 													username={data.name}
 													summary={data.description}
 													tags={data.values}
-													avatarImg={avatars[key]}
+													avatarImg={avatars[data.cluster_id]}
 													componentProps={{
 														LinkComponent: Link,
 														to: data.name,
 														state: {
-															avatarImg: avatars[key],
+															avatarImg: avatars[data.cluster_id],
 															previousLocation: location,
 															username: data.name,
 															summary: data.description,
@@ -161,7 +164,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 														},
 													}}
 												/>
-												{isHovering.key == key &&
+												{/* {isHovering.key == key &&
 												isHovering.ishover &&
 												!data.generated ? (
 													<Button
@@ -177,11 +180,11 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 														}}
 													>
 														{data.name}를 더 잘 알아보고 싶다면?
-														{/* <i class="bi bi-plus"></i> */}
 													</Button>
-												) : (
+												) :
+													(
 													""
-												)}
+												)} */}
 											</Stack>
 										</Stack>
 									);

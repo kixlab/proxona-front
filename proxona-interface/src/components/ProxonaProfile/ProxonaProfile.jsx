@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
-import { Link, useLocation } from "react-router-dom";
 import {
 	Avatar,
 	Button,
@@ -23,7 +22,7 @@ function ProxonaProfile({
 			component={ButtonBase}
 			alignItems={"flex-start"}
 			sx={{
-				maxWidth: "300px",
+				maxWidth: "400px",
 				border: "1px solid #fff",
 				borderRadius: 2,
 				bgcolor: "#fff",
@@ -63,14 +62,15 @@ function ProxonaProfile({
 			<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`} />
 			<Typography variant="h6">{username}</Typography>
 			<Typography paragraph>
-				{summary.replace(/(['"])([^'"]*?)\1/g, function (match, p1, p2) {
+				{summary}
+				{/* {summary.replace(/(['"])([^'"]*?)\1/g, function (match, p1, p2) {
 					return p1 === '"' ? "'" + p2 + "'" : '"' + p2 + '"';
-				})}
+				})} */}
 			</Typography>
 			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
 				{tags &&
 					tags
-						.map((tag) => tag["value"])
+						.map((tag) => tag["name"])
 						.map((tag) => {
 							return <Chip label={`#${tag}`} color="primary" size="small" />;
 						})}

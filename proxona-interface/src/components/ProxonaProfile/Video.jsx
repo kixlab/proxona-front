@@ -15,7 +15,6 @@ const Video = ({ videoId }) => {
 		// access to player in all event handlers via event.target
 		e.target.pauseVideo();
 	};
-	// console.log(videoId);
 
 	return <YouTube videoId={videoId} opts={opts} onReady={_onReady} />;
 };

@@ -18,14 +18,18 @@ const SelectPersona = ({ extendable }) => {
 	const loadData = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${location.state.handleId}/get-dim-val-set/`, {
-					headers: { "Content-Type": "application/json" },
-				})
+				.get(
+					port + `youtube_api/${location.state.handleId}/get-dim-val-def-set/`,
+					{
+						headers: { "Content-Type": "application/json" },
+					}
+				)
 				.then((response) => {
 					setAttrubutes(response.data);
 					if (Object.keys(response.data).length > 0) {
 						setData(true);
 					}
+
 					dispatch(initAttribute(response.data));
 				});
 		} catch (error) {
@@ -35,6 +39,8 @@ const SelectPersona = ({ extendable }) => {
 	useEffect(() => {
 		loadData();
 	}, []);
+
+	const handleSelect = () => {};
 
 	return (
 		<Container
@@ -61,8 +67,10 @@ const SelectPersona = ({ extendable }) => {
 				{data ? (
 					<SelectAttributes
 						attributes={attributeList}
-						readonly={true}
+						// readonly={true}
+						explainable={true}
 						extendable={false}
+						onSelect={handleSelect}
 					/>
 				) : (
 					<div>no data loaded</div>

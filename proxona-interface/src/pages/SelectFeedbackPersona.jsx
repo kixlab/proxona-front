@@ -59,16 +59,17 @@ const ReviseValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
-	const [targetPersona, setTargetPersona] = useState();
+	const [targetPersona, setTargetPersona] = useState([]);
 	// const [profiles, setProfiles] = useState();
 
 	const removePersona = async () => {
 		try {
 			await axios
 				.get(port + `youtube_api/${id}/excluding-persona/`, {
-					params: { excluding_name: targetPersona },
+					excluding_names: targetPersona,
 				})
 				.then((response) => {
+					console.log(response);
 					// setProfiles(response.data);
 					// console.log(response.data);
 				});
@@ -78,6 +79,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	};
 
 	useEffect(() => {
+		console.log(targetPersona);
 		removePersona();
 	}, [targetPersona]);
 
@@ -85,6 +87,10 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		<Container>
 			<Stack spacing={40 / 8} sx={{ m: "5rem" }}>
 				<Typography variant="h4">어떤 프록소나와 기획을 해볼까요?</Typography>
+				<Typography variant="h5">
+					기획에 참여하지 않는 프록소나는 하단에 '기획에서 빼기' 를 눌러주세요
+				</Typography>
+
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
 					{proxonas.map((proxona, key) => (
 						<div>
@@ -93,12 +99,14 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 								summary={proxona.description}
 								generated={proxona.generated}
 								tags={proxona.values}
-								avatarImg={avatars[key]}
+								avatarImg={avatars[proxona.cluster_id]}
 								revisable={true}
 							></ProxonaProfile>
 							<Button
 								sx={{ color: "white" }}
-								onClick={(proxona) => setTargetPersona(proxona)}
+								onClick={() =>
+									setTargetPersona([proxona.name, ...targetPersona])
+								}
 							>
 								기획에서 빼기
 							</Button>

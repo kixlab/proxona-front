@@ -99,7 +99,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 								summary={proxona.description}
 								generated={proxona.generated}
 								tags={proxona.values}
-								avatarImg={avatars[proxona.cluster_id]}
+								avatarImg={avatars[proxona.idx]}
 								revisable={true}
 							></ProxonaProfile>
 							<Button

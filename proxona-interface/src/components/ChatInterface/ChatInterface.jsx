@@ -159,7 +159,7 @@ export const ChatInterface = ({ proxonas }) => {
 														videos: videos,
 														summary: description,
 														tags: values,
-														avatarImg: avatars[cluster_id],
+														avatarImg: avatars[idx],
 														previousLocation: location,
 													};
 												}
@@ -186,12 +186,13 @@ export const ChatInterface = ({ proxonas }) => {
 										}}
 									>
 										<Avatar
+											sx={{ width: 30, height: 30 }}
 											variant="square"
 											src={`/static/img/animal/${
 												avatars[
 													proxonas.filter((proxona) =>
 														proxona.name.includes(message.who)
-													)[0]["cluster_id"]
+													)[0]["idx"]
 												]
 											}.png`}
 										/>

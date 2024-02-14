@@ -125,8 +125,8 @@ const SelectResult = () => {
 										summary={profile.description}
 										avatarImg={
 											avatars[
-												profile.cluster_id
-													? profile.cluster_id
+												profile.idx
+													? profile.idx
 													: Math.floor(Math.random() * 11)
 											]
 										}

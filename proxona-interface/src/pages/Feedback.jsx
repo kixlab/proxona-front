@@ -22,7 +22,7 @@ function Feedback() {
 
 	const loadPlot = async () => {
 		try {
-			const response = await axios.get(`${port}youtube_api/${handleId}/plot/`);
+			const response = await axios.get(port + `youtube_api/${handleId}/plot/`);
 			if (response.data !== "" && !response.data.completed) {
 				setPlot(response.data);
 			}
@@ -114,7 +114,7 @@ function Feedback() {
 					<FeedbackDraft
 						channel={handleId}
 						plot={plot}
-						goToNext={() => navigate(`editor/${handleId}`)}
+						goToNext={() => navigate(`editor/${plot.id}`)}
 						goToPrev={() => navigate(`/${handleId}/feedback`)}
 						proxonas={proxonas}
 					/>

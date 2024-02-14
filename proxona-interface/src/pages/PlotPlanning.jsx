@@ -34,7 +34,6 @@ function PlotPlanning({ plot, proxonas }) {
 	const open = Boolean(anchorEl);
 
 	const createFeedback = async ({ mode, proxona_id, highlighted }) => {
-		console.log({ mode, proxona_id, plot, highlighted });
 		try {
 			const response = await axios.post(
 				port + `youtube_api/${id}/plot/${plot.id}/feedback/`,
@@ -46,7 +45,7 @@ function PlotPlanning({ plot, proxonas }) {
 				}
 			);
 
-			setFeedbackHistory([...feedbackHistory, response.data.body]);
+			setFeedbackHistory([...feedbackHistory, response.data]);
 			return response;
 		} catch (err) {
 			console.log(err);
@@ -97,9 +96,7 @@ function PlotPlanning({ plot, proxonas }) {
 										<Avatar
 											sx={{ width: 24, height: 24, marginRight: "10px" }}
 											variant="square"
-											src={`/static/img/animal/${
-												avatars[proxona.cluster_id]
-											}.png`}
+											src={`/static/img/animal/${avatars[proxona.idx]}.png`}
 										/>
 										{proxona.name} : {proxona.description}
 									</MenuItem>

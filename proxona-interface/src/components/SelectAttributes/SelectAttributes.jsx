@@ -186,7 +186,7 @@ const SelectAttributes = ({
 			);
 			if (response) {
 				addValues(
-					Object.entries(response.data["new_value"])[0][0], //should be replaced to 'new_value'
+					Object.entries(response.data["new_value"])[0][0],
 					Object.entries(response.data["new_value"])[0][1]
 				);
 
@@ -224,7 +224,7 @@ const SelectAttributes = ({
 								{dimension === Object.keys(displayExplain)[0] &&
 								Object.values(displayExplain)[0]?.includes(":")
 									? Object.values(displayExplain)[0].split(":")[0] +
-									  "|" +
+									  " || " +
 									  Object.values(displayExplain)[0].split(":")[1]
 									: ""}
 							</Typography>

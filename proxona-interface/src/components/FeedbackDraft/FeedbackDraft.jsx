@@ -11,11 +11,11 @@ export const FeedbackDraft = ({
 	goToPrev,
 }) => {
 	if (!plot || !plot.topic || !plot.draft) {
-		goToPrev()
-		return
+		goToPrev();
+		return;
 	}
 
-	const {topic, draft} = plot
+	const { topic, draft } = plot;
 
 	return (
 		<div className="feedback-draft-container">
@@ -47,9 +47,9 @@ export const FeedbackDraft = ({
 					</Paper>
 
 					<Stack alignSelf={"flex-end"} flexDirection={"row"}>
-						<button className="button-prev" onClick={goToPrev}>
+						{/* <button className="button-prev" onClick={goToPrev}>
 							이전
-						</button>
+						</button> */}
 						<button className="button-next" onClick={goToNext}>
 							다음
 						</button>

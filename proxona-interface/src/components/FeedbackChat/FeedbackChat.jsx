@@ -81,7 +81,7 @@ export const FeedbackChat = ({ proxonas }) => {
 
 	useEffect(() => {
 		if (messages.length > 0 && messages[messages.length - 1].who === "me") {
-			getMessages();
+			// getMessages();
 		}
 	}, [getMessages]);
 
@@ -175,7 +175,7 @@ export const FeedbackChat = ({ proxonas }) => {
 												avatars[
 													proxonas.filter((proxona) =>
 														proxona.name.includes(message.who)
-													)[0]["cluster_id"]
+													)[0]["idx"]
 												]
 											}.png`}
 										/>

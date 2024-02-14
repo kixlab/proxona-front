@@ -9,6 +9,7 @@
 import "./index.css";
 
 import { $isCodeHighlightNode } from "@lexical/code";
+import { $isAtNodeEnd } from "@lexical/selection";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { mergeRegister, $insertNodeToNearestRoot } from "@lexical/utils";
@@ -37,6 +38,7 @@ import { setFloatingElemPosition } from "./utils/setFloatingElemPosition";
 import { getDOMRangeRect } from "./utils/getDomRangeRect";
 import { dummy } from "../../data/dummy";
 import { ACTION_TYPE } from "../../components/FeedbackBoard/FeedbackBoard";
+import { colors } from "../../data/color";
 
 export const INSERT_INLINE_COMMAND = createCommand("INSERT_INLINE_COMMAND");
 
@@ -190,7 +192,11 @@ function TextFormatFloatingToolbar({
 		try {
 			const res = await onAction(action, proxona, content);
 			editor.update(() => {
-				ss.insertText(selectedAction === `append` ? `${content} ${res}` : res);
+				const highlight = $createTextNode(
+					selectedAction === `append` ? `${content} ${res}` : res
+				).setStyle(`background-color: ${colors[proxona.idx]}`);
+				ss.insertNodes([highlight]);
+				// ss.insertText(selectedAction === `append` ? `${content} ${res}` : res);
 			});
 		} catch (err) {
 			console.error("Error executing action", err);
@@ -209,6 +215,7 @@ function TextFormatFloatingToolbar({
 								onClick={() => {
 									editor.update(() => {
 										const ss = $getSelection();
+										console.log(ss.focus);
 										const content = ss.getTextContent();
 										excuteAction(selectedAction, proxona, content, ss);
 										editor.setEditable(false);
@@ -217,6 +224,7 @@ function TextFormatFloatingToolbar({
 								}}
 								className={"popup-item"}
 								aria-label="Insert link"
+								style={{ backgroundColor: colors[proxona.idx] }}
 							>
 								{proxona.name}
 							</button>

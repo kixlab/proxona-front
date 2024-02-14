@@ -7,6 +7,7 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import FloatingToolbarPlugin from "../../plugins/FloatingToolbarPlugin";
+import CodeHighlightPlugin from "../../plugins/CodeHighlightPlugin";
 // import { dummy } from "../../data/dummy";
 import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import { Typography } from "@mui/material";
@@ -103,7 +104,7 @@ const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
 				proxona_id: proxona.id,
 				highlighted: content,
 			});
-			return res.data.body;
+			return res.data.revised_text;
 		} catch (err) {
 			console.log(err);
 		}
@@ -125,7 +126,6 @@ const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
 
 	const debouncedOnChange = useCallback((value) => {
 		// console.log(new Date(), value);
-		// TODO: send to server
 		savePlot(value.text);
 	}, []);
 

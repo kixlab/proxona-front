@@ -65,7 +65,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	const removePersona = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${id}/excluding-persona/`, {
+				.post(port + `youtube_api/${id}/excluding-persona/`, {
 					excluding_names: targetPersona,
 				})
 				.then((response) => {

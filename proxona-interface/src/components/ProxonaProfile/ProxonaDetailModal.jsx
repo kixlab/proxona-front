@@ -4,7 +4,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { ModalWrapper, CloseButton } from "../../pages/styles/DesignSystem";
 import Video from "./Video";
-import { Dialog, Stack, IconButton, Avatar, Typography } from "@mui/material";
+import {
+	Dialog,
+	Chip,
+	Stack,
+	IconButton,
+	Avatar,
+	Typography,
+	Divider,
+	Box,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 function ProxonaDetailModal() {
@@ -40,24 +49,36 @@ function ProxonaDetailModal() {
 							variant="square"
 							src={`/static/img/animal/${location.state.avatarImg}.png`}
 						/>
+						<Box component="div" sx={{ pr: 2, display: "inline" }}></Box>
 						<div className="user-name">{location.state.username}</div>
 					</div>
 				</Stack>
-				<Stack className="message" padding={1}>
+				<Divider></Divider>
+				<Stack className="message" padding={2}>
 					{location.state.summary}
 				</Stack>
 				<Stack className="selectors" padding={2}>
 					{location.state.tags.map((tag) => {
 						return (
 							<div className="detail">
-								<div className="detail-head">{tag["dimension_name"]}</div>
-								<div className="detail-tags">{tag["name"]}</div>
+								<Chip
+									className="detail-head"
+									label={tag["dimension_name"]}
+								></Chip>
+								<Chip
+									className="detail-tags"
+									color="primary"
+									label={tag["name"]}
+								></Chip>
 							</div>
 						);
 					})}
 				</Stack>
-				<Typography paragraph>
-					<i class="bi bi-chat-right-dots-fill"></i>
+				<Divider></Divider>
+				<Typography paragraph padding={2}>
+					<Box component="div" sx={{ pr: 1, display: "inline" }}>
+						<i class="bi bi-chat-right-dots-fill"></i>
+					</Box>
 					{location.state.username} 가 자주 보는 비디오
 				</Typography>
 

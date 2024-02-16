@@ -150,6 +150,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 													username={data.name}
 													summary={data.description}
 													tags={data.values}
+													generated={data.generated}
 													avatarImg={avatars[data.idx]}
 													componentProps={{
 														LinkComponent: Link,

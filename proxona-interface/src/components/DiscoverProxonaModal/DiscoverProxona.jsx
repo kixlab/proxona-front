@@ -21,6 +21,7 @@ const DiscoverProxona = () => {
 
 	const [selectedDimension, setSelectedDimension] = useState(null);
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
+	const [clickCustomize, setClickCustomize] = useState(false);
 	const dispatch = useDispatch();
 
 	const handleClose = () => {
@@ -33,6 +34,7 @@ const DiscoverProxona = () => {
 
 	const loadPersona = async () => {
 		console.log(selectedDimensionTrue);
+		setClickCustomize(true);
 		await axios
 			.post(port + `youtube_api/${id}/create-persona-exp/`, {
 				dim_val: selectedDimensionTrue,
@@ -40,6 +42,7 @@ const DiscoverProxona = () => {
 			.then((response) => {
 				console.log(response);
 				dispatch(addPersona(response.data));
+				setClickCustomize(false);
 				handleClose();
 			})
 			.catch((error) => {
@@ -93,14 +96,18 @@ const DiscoverProxona = () => {
 				/>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose}>닫기</Button>
+				<Button disabled={clickCustomize} onClick={handleClose}>
+					닫기
+				</Button>
 				<Button
 					variant="contained"
-					disabled={disabled}
+					disabled={disabled | clickCustomize}
 					onClick={() => loadPersona()}
 				>
 					{disabled
 						? `${threshold}개 이상의 특성을 골라주세요`
+						: clickCustomize
+						? `추가 중...`
 						: `프록소나 추가하기`}
 				</Button>
 			</DialogActions>

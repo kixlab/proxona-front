@@ -222,11 +222,15 @@ const SelectAttributes = ({
 							<Typography variant="h6">{dimension}</Typography>
 							<Typography sx={{ ml: 3, color: "#6d53d3" }}>
 								{dimension === Object.keys(displayExplain)[0] &&
-								Object.values(displayExplain)[0]?.includes(":")
-									? Object.values(displayExplain)[0].split(":")[0] +
-									  " || " +
-									  Object.values(displayExplain)[0].split(":")[1]
-									: ""}
+								Object.values(displayExplain)[0]?.includes(":") ? (
+									<div>
+										<b>{Object.values(displayExplain)[0].split(":")[0]}</b>
+										<i class="bi bi-arrow-right"></i>
+										{Object.values(displayExplain)[0].split(":")[1]}
+									</div>
+								) : (
+									""
+								)}
 							</Typography>
 						</Stack>
 						<Stack

@@ -3,6 +3,7 @@ import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요
 import {
 	Avatar,
 	Button,
+	Item,
 	ButtonBase,
 	Chip,
 	Stack,
@@ -14,6 +15,7 @@ function ProxonaProfile({
 	username,
 	summary,
 	tags,
+	generated,
 	componentProps,
 	disabled = false,
 }) {
@@ -22,7 +24,7 @@ function ProxonaProfile({
 			component={ButtonBase}
 			alignItems={"flex-start"}
 			sx={{
-				maxWidth: "400px",
+				width: "400px",
 				border: "1px solid #fff",
 				borderRadius: 2,
 				bgcolor: "#fff",
@@ -36,37 +38,27 @@ function ProxonaProfile({
 			disabled={disabled}
 			{...componentProps}
 		>
-			{/* <Link
-					style={{ color: "inherit", textDecoration: "inherit" }}
-					to={username}
-					state={{
-						previousLocation: location,
-						username: username,
-						summary: summary,
-						tags: tags,
-					}}
-				> */}
-			{/* <div className="header">
-						<div className="user-info">
-							<div className="user-face">
-								<i
-									className="bi bi-emoji-smile"
-									style={styles.index[index]}
-								></i>
-							</div>
-							<div className="user-name" style={styles.index[index]}>
-								{username}
-							</div>
-						</div>
-					</div> */}
-			<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`} />
+			<Stack
+				flex
+				sx={{ width: "100%" }}
+				direction="row"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Avatar variant="square" src={`/static/img/animal/${avatarImg}.png`} />
+
+				{generated ? (
+					<Chip
+						sx={{ bgcolor: "#e1e1e7", color: "#111" }}
+						size="small"
+						label={"created by AI"}
+					/>
+				) : (
+					<div></div>
+				)}
+			</Stack>
 			<Typography variant="h6">{username}</Typography>
-			<Typography paragraph>
-				{summary}
-				{/* {summary.replace(/(['"])([^'"]*?)\1/g, function (match, p1, p2) {
-					return p1 === '"' ? "'" + p2 + "'" : '"' + p2 + '"';
-				})} */}
-			</Typography>
+			<Typography paragraph>{summary}</Typography>
 			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
 				{tags &&
 					tags

@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./ProxonaProfile.css"; // 이 파일에 CSS 스타일을 정의하세요.
 import { useNavigate, useLocation } from "react-router-dom";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import { ModalWrapper, CloseButton } from "../../pages/styles/DesignSystem";
 import Video from "./Video";
 import {
 	Dialog,
@@ -75,24 +73,27 @@ function ProxonaDetailModal() {
 					})}
 				</Stack>
 				<Divider></Divider>
-				<Typography paragraph padding={2}>
-					<Box component="div" sx={{ pr: 1, display: "inline" }}>
-						<i class="bi bi-chat-right-dots-fill"></i>
-					</Box>
-					{location.state.username} 가 자주 보는 비디오
-				</Typography>
-
-				<Stack
-					padding={2}
-					direction="row"
-					spacing={{ xs: 1, sm: 2 }}
-					useFlexGap
-					flexWrap="wrap"
-				>
-					{location.state.videos.map(({ origin_id, title }) => (
-						<Video videoId={origin_id} />
-					))}
-				</Stack>
+				{location.state.videos.length > 0 && (
+					<>
+						<Typography paragraph padding={2}>
+							<Box component="div" sx={{ pr: 1, display: "inline" }}>
+								<i class="bi bi-chat-right-dots-fill"></i>
+							</Box>
+							{location.state.username} 가 자주 보는 비디오
+						</Typography>
+						<Stack
+							padding={2}
+							direction="row"
+							spacing={{ xs: 1, sm: 2 }}
+							useFlexGap
+							flexWrap="wrap"
+						>
+							{location.state.videos.map(({ origin_id, title }) => (
+								<Video videoId={origin_id} />
+							))}
+						</Stack>
+					</>
+				)}
 			</Stack>
 		</Dialog>
 	);

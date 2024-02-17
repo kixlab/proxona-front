@@ -153,7 +153,14 @@ export const ChatInterface = ({ proxonas }) => {
 										proxonas
 											.filter((proxona) => proxona.name.includes(message.who))
 											.map(
-												({ name, cluster_id, videos, description, values }) => {
+												({
+													name,
+													cluster_id,
+													videos,
+													description,
+													values,
+													idx,
+												}) => {
 													return {
 														username: name,
 														videos: videos,

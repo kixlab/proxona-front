@@ -7,8 +7,10 @@ import {
 	ButtonBase,
 	Chip,
 	Stack,
+	IconButton,
 	Typography,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 function ProxonaProfile({
 	avatarImg,
@@ -17,6 +19,7 @@ function ProxonaProfile({
 	tags,
 	generated,
 	componentProps,
+	revisable,
 	disabled = false,
 }) {
 	return (
@@ -51,14 +54,29 @@ function ProxonaProfile({
 					<Chip
 						sx={{ bgcolor: "#e1e1e7", color: "#111" }}
 						size="small"
-						label={"created by AI"}
+						label={"customized by creator"}
 					/>
 				) : (
 					<div></div>
 				)}
 			</Stack>
 			<Typography variant="h6">{username}</Typography>
-			<Typography paragraph>{summary}</Typography>
+			<Stack
+				flex
+				direction="row"
+				justifyContent="space-between"
+				alignItems="center"
+			>
+				<Typography paragraph>{summary}</Typography>
+				{revisable ? (
+					<IconButton aria-label="edit" size="large" color="primary">
+						<EditIcon />
+					</IconButton>
+				) : (
+					""
+				)}
+			</Stack>
+
 			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
 				{tags &&
 					tags

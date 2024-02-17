@@ -54,8 +54,8 @@ function onError(error) {
 }
 
 export const ACTION_TYPE = {
-	append: "APPEND",
-	switch: "SWITCH",
+	"이 부분에 대한 너의 생각은 어때?": "APPEND",
+	"이건 어떻게 고치면 좋을까": "SWITCH",
 };
 
 export default function FeedbackBoard(props) {

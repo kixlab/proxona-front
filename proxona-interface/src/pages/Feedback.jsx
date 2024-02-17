@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
 import { FeedbackDraft } from "../components/FeedbackDraft/FeedbackDraft";
+import ProxonaDetailModal from "../components/ProxonaProfile/ProxonaDetailModal";
 import PlotPlanning from "./PlotPlanning";
 import { port } from "../data/port";
 import SelectFeedbackPersona from "./SelectFeedbackPersona";
@@ -121,9 +122,11 @@ function Feedback() {
 				}
 			/>
 			<Route
-				path="/editor/:plotId"
+				path="/editor/:plotId/"
 				element={<PlotPlanning plot={plot} proxonas={proxonas} />}
-			/>
+			>
+				<Route path="persona/:persona" element={<ProxonaDetailModal />} />
+			</Route>
 		</Routes>
 	);
 }

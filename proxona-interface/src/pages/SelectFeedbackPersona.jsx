@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { port } from "../data/port";
 import { Dialog, DialogContent, TextField, DialogActions } from "@mui/material";
@@ -59,8 +59,13 @@ const ReviseValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
-	const [targetPersona, setTargetPersona] = useState([]);
-	// const [profiles, setProfiles] = useState();
+	const [targetPersona, setTargetPersona] = useState(() => {
+		const saved = localStorage.getItem("excluding_names");
+		const initialValue = JSON.parse(saved);
+		return initialValue || [];
+	});
+
+	const [profiles, setProfiles] = useState(proxonas);
 
 	const removePersona = async () => {
 		try {
@@ -69,9 +74,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					excluding_names: targetPersona,
 				})
 				.then((response) => {
-					console.log(response);
-					// setProfiles(response.data);
-					// console.log(response.data);
+					setProfiles(response.data);
 				});
 		} catch (error) {
 			console.error("Error loading proxonas", error);
@@ -79,8 +82,11 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	};
 
 	useEffect(() => {
-		console.log(targetPersona);
-		removePersona();
+		console.log(profiles);
+		if (targetPersona.length > 0) {
+			removePersona();
+			localStorage.setItem("excluding_names", JSON.stringify(targetPersona));
+		}
 	}, [targetPersona]);
 
 	return (
@@ -92,7 +98,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 				</Typography>
 
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
-					{proxonas.map((proxona, key) => (
+					{profiles.map((proxona, key) => (
 						<div>
 							<ProxonaProfile
 								username={proxona.name}
@@ -120,12 +126,6 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 				>
 					다음
 				</Button>
-				<ReviseValueDialog
-				// open={addValueDialogOpen}
-				// dimension={targetDimension}
-				// handleClose={handleAddValueDialogClose}
-				// handleAdd={addValues}
-				/>
 			</Stack>
 		</Container>
 	);

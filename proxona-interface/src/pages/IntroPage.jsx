@@ -128,7 +128,7 @@ const IntroPage = () => {
 				<Route path="discover" element={<DiscoverProxona />} />
 				<Route path="similar/:id" element={<SimilarPersona />} />
 			</Route>
-			<Route path="/feedback/*" element={<Feedback />} />
+			<Route path="/feedback/*" element={<Feedback />}></Route>
 		</Routes>
 	);
 };

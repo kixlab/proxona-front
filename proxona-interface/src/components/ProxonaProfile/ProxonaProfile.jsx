@@ -74,7 +74,10 @@ function ProxonaProfile({
 				justifyContent="space-between"
 				alignItems="center"
 			>
-				{revisable && Object.values(activateTextArea)[0] ? (
+				{revisable &&
+				activateTextArea.length > 0 &&
+				activateTextArea.filter((x) => x.name.includes(username))[0]
+					.activate ? (
 					<Input
 						sx={{ color: "black" }}
 						type="text"
@@ -86,23 +89,33 @@ function ProxonaProfile({
 				)}
 				{!revisable ? (
 					""
-				) : !Object.values(activateTextArea)[0] ? (
+				) : activateTextArea.length > 0 &&
+				  activateTextArea.filter((x) => x.name.includes(username))[0]
+						.activate === false ? (
 					<IconButton
 						aria-label="edit"
 						size="large"
 						color="primary"
-						onClick={() => setActivateTextArea({ [username]: true })}
+						onClick={() => {
+							setActivateTextArea(
+								activateTextArea.map((x) =>
+									x.name === username ? { ...x, activate: true } : x
+								)
+							);
+						}}
 					>
 						<EditIcon />
 					</IconButton>
 				) : (
-					<IconButton aria-label="save" size="large" color="primary">
-						<SaveIcon
-							onClick={() => {
-								setActivateTextArea({ [username]: false });
-								reviseSummary();
-							}}
-						/>
+					<IconButton
+						aria-label="save"
+						size="large"
+						color="primary"
+						onClick={() => {
+							reviseSummary();
+						}}
+					>
+						<SaveIcon />
 					</IconButton>
 				)}
 			</Stack>
@@ -118,9 +131,6 @@ function ProxonaProfile({
 
 			{/* </Link> */}
 		</Stack>
-
-		// 	</div>
-		// </div>
 	);
 }
 

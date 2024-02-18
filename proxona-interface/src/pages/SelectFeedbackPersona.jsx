@@ -12,14 +12,27 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
 	const [targetPersona, setTargetPersona] = useState(() => {
 		const saved = localStorage.getItem("excluding_names");
-		const initialValue = JSON.parse(saved);
-		return initialValue || [];
+		if (saved) {
+			const initialValue = JSON.parse(saved);
+			return initialValue;
+		} else {
+			return [];
+		}
 	});
 
 	const [profiles, setProfiles] = useState(proxonas);
-	const [activateTextArea, setActivateTextArea] = useState({ null: false });
-	const [inSave, setInSave] = useState(false);
+
 	const [inputText, setInputText] = useState("");
+	const [activateTextArea, setActivateTextArea] = useState(() => {
+		const m = proxonas.map((proxona) => {
+			return {
+				name: proxona.name,
+				activate: false,
+				description: proxona.description,
+			};
+		});
+		return m;
+	});
 
 	const removePersona = async () => {
 		try {
@@ -28,7 +41,6 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					excluding_names: targetPersona,
 				})
 				.then((response) => {
-					console.log(response);
 					setProfiles(response.data);
 				});
 		} catch (error) {
@@ -37,20 +49,54 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	};
 
 	const reviseSummary = async () => {
-		try {
-			await axios
-				.post(port + `youtube_api/${id}/updating-persona/`, {
-					proxona_name: Object.keys(activateTextArea)[0],
-					updating_description: inputText,
-				})
-				.then((response) => {
-					console.log(response.data);
-					// setProfiles(response.data);
-				});
-		} catch (error) {
-			console.error("Error loading proxonas", error);
+		if (inputText) {
+			try {
+				await axios
+					.post(port + `youtube_api/${id}/updating-persona/`, {
+						proxona_name: activateTextArea.filter((x) => x.activate === true)[0]
+							.name,
+						updating_description: inputText,
+					})
+					.then((response) => {
+						setActivateTextArea(
+							activateTextArea.map((x) => ({
+								...x,
+								activate: false,
+							}))
+						);
+
+						setProfiles(
+							profiles.map((x) => {
+								if (x.name === response.data.name) {
+									return {
+										...x,
+										description: response.data.description,
+									};
+								} else {
+									return x;
+								}
+							})
+						);
+					});
+			} catch (error) {
+				console.error("Error loading proxonas", error);
+			}
 		}
 	};
+
+	useEffect(() => {
+		if (proxonas.length > 0) {
+			const m = proxonas.map((proxona) => {
+				return {
+					name: proxona.name,
+					activate: false,
+					description: proxona.description,
+				};
+			});
+
+			setActivateTextArea(m);
+		}
+	}, [proxonas]);
 
 	useEffect(() => {
 		if (targetPersona.length > 0) {
@@ -68,31 +114,78 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 				</Typography>
 
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
-					{profiles.map((proxona, key) => (
-						<div>
-							<ProxonaProfile
-								username={proxona.name}
-								summary={proxona.description}
-								generated={proxona.generated}
-								tags={proxona.values}
-								avatarImg={avatars[proxona.idx]}
-								revisable={true}
-								reviseSummary={reviseSummary}
-								activateTextArea={activateTextArea}
-								setActivateTextArea={setActivateTextArea}
-								setInputText={setInputText}
-								inputText={inputText}
-							></ProxonaProfile>
-							<Button
-								sx={{ color: "white" }}
-								onClick={() =>
-									setTargetPersona([proxona.name, ...targetPersona])
-								}
-							>
-								기획에서 빼기
-							</Button>
-						</div>
-					))}
+					{!targetPersona.length > 0 && profiles
+						? proxonas.map((proxona) => (
+								<div key={proxona.name}>
+									<ProxonaProfile
+										username={proxona.name}
+										summary={proxona.description}
+										generated={proxona.generated}
+										tags={proxona.values}
+										avatarImg={avatars[proxona.idx]}
+										revisable={true}
+										reviseSummary={reviseSummary}
+										activateTextArea={activateTextArea}
+										setActivateTextArea={setActivateTextArea}
+										setInputText={setInputText}
+										inputText={inputText}
+									></ProxonaProfile>
+									<Button
+										sx={{ color: "white" }}
+										onClick={() =>
+											setTargetPersona([proxona.name, ...targetPersona])
+										}
+									>
+										기획에서 빼기
+									</Button>
+								</div>
+						  ))
+						: profiles.map((proxona) => (
+								<div key={proxona.name}>
+									<ProxonaProfile
+										username={proxona.name}
+										summary={proxona.description}
+										generated={proxona.generated}
+										tags={proxona.values}
+										avatarImg={avatars[proxona.idx]}
+										revisable={true}
+										reviseSummary={reviseSummary}
+										activateTextArea={activateTextArea}
+										setActivateTextArea={setActivateTextArea}
+										setInputText={setInputText}
+										inputText={inputText}
+									></ProxonaProfile>
+									<Button
+										sx={{ color: "white" }}
+										onClick={() =>
+											setTargetPersona([proxona.name, ...targetPersona])
+										}
+									>
+										기획에서 빼기
+									</Button>
+								</div>
+						  ))}
+					{/* <div>
+						<ProxonaProfile
+							username={proxona.name}
+							summary={proxona.description}
+							generated={proxona.generated}
+							tags={proxona.values}
+							avatarImg={avatars[proxona.idx]}
+							revisable={true}
+							reviseSummary={reviseSummary}
+							activateTextArea={activateTextArea}
+							setActivateTextArea={setActivateTextArea}
+							setInputText={setInputText}
+							inputText={inputText}
+						></ProxonaProfile>
+						<Button
+							sx={{ color: "white" }}
+							onClick={() => setTargetPersona([proxona.name, ...targetPersona])}
+						>
+							기획에서 빼기
+						</Button>
+					</div> */}
 				</Stack>
 				<Button
 					variant="contained"

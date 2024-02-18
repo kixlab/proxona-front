@@ -8,55 +8,6 @@ import { Paper, Stack, Typography, Button, Container } from "@mui/material";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { avatars } from "../data/avatar";
 
-const ReviseValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
-	const [value, setValue] = useState("");
-	const { id } = useParams();
-
-	const addNewAtt = async () => {
-		try {
-			await axios.post(port + `youtube_api/${id}/add-new-value/`, {
-				dimension: dimension,
-				value,
-			});
-
-			handleAdd(dimension, value);
-			setValue("");
-		} catch (error) {
-			console.error("Error submitting form", error);
-		}
-	};
-
-	return (
-		<Dialog open={open} onClose={handleClose}>
-			<DialogContent p={2}>
-				<Typography gutterBottom>
-					<b style={{ textDecoration: "underline" }}>{dimension}</b>에 추가할
-					특성을 적어보세요.
-				</Typography>
-				<TextField
-					value={value}
-					onChange={(event) => {
-						setValue(event.target.value);
-					}}
-				/>
-			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleClose}>닫기</Button>
-				<Button
-					variant="contained"
-					disabled={value.length === 0}
-					onClick={() => {
-						addNewAtt();
-						handleClose();
-					}}
-				>
-					추가하기
-				</Button>
-			</DialogActions>
-		</Dialog>
-	);
-};
-
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
 	const [targetPersona, setTargetPersona] = useState(() => {
@@ -66,6 +17,9 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	});
 
 	const [profiles, setProfiles] = useState(proxonas);
+	const [activateTextArea, setActivateTextArea] = useState({ null: false });
+	const [inSave, setInSave] = useState(false);
+	const [inputText, setInputText] = useState("");
 
 	const removePersona = async () => {
 		try {
@@ -74,6 +28,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					excluding_names: targetPersona,
 				})
 				.then((response) => {
+					console.log(response);
 					setProfiles(response.data);
 				});
 		} catch (error) {
@@ -81,8 +36,23 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		}
 	};
 
+	const reviseSummary = async () => {
+		try {
+			await axios
+				.post(port + `youtube_api/${id}/updating-persona/`, {
+					proxona_name: Object.keys(activateTextArea)[0],
+					updating_description: inputText,
+				})
+				.then((response) => {
+					console.log(response.data);
+					// setProfiles(response.data);
+				});
+		} catch (error) {
+			console.error("Error loading proxonas", error);
+		}
+	};
+
 	useEffect(() => {
-		console.log(profiles);
 		if (targetPersona.length > 0) {
 			removePersona();
 			localStorage.setItem("excluding_names", JSON.stringify(targetPersona));
@@ -107,6 +77,11 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 								tags={proxona.values}
 								avatarImg={avatars[proxona.idx]}
 								revisable={true}
+								reviseSummary={reviseSummary}
+								activateTextArea={activateTextArea}
+								setActivateTextArea={setActivateTextArea}
+								setInputText={setInputText}
+								inputText={inputText}
 							></ProxonaProfile>
 							<Button
 								sx={{ color: "white" }}

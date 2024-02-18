@@ -9,7 +9,9 @@ import {
 	Stack,
 	IconButton,
 	Typography,
+	Input,
 } from "@mui/material";
+import SaveIcon from "@mui/icons-material/Save";
 import EditIcon from "@mui/icons-material/Edit";
 
 function ProxonaProfile({
@@ -19,7 +21,12 @@ function ProxonaProfile({
 	tags,
 	generated,
 	componentProps,
+	reviseSummary,
 	revisable,
+	setActivateTextArea,
+	activateTextArea,
+	inputText,
+	setInputText,
 	disabled = false,
 }) {
 	return (
@@ -67,13 +74,36 @@ function ProxonaProfile({
 				justifyContent="space-between"
 				alignItems="center"
 			>
-				<Typography paragraph>{summary}</Typography>
-				{revisable ? (
-					<IconButton aria-label="edit" size="large" color="primary">
+				{revisable && Object.values(activateTextArea)[0] ? (
+					<Input
+						sx={{ color: "black" }}
+						type="text"
+						value={inputText}
+						onChange={(e) => setInputText(e.target.value)}
+					></Input>
+				) : (
+					<Typography paragraph>{summary}</Typography>
+				)}
+				{!revisable ? (
+					""
+				) : !Object.values(activateTextArea)[0] ? (
+					<IconButton
+						aria-label="edit"
+						size="large"
+						color="primary"
+						onClick={() => setActivateTextArea({ [username]: true })}
+					>
 						<EditIcon />
 					</IconButton>
 				) : (
-					""
+					<IconButton aria-label="save" size="large" color="primary">
+						<SaveIcon
+							onClick={() => {
+								setActivateTextArea({ [username]: false });
+								reviseSummary();
+							}}
+						/>
+					</IconButton>
 				)}
 			</Stack>
 

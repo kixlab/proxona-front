@@ -34,7 +34,7 @@ export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
 						style={{
 							alignSelf: "flex-end",
 						}}
-						onClick={goToNext}
+						onClick={topic && !isLoading ? goToNext : ""}
 						disabled={!topic | isLoading ? true : false}
 						className="button-next"
 					>

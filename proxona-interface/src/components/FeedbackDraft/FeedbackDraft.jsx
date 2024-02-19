@@ -40,7 +40,7 @@ export const FeedbackDraft = ({
 						</Box>
 						<Divider />
 						<Box sx={{ p: 2 }}>
-							<Typography variant="h6" component="div">
+							<Typography variant="h6" component="div" whiteSpace={'pre-line'}>
 								{draft}
 							</Typography>
 						</Box>

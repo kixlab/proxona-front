@@ -159,6 +159,7 @@ function PlotPlanning({ plot, proxonas }) {
 					</Button>
 				</Stack>
 			</Stack>
+			{/* <Outlet/> */}
 		</>
 	);
 }

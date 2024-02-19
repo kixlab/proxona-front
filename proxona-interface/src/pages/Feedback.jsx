@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Outlet, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
 import { FeedbackDraft } from "../components/FeedbackDraft/FeedbackDraft";
@@ -123,7 +123,13 @@ function Feedback() {
 			/>
 			<Route
 				path="/editor/:plotId/"
-				element={<PlotPlanning plot={plot} proxonas={proxonas} />}
+				element={
+					<>
+						<PlotPlanning plot={plot} proxonas={proxonas} />
+						<Outlet/>
+					</>
+				
+			}
 			>
 				<Route path="persona/:persona" element={<ProxonaDetailModal />} />
 			</Route>

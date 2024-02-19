@@ -54,8 +54,8 @@ function onError(error) {
 }
 
 export const ACTION_TYPE = {
-	"이 부분에 대한 너의 생각은 어때?": "APPEND",
-	"이건 어떻게 고치면 좋을까": "SWITCH",
+	"이 부분에 대한 너의 생각은 어때?": "REVIEW",
+	"이건 어떻게 고치면 좋을까": "SUGGESTION",
 };
 
 export default function FeedbackBoard(props) {
@@ -86,7 +86,7 @@ const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
 		onError,
 	};
 
-	const actions = Object.keys(ACTION_TYPE);
+	const actions = Object.entries(ACTION_TYPE);
 	const [editorState, setEditorState] = useState();
 
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState(null);
@@ -101,9 +101,11 @@ const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
 		try {
 			const res = await createFeedback({
 				mode: actionType,
-				proxona_id: proxona.id,
-				highlighted: content,
+				proxona_name: proxona.name,
+				// proxona_id: proxona.id,
+				dragged: content,
 			});
+
 			return res.data.revised_text;
 		} catch (err) {
 			console.log(err);

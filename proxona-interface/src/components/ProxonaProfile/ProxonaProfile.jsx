@@ -73,16 +73,29 @@ function ProxonaProfile({
 				direction="row"
 				justifyContent="space-between"
 				alignItems="center"
+				width={"100%"}
 			>
 				{revisable &&
 				activateTextArea.length > 0 &&
 				activateTextArea.filter((x) => x.name.includes(username))[0]
 					.activate ? (
 					<Input
+						multiline
 						sx={{ color: "black" }}
 						type="text"
-						value={inputText}
-						onChange={(e) => setInputText(e.target.value)}
+						value={
+							activateTextArea.filter((x) => x.name.includes(username))[0]
+								.description
+						}
+						onChange={(e) => {
+							setActivateTextArea(
+								activateTextArea.map((x) =>
+									x.name === username && x.activate
+										? { ...x, description: e.target.value }
+										: x
+								)
+							);
+						}}
 					></Input>
 				) : (
 					<Typography paragraph>{summary}</Typography>

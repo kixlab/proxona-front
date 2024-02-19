@@ -49,38 +49,38 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	};
 
 	const reviseSummary = async () => {
-		if (inputText) {
-			try {
-				await axios
-					.post(port + `youtube_api/${id}/updating-persona/`, {
-						proxona_name: activateTextArea.filter((x) => x.activate === true)[0]
-							.name,
-						updating_description: inputText,
-					})
-					.then((response) => {
-						setActivateTextArea(
-							activateTextArea.map((x) => ({
-								...x,
-								activate: false,
-							}))
-						);
+		try {
+			await axios
+				.post(port + `youtube_api/${id}/updating-persona/`, {
+					proxona_name: activateTextArea.filter((x) => x.activate === true)[0]
+						.name,
+					updating_description: activateTextArea.filter(
+						(x) => x.activate === true
+					)[0].description,
+				})
+				.then((response) => {
+					setActivateTextArea(
+						activateTextArea.map((x) => ({
+							...x,
+							activate: false,
+						}))
+					);
 
-						setProfiles(
-							profiles.map((x) => {
-								if (x.name === response.data.name) {
-									return {
-										...x,
-										description: response.data.description,
-									};
-								} else {
-									return x;
-								}
-							})
-						);
-					});
-			} catch (error) {
-				console.error("Error loading proxonas", error);
-			}
+					setProfiles(
+						profiles.map((x) => {
+							if (x.name === response.data.name) {
+								return {
+									...x,
+									description: response.data.description,
+								};
+							} else {
+								return x;
+							}
+						})
+					);
+				});
+		} catch (error) {
+			console.error("Error loading proxonas", error);
 		}
 	};
 

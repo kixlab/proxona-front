@@ -41,15 +41,16 @@ function PlotPlanning({ plot, proxonas }) {
 
 	const [profiles, setProfiles] = useState(proxonas);
 
-	const createFeedback = async ({ mode, proxona_id, highlighted }) => {
+	const createFeedback = async ({ mode, dragged, proxona_name }) => {
 		try {
 			const response = await axios.post(
 				port + `youtube_api/${id}/plot/${plot.id}/feedback/`,
 				{
-					mode,
-					proxona: proxona_id,
-					plot: plot.id,
-					highlighted,
+					mode: mode,
+					proxona_name: proxona_name,
+					// proxona_id: proxona_id,
+					// plot: plot.id,
+					dragged: dragged,
 				}
 			);
 

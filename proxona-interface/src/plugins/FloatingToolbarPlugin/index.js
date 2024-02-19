@@ -208,7 +208,9 @@ function TextFormatFloatingToolbar({
 	return (
 		<div ref={popupCharStylesEditorRef} className="floating-text-format-popup">
 			{editor.isEditable()
-				? selectedAction && actions.indexOf(selectedAction) > -1
+				? selectedAction &&
+				  Object.values(Object.fromEntries(actions)).indexOf(selectedAction) >
+						-1
 					? proxonas.map((proxona) => (
 							<button
 								type="button"
@@ -233,7 +235,7 @@ function TextFormatFloatingToolbar({
 							<button
 								type="button"
 								onClick={() => {
-									setSelectedAction(action);
+									setSelectedAction(action[1]);
 									editor.update(() => {
 										const ss = $getSelection();
 									});
@@ -241,7 +243,7 @@ function TextFormatFloatingToolbar({
 								className={"popup-item"}
 								aria-label="Insert link"
 							>
-								{action}
+								{action[0]}
 							</button>
 					  ))
 				: null}
@@ -373,7 +375,7 @@ function useFloatingTextFormatToolbar(
 export default function FloatingToolbarPlugin({
 	anchorElem = document.body,
 	proxonas = proxonas,
-	actions = Object.keys(ACTION_TYPE),
+	actions = Object.values(ACTION_TYPE),
 	onAction,
 }) {
 	const [editor] = useLexicalComposerContext();

@@ -71,18 +71,28 @@ export const FeedbackChat = ({ proxonas }) => {
 				whom: values.length > 0 ? values[0] : "none",
 			})
 			.then((res) => {
-				console.log(res.data);
-				const mappedMessages = Object.entries(res.data).map((message) => ({
-					who: message[0],
+				const data = res.data;
+				const excludeList = localStorage.getItem("excluding_names");
+				if (excludeList && excludeList.length) {
+					Object.entries(res.data).map(([key, values]) => {
+						if (excludeList.includes(key)) {
+							delete data[key];
+						}
+					});
+					console.log(data);
 
-					text: message[1].substring(
-						filterMessage(message[1])[0] + 9,
-						filterMessage(message[1])[1] - 3
-					),
-				}));
-				setMessages([...messages, ...mappedMessages]);
-				setBotIsLoading(false);
-				setValues("");
+					const mappedMessages = Object.entries(data).map((message) => ({
+						who: message[0],
+
+						text: message[1].substring(
+							filterMessage(message[1])[0] + 9,
+							filterMessage(message[1])[1] - 3
+						),
+					}));
+					setMessages([...messages, ...mappedMessages]);
+					setBotIsLoading(false);
+					setValues("");
+				}
 			});
 	}, [messages]);
 

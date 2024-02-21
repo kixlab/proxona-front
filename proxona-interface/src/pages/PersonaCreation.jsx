@@ -150,12 +150,16 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 													username={data.name}
 													summary={data.description}
 													tags={data.values}
+													job={data.job}
 													generated={data.generated}
 													avatarImg={avatars[data.idx]}
 													componentProps={{
 														LinkComponent: Link,
 														to: data.name,
 														state: {
+															job: data.job,
+															generated: data.generated,
+															reason: data.reason,
 															avatarImg: avatars[data.idx],
 															previousLocation: location,
 															username: data.name,

@@ -19,9 +19,6 @@ function ProxonaDetailModal() {
 	const location = useLocation();
 
 	// const [videoIds, setVideoIds] = useState(["Zap4EGi88Jo", "u_8MEBiIFYg"]);
-
-	console.log(location.state);
-
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
 	};
@@ -49,33 +46,60 @@ function ProxonaDetailModal() {
 						/>
 						<Box component="div" sx={{ pr: 2, display: "inline" }}></Box>
 						<div className="user-name">{location.state.username}</div>
+						{location.state.generated ? (
+							<Chip
+								sx={{ ml: 2, mt: 1, bgcolor: "#e1e1e7", color: "#111" }}
+								size="small"
+								label={"customized by creator"}
+							/>
+						) : (
+							<div></div>
+						)}
 					</div>
 				</Stack>
 				<Divider></Divider>
-				<Stack className="message" padding={2}>
-					{location.state.summary}
+				<Stack className="message" padding={1}>
+					직업: {location.state.job} <br></br>
+					자기 소개: {location.state.summary}
 				</Stack>
-				<Stack className="selectors" padding={2}>
-					{location.state.tags.map((tag) => {
-						return (
-							<div className="detail">
-								<Chip
-									className="detail-head"
-									label={tag["dimension_name"]}
-								></Chip>
-								<Chip
-									className="detail-tags"
-									color="primary"
-									label={tag["name"]}
-								></Chip>
-							</div>
-						);
-					})}
+				<Divider></Divider>
+				<Stack className="selectors" padding={1}>
+					<Typography padding={1} sx={{ fontWeight: "600" }}>
+						<Box component="div" sx={{ pr: 1, display: "inline" }}>
+							<i class="bi bi-chat-right-dots-fill"></i>
+						</Box>
+						이런 특성을 가지고 있어요!
+					</Typography>
+					<Stack padding={1}>
+						{location.state.tags.map((tag) => {
+							return (
+								<div className="detail">
+									<Chip
+										className="detail-head"
+										label={tag["dimension_name"]}
+									></Chip>
+									<Chip
+										className="detail-tags"
+										color="primary"
+										label={tag["name"]}
+									></Chip>
+								</div>
+							);
+						})}
+					</Stack>
 				</Stack>
+				<Divider></Divider>
+				<Typography padding={1} sx={{ fontWeight: "600" }}>
+					<Box component="div" sx={{ pr: 1, display: "inline" }}>
+						<i class="bi bi-chat-right-dots-fill"></i>
+					</Box>
+					{location.state.username} 는 왜 이 채널을 시청할까요?
+				</Typography>
+				<Stack padding={1}>{location.state.reason}</Stack>
 				<Divider></Divider>
 				{location.state.videos.length > 0 && (
 					<>
-						<Typography paragraph padding={2}>
+						<Typography padding={1} sx={{ fontWeight: "600" }}>
 							<Box component="div" sx={{ pr: 1, display: "inline" }}>
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>

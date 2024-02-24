@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+	Outlet,
+	Route,
+	Routes,
+	useNavigate,
+	useParams,
+} from "react-router-dom";
 import axios from "axios";
 import { FeedbackIntro } from "../components/FeedbackIntro/FeedbackIntro";
 import { FeedbackDraft } from "../components/FeedbackDraft/FeedbackDraft";
@@ -11,19 +17,20 @@ import SelectFeedbackPersona from "./SelectFeedbackPersona";
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
 	const { id: handleId } = useParams();
-	// const [topic, setTopic] = useState("");
 	const [plot, setPlot] = useState({
-		id: 1,
+		id: null,
 		topic: null,
 		body: null,
 	});
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
+	const [isNewDraftLoading, setNewDraftLoading] = useState(false);
 
 	const navigate = useNavigate();
 
 	const loadPlot = async () => {
 		try {
 			const response = await axios.get(port + `youtube_api/${handleId}/plot/`);
+			console.log(response);
 			if (response.data !== "" && !response.data.completed) {
 				setPlot(response.data);
 			}
@@ -69,8 +76,26 @@ function Feedback() {
 		if (plot) {
 			getDraft(plot?.topic, () => navigate("draft"));
 		}
-		navigate("draft");
+		// navigate("draft");
 		console.log("createPlot is here");
+	};
+
+	const recreatePlot = async () => {
+		try {
+			setNewDraftLoading(true);
+			const response = await axios.post(
+				port + `youtube_api/${handleId}/plot/complete`,
+				{
+					completed: true,
+				}
+			);
+			if (response) {
+				setPlot({ ...plot, body: response.data.draft });
+				setNewDraftLoading(false);
+			}
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const loadProxona = async () => {
@@ -116,7 +141,9 @@ function Feedback() {
 						channel={handleId}
 						plot={plot}
 						goToNext={() => navigate(`editor/${plot.id}`)}
-						goToPrev={() => navigate(`/${handleId}/feedback`)}
+						goToRegenerate={() => recreatePlot()}
+						isLoading={isNewDraftLoading}
+						// goToPrev={() => navigate(`/${handleId}/feedback`)}
 						proxonas={proxonas}
 					/>
 				}
@@ -126,10 +153,9 @@ function Feedback() {
 				element={
 					<>
 						<PlotPlanning plot={plot} proxonas={proxonas} />
-						<Outlet/>
+						<Outlet />
 					</>
-				
-			}
+				}
 			>
 				<Route path="persona/:persona" element={<ProxonaDetailModal />} />
 			</Route>

@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Stack, Button, Paper, Typography, Divider, Box } from "@mui/material";
+import {
+	Stack,
+	Button,
+	Paper,
+	Typography,
+	Divider,
+	Box,
+	CircularProgress,
+} from "@mui/material";
 import "./FeedbackDraft.css";
 
 export const FeedbackDraft = ({
@@ -8,14 +16,17 @@ export const FeedbackDraft = ({
 	plot,
 	proxonas,
 	goToNext,
-	goToPrev,
+	goToRegenerate,
+	isLoading,
+	// goToPrev,
 }) => {
-	if (!plot || !plot.topic || !plot.draft) {
-		goToPrev();
-		return;
-	}
+	// if (!plot || !plot.topic || !plot.draft) {
+	// 	goToPrev();
+	// 	return;
+	// }
 
 	const { topic, draft } = plot;
+	console.log(isLoading);
 
 	return (
 		<div className="feedback-draft-container">
@@ -40,19 +51,35 @@ export const FeedbackDraft = ({
 						</Box>
 						<Divider />
 						<Box sx={{ p: 2 }}>
-							<Typography variant="h6" component="div" whiteSpace={'pre-line'}>
-								{draft}
-							</Typography>
+							{draft && !isLoading ? (
+								<Typography
+									variant="h6"
+									component="div"
+									whiteSpace={"pre-line"}
+								>
+									{draft}
+								</Typography>
+							) : (
+								<CircularProgress />
+							)}
 						</Box>
 					</Paper>
 
 					<Stack alignSelf={"flex-end"} flexDirection={"row"}>
-						{/* <button className="button-prev" onClick={goToPrev}>
-							이전
-						</button> */}
-						<button className="button-next" onClick={goToNext}>
+						<Button
+							className="button-prev"
+							disabled={isLoading}
+							onClick={goToRegenerate}
+						>
+							{isLoading ? "생성 중입니다.." : "다시 생성"}
+						</Button>
+						<Button
+							className="button-next"
+							disabled={isLoading}
+							onClick={goToNext}
+						>
 							다음
-						</button>
+						</Button>
 					</Stack>
 				</Stack>
 			</>

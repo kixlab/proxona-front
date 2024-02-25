@@ -18,7 +18,6 @@ import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
 import { port } from "../data/port";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { avatars } from "../data/avatar";
-import { Outlet } from "@mui/icons-material";
 
 function PlotPlanning({ plot, proxonas }) {
 	// const { plotId } = useParams();
@@ -39,6 +38,8 @@ function PlotPlanning({ plot, proxonas }) {
 		return initialValue || [];
 	});
 
+	const [messages, setMessages] = useState([]);
+
 	const [profiles, setProfiles] = useState(proxonas);
 
 	const createFeedback = async ({ mode, dragged, proxona_name }) => {
@@ -48,8 +49,6 @@ function PlotPlanning({ plot, proxonas }) {
 				{
 					mode: mode,
 					proxona_name: proxona_name,
-					// proxona_id: proxona_id,
-					// plot: plot.id,
 					dragged: dragged,
 				}
 			);
@@ -142,6 +141,9 @@ function PlotPlanning({ plot, proxonas }) {
 							elevation={4}
 						>
 							<FeedbackBoard
+								setMessages={setMessages}
+								messages={messages}
+								handleId={id}
 								plot={plot}
 								proxonas={profiles}
 								createFeedback={createFeedback}
@@ -149,7 +151,12 @@ function PlotPlanning({ plot, proxonas }) {
 						</Paper>
 					</Stack>
 					<Stack flex={1} p={2}>
-						<FeedbackChat proxonas={proxonas} removePersona={removePersona} />
+						<FeedbackChat
+							setMessages={setMessages}
+							messages={messages}
+							proxonas={proxonas}
+							removePersona={removePersona}
+						/>
 					</Stack>
 				</Stack>
 

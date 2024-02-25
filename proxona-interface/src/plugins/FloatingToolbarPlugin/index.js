@@ -191,9 +191,10 @@ function TextFormatFloatingToolbar({
 	const excuteAction = async (action, proxona, content, ss) => {
 		try {
 			const res = await onAction(action, proxona, content);
+			console.log(selectedAction);
 			editor.update(() => {
 				const highlight = $createTextNode(
-					selectedAction === `append` ? `${content} ${res}` : res
+					selectedAction === `suggestion` ? `${content}` : `${content}`
 				).setStyle(`background-color: ${colors[proxona.idx]}`);
 				ss.insertNodes([highlight]);
 				// ss.insertText(selectedAction === `append` ? `${content} ${res}` : res);
@@ -217,7 +218,6 @@ function TextFormatFloatingToolbar({
 								onClick={() => {
 									editor.update(() => {
 										const ss = $getSelection();
-										console.log(ss.focus);
 										const content = ss.getTextContent();
 										excuteAction(selectedAction, proxona, content, ss);
 										editor.setEditable(false);

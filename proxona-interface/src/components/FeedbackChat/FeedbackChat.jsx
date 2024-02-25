@@ -14,6 +14,7 @@ import {
 	Divider,
 	Avatar,
 	IconButton,
+	CircularProgress,
 } from "@mui/material";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { port } from "../../data/port";
@@ -22,12 +23,12 @@ import { avatars } from "../../data/avatar";
 import defaultStyle from "../ChatInterface/defaultStyle";
 import { Outlet } from "@mui/icons-material";
 
-export const FeedbackChat = ({ proxonas }) => {
+export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 	// const [messages, setMessages] = useState(textMessage);
-	const [messages, setMessages] = useState([]);
+	// const [messages, setMessages] = useState([]);
 	const { id } = useParams();
 	const [inputMessage, setInputMessage] = useState(
-		"내가 쓴 플롯에 대한 전반적인 생각을 말해줄래?"
+		"내가 쓴 스토리라인에 대한 전반적인 생각을 말해줄래?"
 	);
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
@@ -44,7 +45,7 @@ export const FeedbackChat = ({ proxonas }) => {
 	];
 
 	const sendMessage = (e) => {
-		if (inputMessage) {
+		if (inputMessage && inputMessage !== " ") {
 			setInitial(false);
 			setMessages([...messages, { who: "me", text: inputMessage }]);
 			setInputMessage(" ");
@@ -62,10 +63,17 @@ export const FeedbackChat = ({ proxonas }) => {
 		return [lastIndex, bracketIndex];
 	};
 
+	// console.log(messages);
+
 	const getMessages = useCallback(async () => {
+		console.log({
+			user_question: messages[messages.length - 1].text,
+			mention: values.length > 0 ? true : false,
+			whom: values.length > 0 ? values[0] : "none",
+		});
 		setBotIsLoading(true);
 		axios
-			.post(port + `youtube_api/${id}/generate_response/`, {
+			.post(port + `youtube_api/${id}/plot/chat/`, {
 				user_question: messages[messages.length - 1].text,
 				mention: values.length > 0 ? true : false,
 				whom: values.length > 0 ? values[0] : "none",
@@ -79,14 +87,14 @@ export const FeedbackChat = ({ proxonas }) => {
 							delete data[key];
 						}
 					});
-					console.log(data);
+					// console.log(data);
 
 					const mappedMessages = Object.entries(data).map((message) => ({
 						who: message[0],
 
 						text: message[1].substring(
 							filterMessage(message[1])[0] + 9,
-							filterMessage(message[1])[1] - 3
+							filterMessage(message[1])[1] - 2
 						),
 					}));
 					setMessages([...messages, ...mappedMessages]);
@@ -115,7 +123,7 @@ export const FeedbackChat = ({ proxonas }) => {
 		};
 
 		scrollToBottom();
-	}, [messages]);
+	}, [messages, botIsLoading]);
 
 	return (
 		<>
@@ -241,7 +249,9 @@ export const FeedbackChat = ({ proxonas }) => {
 					)}
 					{botIsLoading && (
 						<Stack className="chat-wrapper bot">
-							<Stack className="chat-message bot">Loading...</Stack>
+							<Stack className="chat-message bot">
+								<CircularProgress />
+							</Stack>
 						</Stack>
 					)}
 				</Stack>

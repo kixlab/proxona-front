@@ -67,6 +67,9 @@ function Feedback() {
 			}
 		} catch (err) {
 			console.error("Error creating new draft(plot)", err);
+			if (plot) {
+				callback();
+			}
 		} finally {
 			setIsDraftLoading(false);
 		}
@@ -76,6 +79,7 @@ function Feedback() {
 		if (plot) {
 			getDraft(plot?.topic, () => navigate("draft"));
 		}
+
 		// navigate("draft");
 		console.log("createPlot is here");
 	};

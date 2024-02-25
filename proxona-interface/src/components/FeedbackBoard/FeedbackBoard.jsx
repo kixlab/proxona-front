@@ -59,17 +59,26 @@ export const ACTION_TYPE = {
 };
 
 export default function FeedbackBoard(props) {
-	const { plot } = props;
+	const { plot, messages, setMessages } = props;
 	const { handleId } = useParams();
 
 	if (!plot || !plot.draft) {
 		return <Typography>loading..</Typography>;
 	}
-	return <Editor handleId={handleId} {...props} />;
+	return <Editor {...props} />;
 }
 
-const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
+const Editor = ({
+	handleId,
+	plot,
+	proxonas,
+	createFeedback,
+	messages,
+	setMessages,
+}) => {
 	const { draft } = plot;
+
+	// console.log(handleId);
 
 	const initEditor = (editor) => {
 		if (draft) {
@@ -102,11 +111,28 @@ const Editor = ({ handleId, plot, proxonas, createFeedback }) => {
 			const res = await createFeedback({
 				mode: actionType,
 				proxona_name: proxona.name,
-				// proxona_id: proxona.id,
 				dragged: content,
 			});
 
-			return res.data.revised_text;
+			if (res) {
+				// console.log(res.data);
+				setMessages([
+					...messages,
+					{
+						who: "me",
+						text: (
+							<>
+								{`@${proxona.name}`} <b>'{content}'</b>{" "}
+								{actionType == "REVIEW"
+									? "이 부분에 대한 너의 생각은 어때?"
+									: "이건 어떻게 고치면 좋을까?"}
+							</>
+						),
+					},
+					{ who: res.data.proxona["name"], text: res.data.feedback },
+				]);
+				return res.data.feedback;
+			}
 		} catch (err) {
 			console.log(err);
 		}

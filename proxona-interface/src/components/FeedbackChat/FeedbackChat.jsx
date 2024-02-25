@@ -91,7 +91,6 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 
 					const mappedMessages = Object.entries(data).map((message) => ({
 						who: message[0],
-
 						text: message[1].substring(
 							filterMessage(message[1])[0] + 9,
 							filterMessage(message[1])[1] - 2
@@ -128,7 +127,7 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 	return (
 		<>
 			<Stack height={1} overflow={"hidden"}>
-				<Stack flex={1} overflow={"auto"}>
+				<Stack flex={1} overflow={"auto"} ref={chatContainerRef}>
 					{initial ? (
 						<Stack spacing={20 / 8} alignSelf={"center"} py={40 / 8}>
 							<Typography variant="h6">

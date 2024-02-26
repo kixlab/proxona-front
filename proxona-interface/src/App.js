@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 // import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -11,7 +11,7 @@ function App() {
 	const { id } = useParams();
 	const [proxonas, setProxonas] = useState([]);
 
-	const loadProxona = async () => {
+	const loadProxona = useCallback(async () => {
 		try {
 			await axios
 				.get(port + `youtube_api/${id}/current-persona/`)
@@ -21,11 +21,12 @@ function App() {
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
+		console.log("load proxona!");
 		loadProxona();
-	}, [proxonas]);
+	}, [loadProxona]);
 
 	const onCreateProxona = (newProxona) => {
 		setProxonas([...proxonas, newProxona]);

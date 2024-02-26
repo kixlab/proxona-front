@@ -188,12 +188,14 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 														cluster_id,
 														videos,
 														description,
+														reason,
 														idx,
 														values,
 													}) => {
 														return {
 															username: name,
 															videos: videos,
+															reason: reason,
 															summary: description,
 															tags: values,
 															avatarImg: avatars[idx],

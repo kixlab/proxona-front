@@ -66,7 +66,6 @@ const SelectResult = () => {
 			await axios
 				.get(port + `youtube_api/${id}/current-persona/`)
 				.then((response) => {
-					console.log(response.data);
 					setProfiles(response.data);
 					dispatch(loadPersonas(response.data));
 					if (response.data.length > 0) {

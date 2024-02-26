@@ -73,7 +73,6 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 			await axios
 				.get(port + `youtube_api/${id}/current-persona/`)
 				.then((response) => {
-					console.log(response.data);
 					setProfiles(response.data);
 				});
 		} catch (error) {
@@ -157,7 +156,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 														LinkComponent: Link,
 														to: data.name,
 														state: {
-															job: data.job,	
+															job: data.job,
 															generated: data.generated,
 															reason: data.reason,
 															avatarImg: avatars[data.idx],

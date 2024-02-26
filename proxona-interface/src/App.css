@@ -2,8 +2,14 @@
 	text-align: center;
 }
 
-html, body, #root {
+html,
+body,
+#root {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+}
+
+iframe {
+	display: none;
 }

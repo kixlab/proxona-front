@@ -23,6 +23,8 @@ function ProxonaDetailModal() {
 		navigate(location.state.previousLocation.pathname);
 	};
 
+	console.log(location);
+
 	return (
 		<Dialog open={true} onClose={handleClose}>
 			<IconButton

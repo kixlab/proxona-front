@@ -191,7 +191,6 @@ function TextFormatFloatingToolbar({
 	const excuteAction = async (action, proxona, content, ss) => {
 		try {
 			const res = await onAction(action, proxona, content);
-			console.log(selectedAction);
 			editor.update(() => {
 				const highlight = $createTextNode(
 					selectedAction === `suggestion` ? `${content}` : `${content}`

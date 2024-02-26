@@ -59,6 +59,7 @@ export const ChatInterface = ({ proxonas }) => {
 
 	const getMessages = useCallback(async () => {
 		setBotIsLoading(true);
+		// console.log(messages);
 		axios
 			.post(port + `youtube_api/${id}/generate_response/`, {
 				user_question: messages[messages.length - 1].text,
@@ -66,7 +67,7 @@ export const ChatInterface = ({ proxonas }) => {
 				whom: values.length > 0 ? values[0] : "none",
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
 
@@ -158,6 +159,7 @@ export const ChatInterface = ({ proxonas }) => {
 													cluster_id,
 													videos,
 													description,
+													reason,
 													values,
 													idx,
 												}) => {
@@ -165,6 +167,7 @@ export const ChatInterface = ({ proxonas }) => {
 														username: name,
 														videos: videos,
 														summary: description,
+														reason: reason,
 														tags: values,
 														avatarImg: avatars[idx],
 														previousLocation: location,

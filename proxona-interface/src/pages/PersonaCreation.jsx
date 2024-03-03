@@ -92,7 +92,6 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 					proxonaContainerRef.current.scrollHeight;
 			}
 		};
-		console.log(proxonaContainerRef);
 
 		scrollToBottom();
 	}, [proxonaContainerRef]);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 // import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -6,12 +6,15 @@ import PersonaCreation from "./pages/PersonaCreation.jsx";
 import { Outlet, useParams } from "react-router-dom";
 import axios from "axios";
 import { port } from "./data/port.js";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
 	const { id } = useParams();
 	const [proxonas, setProxonas] = useState([]);
+	// const dispatch = useDispatch();
+	const { personas } = useSelector((state) => state.personaList);
 
-	const loadProxona = useCallback(async () => {
+	const loadProxona = async () => {
 		try {
 			await axios
 				.get(port + `youtube_api/${id}/current-persona/`)
@@ -21,12 +24,12 @@ function App() {
 		} catch (error) {
 			console.error("Error loading proxonas", error);
 		}
-	}, []);
+	};
 
 	useEffect(() => {
-		console.log("load proxona!");
+		console.log("load persona");
 		loadProxona();
-	}, [loadProxona]);
+	}, [personas]);
 
 	const onCreateProxona = (newProxona) => {
 		setProxonas([...proxonas, newProxona]);

@@ -17,13 +17,28 @@ import CloseIcon from "@mui/icons-material/Close";
 function ProxonaDetailModal() {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const [dv, setDv] = useState([]);
 
-	// const [videoIds, setVideoIds] = useState(["Zap4EGi88Jo", "u_8MEBiIFYg"]);
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
 	};
 
-	console.log(location);
+	useEffect(() => {
+		const outputArray = location.state.tags.reduce((acc, curr) => {
+			const existingItem = acc.find((item) => {
+				console.log(item);
+				return item.dimension_name === curr.dimension_name;
+			});
+			if (existingItem) {
+				existingItem.name.push(curr.name);
+			} else {
+				acc.push({ name: [curr.name], dimension_name: curr.dimension_name });
+			}
+			return acc;
+		}, []);
+
+		setDv(outputArray);
+	}, []);
 
 	return (
 		<Dialog open={true} onClose={handleClose}>
@@ -73,18 +88,19 @@ function ProxonaDetailModal() {
 						이런 특성을 가지고 있어요!
 					</Typography>
 					<Stack padding={1}>
-						{location.state.tags.map((tag) => {
+						{dv.map(({ dimension_name, name }) => {
 							return (
 								<div className="detail">
-									<Chip
-										className="detail-head"
-										label={tag["dimension_name"]}
-									></Chip>
-									<Chip
-										className="detail-tags"
-										color="primary"
-										label={tag["name"]}
-									></Chip>
+									<Chip className="detail-head" label={dimension_name}></Chip>
+									{name.map((tag) => {
+										return (
+											<Chip
+												className="detail-body"
+												color="primary"
+												label={tag}
+											></Chip>
+										);
+									})}
 								</div>
 							);
 						})}

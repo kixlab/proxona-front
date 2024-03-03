@@ -34,6 +34,8 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		return m;
 	});
 
+	console.log(targetPersona);
+
 	const removePersona = async () => {
 		try {
 			await axios

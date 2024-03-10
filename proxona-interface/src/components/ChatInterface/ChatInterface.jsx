@@ -34,6 +34,7 @@ export const ChatInterface = ({ proxonas }) => {
 	const [botIsLoading, setBotIsLoading] = useState(false);
 	const { id } = useParams();
 	const [values, setValues] = useState("");
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
@@ -61,19 +62,19 @@ export const ChatInterface = ({ proxonas }) => {
 		setBotIsLoading(true);
 		// console.log(messages);
 		axios
-			.post(port + `youtube_api/${id}/generate_response/`, {
+			.post(port + `youtube_api/${username}/${id}/generate_response/`, {
 				user_question: messages[messages.length - 1].text,
 				mention: values.length > 0 ? true : false,
 				whom: values.length > 0 ? values[0] : "none",
 			})
 			.then((res) => {
-				// console.log(res.data);
+				console.log(res.data);
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
 
 					text: message[1].substring(
 						filterMessage(message[1])[0] + 9,
-						filterMessage(message[1])[1] - 3
+						filterMessage(message[1])[1] - 2
 					),
 				}));
 				setMessages([...messages, ...mappedMessages]);

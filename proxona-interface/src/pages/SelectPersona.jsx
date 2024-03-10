@@ -14,17 +14,16 @@ const SelectPersona = ({ extendable }) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const attributeList = useSelector((state) => state.attributeList.attributes);
-
+	const { username, handle } = useSelector((state) => state.loginInfo);
+	console.log(handle);
 	const loadData = async () => {
 		try {
 			await axios
-				.get(
-					port + `youtube_api/${location.state.handleId}/get-dim-val-def-set/`,
-					{
-						headers: { "Content-Type": "application/json" },
-					}
-				)
+				.get(port + `youtube_api/admin/${handle}/get-dim-val-def-set/`, {
+					headers: { "Content-Type": "application/json" },
+				})
 				.then((response) => {
+					console.log(response);
 					setAttrubutes(response.data);
 					if (Object.keys(response.data).length > 0) {
 						setData(true);

@@ -3,8 +3,6 @@ import { SignupForm } from "../components/SignupForm/SignupForm";
 import { textContent } from "../data/textContent";
 import "./styles/index.css";
 
-
-
 function Signup() {
 	return (
 		<div className="container signup_container">

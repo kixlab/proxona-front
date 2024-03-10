@@ -66,13 +66,13 @@ export const FeedbackDraft = ({
 					</Paper>
 
 					<Stack alignSelf={"flex-end"} flexDirection={"row"}>
-						<Button
+						{/* <Button
 							className="button-prev"
 							disabled={isLoading}
 							onClick={goToRegenerate}
 						>
 							{isLoading ? "생성 중입니다.." : "다시 생성"}
-						</Button>
+						</Button> */}
 						<Button
 							className="button-next"
 							disabled={isLoading}

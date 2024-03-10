@@ -18,6 +18,7 @@ import { FeedbackChat } from "../components/FeedbackChat/FeedbackChat";
 import { port } from "../data/port";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { avatars } from "../data/avatar";
+import { useDispatch, useSelector } from "react-redux";
 
 function PlotPlanning({ plot, proxonas }) {
 	// const { plotId } = useParams();
@@ -39,13 +40,14 @@ function PlotPlanning({ plot, proxonas }) {
 	});
 
 	const [messages, setMessages] = useState([]);
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const [profiles, setProfiles] = useState(proxonas);
 
 	const createFeedback = async ({ mode, dragged, proxona_name }) => {
 		try {
 			const response = await axios.post(
-				port + `youtube_api/${id}/plot/${plot.id}/feedback/`,
+				port + `youtube_api/${username}/${id}/plot/${plot.id}/feedback/`,
 				{
 					mode: mode,
 					proxona_name: proxona_name,
@@ -69,7 +71,7 @@ function PlotPlanning({ plot, proxonas }) {
 	const removePersona = async () => {
 		try {
 			await axios
-				.post(port + `youtube_api/${id}/excluding-persona/`, {
+				.post(port + `youtube_api/${username}/${id}/excluding-persona/`, {
 					excluding_names: excludedPersona,
 				})
 				.then((response) => {

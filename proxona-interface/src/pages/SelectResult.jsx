@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile";
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {
+	Link,
+	Route,
+	Routes,
+	useNavigate,
+	useParams,
+	useLocation,
+} from "react-router-dom";
 import { Stack, Button, Typography, Box } from "@mui/material";
 import { dummy } from "../data/dummy";
 import SelectAttributes from "../components/SelectAttributes/SelectAttributes";
@@ -38,7 +45,9 @@ const SelectResult = () => {
 	const [attributes, setAttributes] = useState({});
 	const [attribute, setAttribute] = useState({});
 	const dispatch = useDispatch();
-	const { personas } = useSelector((state) => state.personaList);
+	const location = useLocation();
+	const { username, handleId } = useSelector((state) => state.loginInfo);
+
 	const [data, setData] = useState(false);
 
 	useEffect(() => {
@@ -50,7 +59,7 @@ const SelectResult = () => {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${id}/get-dim-val-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -64,7 +73,7 @@ const SelectResult = () => {
 	const loadProxona = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${id}/current-persona/`)
+				.get(port + `youtube_api/${username}/${id}/current-persona/`)
 				.then((response) => {
 					setProfiles(response.data);
 					dispatch(loadPersonas(response.data));

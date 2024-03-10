@@ -35,11 +35,13 @@ const IntroIndex = () => {
 	const dispatch = useDispatch();
 	const { channel_name, video_count, comment_count, channel_handle } =
 		useSelector((state) => state.channelInfo);
+	const location = useLocation();
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const loadData = async () => {
 		try {
 			await axios
-				.get(port + "youtube_api/" + id + "/channel/", {
+				.get(port + `youtube_api/${username}/` + handle + "/channel/", {
 					headers: {
 						"Content-Type": "application/json",
 					},
@@ -78,7 +80,10 @@ const IntroIndex = () => {
 				className="more_button"
 				onClick={() =>
 					navigate(`/${channel_handle}/select`, {
-						state: { handleId: channel_handle },
+						state: {
+							handleId: channel_handle,
+							username: location.state.username,
+						},
 					})
 				}
 			>
@@ -89,11 +94,11 @@ const IntroIndex = () => {
 };
 
 const IntroPage = () => {
-	const { id } = useParams();
-	const [plot, setPlot] = useState(null);
-	const [plotLoading, setPlotLoading] = useState(true);
+	// const { id } = useParams();
+	// const [plot, setPlot] = useState(null);
+	// const [plotLoading, setPlotLoading] = useState(true);
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	// const loadPlot = async () => {
 	// 	try {

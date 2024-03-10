@@ -13,6 +13,7 @@ import ProxonaDetailModal from "../components/ProxonaProfile/ProxonaDetailModal"
 import PlotPlanning from "./PlotPlanning";
 import { port } from "../data/port";
 import SelectFeedbackPersona from "./SelectFeedbackPersona";
+import { useDispatch, useSelector } from "react-redux";
 
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
@@ -24,12 +25,15 @@ function Feedback() {
 	});
 	const [isDraftLoading, setIsDraftLoading] = useState(false);
 	const [isNewDraftLoading, setNewDraftLoading] = useState(false);
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const navigate = useNavigate();
 
 	const loadPlot = async () => {
 		try {
-			const response = await axios.get(port + `youtube_api/${handleId}/plot/`);
+			const response = await axios.get(
+				port + `youtube_api/${username}/${handleId}/plot/`
+			);
 			console.log(response);
 			if (response.data !== "" && !response.data.completed) {
 				setPlot(response.data);
@@ -56,9 +60,12 @@ function Feedback() {
 			// 		}
 			// 	);
 			// } else {
-			res = await axios.post(port + `youtube_api/${handleId}/plot/`, {
-				topic,
-			});
+			res = await axios.post(
+				port + `youtube_api/${username}/${handleId}/plot/`,
+				{
+					topic,
+				}
+			);
 			// }
 
 			if (res) {
@@ -88,7 +95,7 @@ function Feedback() {
 		try {
 			setNewDraftLoading(true);
 			const response = await axios.post(
-				port + `youtube_api/${handleId}/plot/complete`,
+				port + `youtube_api/${username}/${handleId}/plot/complete`,
 				{
 					completed: true,
 				}
@@ -105,7 +112,7 @@ function Feedback() {
 	const loadProxona = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${handleId}/current-persona/`)
+				.get(port + `youtube_api/${username}/${handleId}/current-persona/`)
 				.then((response) => {
 					setProxonas(response.data);
 				});

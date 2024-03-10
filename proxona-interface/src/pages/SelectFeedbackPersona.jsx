@@ -10,18 +10,19 @@ import { avatars } from "../data/avatar";
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
-	const [targetPersona, setTargetPersona] = useState(() => {
-		const saved = localStorage.getItem("excluding_names");
-		if (saved) {
-			const initialValue = JSON.parse(saved);
-			return initialValue;
-		} else {
-			return [];
-		}
-	});
+	// const [targetPersona, setTargetPersona] = useState(() => {
+	// 	const saved = localStorage.getItem("excluding_names");
+	// 	if (saved) {
+	// 		const initialValue = JSON.parse(saved);
+	// 		return initialValue;
+	// 	} else {
+	// 		return [];
+	// 	}
+	// });
+	const [targetPersona, setTargetPersona] = useState([]);
 
 	const [profiles, setProfiles] = useState(proxonas);
-
+	const location = useLocation();
 	const [inputText, setInputText] = useState("");
 	const [activateTextArea, setActivateTextArea] = useState(() => {
 		const m = proxonas.map((proxona) => {
@@ -34,12 +35,12 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		return m;
 	});
 
-	console.log(targetPersona);
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const removePersona = async () => {
 		try {
 			await axios
-				.post(port + `youtube_api/${id}/excluding-persona/`, {
+				.post(port + `youtube_api/${username}/${id}/excluding-persona/`, {
 					excluding_names: targetPersona,
 				})
 				.then((response) => {
@@ -53,7 +54,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	const reviseSummary = async () => {
 		try {
 			await axios
-				.post(port + `youtube_api/${id}/updating-persona/`, {
+				.post(port + `youtube_api/${username}/${id}/updating-persona/`, {
 					proxona_name: activateTextArea.filter((x) => x.activate === true)[0]
 						.name,
 					updating_description: activateTextArea.filter(

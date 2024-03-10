@@ -23,6 +23,7 @@ const DiscoverProxona = () => {
 	const [selectedDimensionTrue, setSelectedDimensionTrue] = useState([]);
 	const [clickCustomize, setClickCustomize] = useState(false);
 	const dispatch = useDispatch();
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const handleClose = () => {
 		navigate(location.state.previousLocation.pathname);
@@ -35,7 +36,7 @@ const DiscoverProxona = () => {
 	const loadPersona = async () => {
 		setClickCustomize(true);
 		await axios
-			.post(port + `youtube_api/${id}/create-persona-exp/`, {
+			.post(port + `youtube_api/${username}/${id}/create-persona-exp/`, {
 				dim_val: selectedDimensionTrue,
 			})
 			.then((response) => {

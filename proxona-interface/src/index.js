@@ -8,12 +8,13 @@ import Signup from "./pages/Signup";
 import Feedback from "./pages/Feedback";
 import ErrorPage from "./pages/ErrorPage";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { persistor, store } from "./redux/store";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { GlobalStyles } from "./pages/styles/GlobalStyles";
 import { lightTheme, darkTheme } from "./pages/styles/Themes";
 import IntroPage from "./pages/IntroPage";
 import { CssBaseline } from "@mui/material";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
 	{
@@ -35,7 +36,9 @@ root.render(
 				<CssBaseline />
 				<GlobalStyles></GlobalStyles>
 				<Provider store={store}>
-					<RouterProvider router={router} />
+					<PersistGate loading={null} persistor={persistor}>
+						<RouterProvider router={router} />
+					</PersistGate>
 				</Provider>
 			</>
 		</ThemeProvider>

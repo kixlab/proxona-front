@@ -47,6 +47,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	// const dispatch = useDispatch();
 	// const { personas } = useSelector((state) => state.personaList);
 	const proxonaContainerRef = useRef(null);
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	useEffect(() => {
 		const groupedData = groupBy(profiles, "index");
@@ -57,7 +58,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${id}/get-dim-val-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -71,7 +72,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const loadProxona = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${id}/current-persona/`)
+				.get(port + `youtube_api/${username}/${id}/current-persona/`)
 				.then((response) => {
 					setProfiles(response.data);
 				});

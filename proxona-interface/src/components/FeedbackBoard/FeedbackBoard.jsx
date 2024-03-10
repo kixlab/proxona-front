@@ -15,6 +15,7 @@ import { useDebouncedCallback } from "use-debounce";
 import axios from "axios";
 import { port } from "../../data/port";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function useDebouncedLexicalOnChange(getEditorState, callback, delay) {
 	const lastPayloadRef = React.useRef(null);
@@ -97,6 +98,7 @@ const Editor = ({
 
 	const actions = Object.entries(ACTION_TYPE);
 	const [editorState, setEditorState] = useState();
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState(null);
 
@@ -145,7 +147,7 @@ const Editor = ({
 
 	const savePlot = async (draft) => {
 		const res = await axios.patch(
-			port + `youtube_api/${handleId}/plot/${plot.id}/`,
+			port + `youtube_api/${username}/${handleId}/plot/${plot.id}/`,
 			{
 				draft,
 			}

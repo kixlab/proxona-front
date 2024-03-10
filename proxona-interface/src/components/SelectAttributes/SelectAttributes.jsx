@@ -82,10 +82,11 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 	// const attributeList = useSelector((state) => state.attributeList.attributes);
 	// const dispatch = useDispatch();
 	const { id } = useParams();
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const addNewAtt = async () => {
 		try {
-			await axios.post(port + `youtube_api/${id}/add-new-value/`, {
+			await axios.post(port + `youtube_api/${username}/${id}/add-new-value/`, {
 				mode: "manual",
 				dimension: dimension,
 				value,
@@ -156,6 +157,7 @@ const SelectAttributes = ({
 	const [addValueDialogOpen, setAddValueDialogOpen] = useState(false);
 	const [isGenerating, setIsGenerating] = useState(null);
 	const [displayExplain, setDisplayExplain] = useState({});
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const addValues = (dimension, value) => {
 		setDimensions({
@@ -178,7 +180,7 @@ const SelectAttributes = ({
 		setIsGenerating(dimension);
 		try {
 			const response = await axios.post(
-				port + "youtube_api/" + id + "/add-new-value/",
+				port + `youtube_api/${username}/` + id + "/add-new-value/",
 				{
 					mode: "auto",
 					dimension: dimension,

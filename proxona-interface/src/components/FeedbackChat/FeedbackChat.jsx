@@ -22,6 +22,7 @@ import { MentionsInput, Mention } from "react-mentions";
 import { avatars } from "../../data/avatar";
 import defaultStyle from "../ChatInterface/defaultStyle";
 import { Outlet } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
 
 export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 	// const [messages, setMessages] = useState(textMessage);
@@ -36,6 +37,7 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 	const location = useLocation();
 	const mentionRef = useRef(null);
 	const [values, setValues] = useState("");
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
@@ -72,34 +74,44 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 			whom: values.length > 0 ? values[0] : "none",
 		});
 		setBotIsLoading(true);
+
 		axios
-			.post(port + `youtube_api/${id}/plot/chat/`, {
+			.post(port + `youtube_api/${username}/${id}/plot/chat/`, {
 				user_question: messages[messages.length - 1].text,
 				mention: values.length > 0 ? true : false,
 				whom: values.length > 0 ? values[0] : "none",
 			})
 			.then((res) => {
-				const data = res.data;
-				const excludeList = localStorage.getItem("excluding_names");
-				if (excludeList && excludeList.length) {
-					Object.entries(res.data).map(([key, values]) => {
-						if (excludeList.includes(key)) {
-							delete data[key];
-						}
-					});
-					// console.log(data);
+				// const data = res.data;
+				// const excludeList = localStorage.getItem("excluding_names");
+				// if (excludeList && excludeList.length) {
+				// Object.entries(res.data).map(([key, values]) => {
+				// 	if (excludeList.includes(key)) {
+				// 		delete data[key];
+				// 	}
+				// });
+				// console.log(data);
 
-					const mappedMessages = Object.entries(data).map((message) => ({
-						who: message[0],
-						text: message[1].substring(
-							filterMessage(message[1])[0] + 9,
-							filterMessage(message[1])[1] - 2
-						),
-					}));
-					setMessages([...messages, ...mappedMessages]);
-					setBotIsLoading(false);
-					setValues("");
-				}
+				// const mappedMessages = Object.entries(data).map((message) => ({
+				// 	who: message[0],
+				// 	text: message[1].substring(
+				// 		filterMessage(message[1])[0] + 9,
+				// 		filterMessage(message[1])[1] - 2
+				// 	),
+				// }));
+				console.log(res.data);
+
+				const mappedMessages = Object.entries(res.data).map((message) => ({
+					who: message[0],
+					text: message[1].substring(
+						filterMessage(message[1])[0] + 9,
+						filterMessage(message[1])[1] - 2
+					),
+				}));
+				setMessages([...messages, ...mappedMessages]);
+				setBotIsLoading(false);
+				setValues("");
+				// }
 			});
 	}, [messages]);
 

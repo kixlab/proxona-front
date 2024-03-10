@@ -7,18 +7,22 @@ import { Outlet, useParams } from "react-router-dom";
 import axios from "axios";
 import { port } from "./data/port.js";
 import { useDispatch, useSelector } from "react-redux";
+import sleep from "sleep-promise";
 
 function App() {
 	const { id } = useParams();
 	const [proxonas, setProxonas] = useState([]);
 	// const dispatch = useDispatch();
 	const { personas } = useSelector((state) => state.personaList);
+	const { username, handle } = useSelector((state) => state.loginInfo);
 
 	const loadProxona = async () => {
 		try {
+			await sleep(500);
 			await axios
-				.get(port + `youtube_api/${id}/current-persona/`)
+				.get(port + `youtube_api/${username}/${id}/current-persona/`)
 				.then((response) => {
+					console.log(response.data);
 					setProxonas(response.data);
 				});
 		} catch (error) {

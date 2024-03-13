@@ -10,6 +10,6 @@ body,
 	padding: 0;
 }
 
-iframe {
-	/* display: none; */
+iframe#webpack-dev-server-client-overlay {
+	display: none;
 }

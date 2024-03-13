@@ -162,9 +162,13 @@ export const ChatInterface = ({ proxonas }) => {
 													description,
 													reason,
 													values,
+													job,
+													generated,
 													idx,
 												}) => {
 													return {
+														job: job,
+														generated: generated,
 														username: name,
 														videos: videos,
 														summary: description,

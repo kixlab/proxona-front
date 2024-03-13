@@ -146,6 +146,7 @@ const Editor = ({
 	});
 
 	const savePlot = async (draft) => {
+		console.log(draft);
 		const res = await axios.patch(
 			port + `youtube_api/${username}/${handleId}/plot/${plot.id}/`,
 			{
@@ -155,7 +156,7 @@ const Editor = ({
 	};
 
 	const debouncedOnChange = useCallback((value) => {
-		// console.log(new Date(), value);
+		console.log(new Date(), value);
 		savePlot(value.text);
 	}, []);
 

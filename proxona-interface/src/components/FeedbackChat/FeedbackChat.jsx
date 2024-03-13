@@ -203,8 +203,12 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 														reason,
 														idx,
 														values,
+														job,
+														generated,
 													}) => {
 														return {
+															generated: generated,
+															job: job,
 															username: name,
 															videos: videos,
 															reason: reason,

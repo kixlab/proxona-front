@@ -41,6 +41,7 @@ function PlotPlanning({ plot, proxonas }) {
 
 	const [messages, setMessages] = useState([]);
 	const { username, handle } = useSelector((state) => state.loginInfo);
+	const navigate = useNavigate();
 
 	const [profiles, setProfiles] = useState(proxonas);
 
@@ -163,7 +164,11 @@ function PlotPlanning({ plot, proxonas }) {
 				</Stack>
 
 				<Stack p={1}>
-					<Button size="large" variant="contained">
+					<Button
+						size="large"
+						variant="contained"
+						onClick={() => navigate("finish")}
+					>
 						플래닝 완료
 					</Button>
 				</Stack>

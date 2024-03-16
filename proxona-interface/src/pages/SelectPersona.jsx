@@ -15,7 +15,7 @@ const SelectPersona = ({ extendable }) => {
 	const dispatch = useDispatch();
 	const attributeList = useSelector((state) => state.attributeList.attributes);
 	const { username, handle } = useSelector((state) => state.loginInfo);
-	console.log(handle);
+	// console.log(handle);
 	const loadData = async () => {
 		try {
 			await axios
@@ -23,7 +23,7 @@ const SelectPersona = ({ extendable }) => {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
-					console.log(response);
+					// console.log(response);
 					setAttrubutes(response.data);
 					if (Object.keys(response.data).length > 0) {
 						setData(true);

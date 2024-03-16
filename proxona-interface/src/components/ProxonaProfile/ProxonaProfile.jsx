@@ -81,7 +81,7 @@ function ProxonaProfile({
 					.activate ? (
 					<Input
 						multiline
-						sx={{ color: "black" }}
+						sx={{ color: "black", width: "100%" }}
 						type="text"
 						value={
 							activateTextArea.filter((x) => x.name.includes(username))[0]

@@ -14,6 +14,7 @@ import PlotPlanning from "./PlotPlanning";
 import { port } from "../data/port";
 import SelectFeedbackPersona from "./SelectFeedbackPersona";
 import { useDispatch, useSelector } from "react-redux";
+import { FinishPage } from "./FinishPage";
 
 function Feedback() {
 	const [proxonas, setProxonas] = useState([]);
@@ -114,6 +115,7 @@ function Feedback() {
 			await axios
 				.get(port + `youtube_api/${username}/${handleId}/current-persona/`)
 				.then((response) => {
+					console.log(response.data);
 					setProxonas(response.data);
 				});
 		} catch (error) {
@@ -131,7 +133,15 @@ function Feedback() {
 
 	return (
 		<Routes>
-			<Route path="/" element={<SelectFeedbackPersona proxonas={proxonas} />} />
+			<Route
+				path="/"
+				element={
+					<SelectFeedbackPersona
+						proxonas={proxonas}
+						loadProxona={loadProxona}
+					/>
+				}
+			/>
 			<Route
 				path={`/topic`}
 				element={
@@ -169,6 +179,7 @@ function Feedback() {
 				}
 			>
 				<Route path="persona/:persona" element={<ProxonaDetailModal />} />
+				<Route path="finish" element={<FinishPage />} />
 			</Route>
 		</Routes>
 	);

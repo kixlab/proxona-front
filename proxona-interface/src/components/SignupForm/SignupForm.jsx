@@ -28,14 +28,14 @@ export const SignupForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(formData);
+		// console.log(formData);
 		try {
 			const response = await axios.post(port + "youtube_api/login/", formData);
 
 			if (response) {
 				setSignIn(true);
 				setAlert(false);
-				console.log("Success in response");
+				// console.log("Success in response");
 			} else {
 				setAlert(true);
 			}
@@ -74,7 +74,7 @@ export const SignupForm = () => {
 			navigate(`/${formData.handle}`, {
 				state: { handleId: formData.handle, username: formData.username },
 			});
-			console.log("login success");
+			// console.log("login success");
 		}
 	}, [signIn, plot]);
 

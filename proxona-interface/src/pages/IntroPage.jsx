@@ -21,6 +21,7 @@ import SimilarPersona from "../components/SimilarPersonaModal/SimilarPersona.jsx
 import Feedback from "./Feedback.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { setChannel } from "../redux/channelInfo.js";
+import { FinishPage } from "./FinishPage.jsx";
 
 const IntroIndex = () => {
 	// const location = useLocation();
@@ -134,6 +135,7 @@ const IntroPage = () => {
 				<Route path="similar/:id" element={<SimilarPersona />} />
 			</Route>
 			<Route path="/feedback/*" element={<Feedback />}></Route>
+			<Route path="/finish" element={<FinishPage />}></Route>
 		</Routes>
 	);
 };

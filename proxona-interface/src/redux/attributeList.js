@@ -10,13 +10,13 @@ const attributeListSlice = createSlice({
 		// load list from a server
 		initAttribute: (state, action) => {
 			state.attributes = action.payload;
-			console.log("loaded!");
+			// console.log("loaded!");
 		},
 
 		// add attribute from a server / user input
 		addAttribute: (state, action) => {
 			state.attributes = [...state.attributes, action.payload];
-			console.log("added!");
+			// console.log("added!");
 		},
 	},
 });

@@ -10,18 +10,18 @@ import { avatars } from "../data/avatar";
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
-	// const [targetPersona, setTargetPersona] = useState(() => {
-	// 	const saved = localStorage.getItem("excluding_names");
-	// 	if (saved) {
-	// 		const initialValue = JSON.parse(saved);
-	// 		return initialValue;
-	// 	} else {
-	// 		return [];
-	// 	}
-	// });
-	const [targetPersona, setTargetPersona] = useState([]);
+	const [targetPersona, setTargetPersona] = useState(() => {
+		const saved = localStorage.getItem("excluding_names");
+		if (saved) {
+			const initialValue = JSON.parse(saved);
+			return initialValue;
+		} else {
+			return [];
+		}
+	});
+	// const [targetPersona, setTargetPersona] = useState([]);
 
-	const [profiles, setProfiles] = useState(proxonas);
+	const [profiles, setProfiles] = useState([]);
 	const location = useLocation();
 	const [inputText, setInputText] = useState("");
 	const [activateTextArea, setActivateTextArea] = useState(() => {
@@ -62,6 +62,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					)[0].description,
 				})
 				.then((response) => {
+					console.log(response.data);
 					setActivateTextArea(
 						activateTextArea.map((x) => ({
 							...x,
@@ -87,7 +88,10 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		}
 	};
 
+	console.log(profiles);
+
 	useEffect(() => {
+		setProfiles(proxonas);
 		if (proxonas.length > 0) {
 			const m = proxonas.map((proxona) => {
 				return {
@@ -118,7 +122,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
 					{!targetPersona.length > 0 && profiles
-						? proxonas.map((proxona) => (
+						? profiles.map((proxona) => (
 								<div key={proxona.name}>
 									<ProxonaProfile
 										username={proxona.name}

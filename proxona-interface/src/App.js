@@ -22,7 +22,7 @@ function App() {
 			await axios
 				.get(port + `youtube_api/${username}/${id}/current-persona/`)
 				.then((response) => {
-					console.log(response.data);
+					// console.log(response.data);
 					setProxonas(response.data);
 				});
 		} catch (error) {
@@ -31,7 +31,7 @@ function App() {
 	};
 
 	useEffect(() => {
-		console.log("load persona");
+		// console.log("load persona");
 		loadProxona();
 	}, [personas]);
 

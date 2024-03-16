@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import "./ChatInterface.css";
 import "../ProxonaProfile/ProxonaProfile.css";
 import axios from "axios";
-import { textMessage } from "../../data/dummy";
+// import { textMessage } from "../../data/dummy";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { port } from "../../data/port";
 import {
@@ -12,9 +12,8 @@ import {
 	Typography,
 	Paper,
 	Avatar,
-	InputBase,
-	Divider,
 	IconButton,
+	CircularProgress,
 } from "@mui/material";
 import { avatars } from "../../data/avatar";
 
@@ -40,7 +39,8 @@ export const ChatInterface = ({ proxonas }) => {
 	const exampleQuestions = [
 		"어떤 비디오를 좋아해?",
 		"내 비디오를 왜 봐?",
-		"이런 토픽의 비디오 만들건데 어떻게 생각해?",
+		"내 비디오 중에 제일 좋아하는게 뭐야?",
+		"평소 생활 습관이 어때?",
 	];
 
 	const sendMessage = (e) => {
@@ -106,7 +106,13 @@ export const ChatInterface = ({ proxonas }) => {
 				{initial ? (
 					<Stack spacing={20 / 8} alignSelf={"center"}>
 						<Typography variant="h6">
-							내 채널의 뷰어인 프록소나에게 마음껏 질문해보세요!
+							내 채널의 뷰어인 시청자 페르소나에게 마음껏 질문해보세요!
+						</Typography>
+						<Typography
+							variant="p"
+							sx={{ textAlign: "center", color: "#808080" }}
+						>
+							이런 질문들을 할 수 있어요.
 						</Typography>
 						<Stack spacing={10 / 8}>
 							{exampleQuestions.map((element, key) => (
@@ -229,7 +235,10 @@ export const ChatInterface = ({ proxonas }) => {
 				)}
 				{botIsLoading && (
 					<Stack className="chat-wrapper bot">
-						<Stack className="chat-message bot">Typing...</Stack>
+						<Stack className="chat-message bot">
+							<CircularProgress />{" "}
+							<span>페르소나들이 답변을 준비하는 중...</span>
+						</Stack>
 					</Stack>
 				)}
 			</Stack>
@@ -257,7 +266,7 @@ export const ChatInterface = ({ proxonas }) => {
 							setInputMessage(newPlainTextValue);
 						}}
 						style={defaultStyle}
-						placeholder={"Mention people using '@'"}
+						placeholder={"'@'를 이용하여 직접 물어보세요!"}
 						a11ySuggestionsListLabel={"Suggested mentions"}
 						inputRef={mentionRef}
 					>

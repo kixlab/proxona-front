@@ -55,8 +55,8 @@ function onError(error) {
 }
 
 export const ACTION_TYPE = {
-	"이 부분에 대한 너의 생각은 어때?": "REVIEW",
-	"이건 어떻게 고치면 좋을까": "SUGGESTION",
+	"이 부분에 대한 너의 생각은 어때?": "EVALUATION",
+	"이건 어떻게 고치면 좋을까?": "SUGGESTION",
 };
 
 export default function FeedbackBoard(props) {
@@ -125,7 +125,7 @@ const Editor = ({
 						text: (
 							<>
 								{`@${proxona.name}`} <b>'{content}'</b>{" "}
-								{actionType == "REVIEW"
+								{actionType == "EVALUATION"
 									? "이 부분에 대한 너의 생각은 어때?"
 									: "이건 어떻게 고치면 좋을까?"}
 							</>
@@ -146,7 +146,7 @@ const Editor = ({
 	});
 
 	const savePlot = async (draft) => {
-		console.log(draft);
+		// console.log(draft);
 		const res = await axios.patch(
 			port + `youtube_api/${username}/${handleId}/plot/${plot.id}/`,
 			{
@@ -156,7 +156,7 @@ const Editor = ({
 	};
 
 	const debouncedOnChange = useCallback((value) => {
-		console.log(new Date(), value);
+		// console.log(new Date(), value);
 		savePlot(value.text);
 	}, []);
 

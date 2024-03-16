@@ -120,8 +120,8 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 						/>
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
-						<Typography variant="h6">
-							{textContent.subTitle} {proxonas.length}
+						<Typography variant="h6" mb={2}>
+							내 채널의 시청자 페르소나: {proxonas.length} 명
 						</Typography>
 
 						<Stack spacing={20 / 8}>
@@ -223,7 +223,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 					})}
 				>
 					<Typography sx={{ paddingRight: "8px" }}>
-						Discover more proxona
+						Customize Own Personas
 					</Typography>
 					<i class="bi bi-compass"></i>
 				</Button>
@@ -236,7 +236,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 					}}
 				>
 					<Typography sx={{ paddingRight: "8px" }}>
-						Let's get feedback
+						Create Video Storyline
 					</Typography>
 					<i class="bi bi-people"></i>
 				</Button>

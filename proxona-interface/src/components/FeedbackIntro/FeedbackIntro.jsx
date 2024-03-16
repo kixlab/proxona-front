@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Stack, Button, Paper, InputBase } from "@mui/material";
+import { Stack, Button, Paper, InputBase, Typography } from "@mui/material";
 import "./FeedbackIntro.css";
 
 export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
@@ -8,8 +8,19 @@ export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
 		<div className="feedback-intro-container">
 			<>
 				<Stack alignItems={"stretch"} marginBottom={"20px"}>
-					<h2>어떤 주제에 대한 비디오를 기획해볼까요?</h2>
-					<p>비디오 주제를 입력하면 채널 성격에 맞는 초안을 준비해드릴게요.</p>
+					<Typography
+						variant="h4"
+						mb={2}
+						sx={{ color: "#6d53d3", marginBottom: "10px" }}
+					>
+						<b>어떤 주제에 대한 비디오를 기획해볼까요?</b>
+					</Typography>
+					<Typography
+						variant="p"
+						sx={{ color: "#808080", marginBottom: "30px" }}
+					>
+						비디오 주제를 입력하면 채널 성격에 맞는 초안을 준비해드릴게요.
+					</Typography>
 
 					<Paper
 						alignSelf="stretch"

@@ -5,7 +5,7 @@ import { dummy } from "../../data/dummy";
 
 export const FloatingMenu = ({ show }) => {
 	const ACTIONS = {
-		REVIEW: "이 부분에 대한 너의 생각은 어때?",
+		EVALUATION: "이 부분에 대한 너의 생각은 어때?",
 		SUGGESTION: "이건 어떻게 고치면 좋을까?",
 	};
 

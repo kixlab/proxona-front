@@ -33,7 +33,7 @@ export const FeedbackDraft = ({
 			<>
 				<Stack marginBottom={"20px"}>
 					<h2>{`${channel} 님의 채널 성격에 맞춰 초안을 준비해봤어요.`}</h2>
-					<p>{`이제 PROXONA의 피드백을 받아 비디오를 구체적으로 플래닝해봐요. `}</p>
+					<p>{`이제 시청자 페르소나들의 피드백을 받아 비디오를 구체적으로 플래닝해봐요. `}</p>
 					<Paper
 						alignSelf="stretch"
 						sx={{

@@ -268,7 +268,7 @@ const SelectAttributes = ({
 										size="small"
 										onClick={() => handleSuggest(dimension)}
 									>
-										{isGenerating == dimension ? "제안 중..." : "제안받기"}
+										{isGenerating == dimension ? "AI 추천 중..." : "AI 추천"}
 									</Button>
 									<Button
 										color="primary"
@@ -279,7 +279,7 @@ const SelectAttributes = ({
 											setAddValueDialogOpen(true);
 										}}
 									>
-										직접추가
+										직접<br></br>추가
 									</Button>
 								</Stack>
 							)}

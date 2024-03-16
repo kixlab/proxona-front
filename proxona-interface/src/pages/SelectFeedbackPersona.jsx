@@ -1,12 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { port } from "../data/port";
-import { Dialog, DialogContent, TextField, DialogActions } from "@mui/material";
 import { useSelector } from "react-redux";
 import ProxonaProfile from "../components/ProxonaProfile/ProxonaProfile";
-import { Paper, Stack, Typography, Button, Container } from "@mui/material";
+import {
+	Paper,
+	Stack,
+	Typography,
+	Button,
+	Container,
+	Divider,
+} from "@mui/material";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { avatars } from "../data/avatar";
+import SaveIcon from "@mui/icons-material/Save";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
@@ -51,6 +60,18 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		}
 	};
 
+	const getRemovePersona = async () => {
+		try {
+			await axios
+				.get(port + `youtube_api/${username}/${id}/excluding-persona/`)
+				.then((response) => {
+					setTargetPersona(response.data);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const reviseSummary = async () => {
 		try {
 			await axios
@@ -62,7 +83,6 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					)[0].description,
 				})
 				.then((response) => {
-					console.log(response.data);
 					setActivateTextArea(
 						activateTextArea.map((x) => ({
 							...x,
@@ -88,8 +108,6 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		}
 	};
 
-	console.log(profiles);
-
 	useEffect(() => {
 		setProfiles(proxonas);
 		if (proxonas.length > 0) {
@@ -112,18 +130,37 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 		}
 	}, [targetPersona]);
 
+	// useEffect(() => {
+	// 	getRemovePersona();
+	// }, []);
+
 	return (
 		<Container>
 			<Stack spacing={40 / 8} sx={{ m: "5rem" }}>
-				<Typography variant="h4">어떤 프록소나와 기획을 해볼까요?</Typography>
-				<Typography variant="h5">
-					기획에 참여하지 않는 프록소나는 하단에 '기획에서 빼기' 를 눌러주세요
-				</Typography>
-
+				<Stack sx={{ textAlign: "center" }}>
+					<Typography variant="h4" mb={2}>
+						<b>어떤 시청자 페르소나와 기획을 해볼까요?</b>
+					</Typography>
+					<Typography variant="p" sx={{ color: "#D9D9D9" }}>
+						이제부터, 새로운 비디오 스토리라인을 작성하는 시간입니다. <br></br>
+						어떤 시청자 페르소나에 집중해서 비디오를 기획하고 싶나요? <br></br>
+						덜 중요하다고 생각되는 시청자 페르소나는 제외하셔도 좋습니다. (
+						<DeleteIcon /> 클릭) <br></br>또한, 시청자 페르소나의 프로필을 수정
+						및 구체화하실 수 있습니다. <br></br>아이콘을 눌러 프로필을
+						수정해보세요. (
+						<EditIcon /> 클릭, 수정 후 <SaveIcon /> 클릭)
+					</Typography>
+				</Stack>
+				<Divider></Divider>
 				<Stack flexDirection={"row"} gap={10 / 8} flexWrap={"wrap"}>
 					{!targetPersona.length > 0 && profiles
 						? profiles.map((proxona) => (
-								<div key={proxona.name}>
+								<Stack
+									key={proxona.name}
+									flex
+									alignItems="flex-end"
+									direction="column"
+								>
 									<ProxonaProfile
 										username={proxona.name}
 										summary={proxona.description}
@@ -138,14 +175,14 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 										inputText={inputText}
 									></ProxonaProfile>
 									<Button
-										sx={{ color: "white" }}
+										sx={{ color: "#808080" }}
 										onClick={() =>
 											setTargetPersona([proxona.name, ...targetPersona])
 										}
 									>
-										기획에서 빼기
+										<DeleteIcon />
 									</Button>
-								</div>
+								</Stack>
 						  ))
 						: profiles.map((proxona) => (
 								<div key={proxona.name}>

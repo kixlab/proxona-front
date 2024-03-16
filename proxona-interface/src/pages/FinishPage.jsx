@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Container } from "@mui/material";
+import React from "react";
 
 export const FinishPage = () => {
 	return (
@@ -17,9 +16,16 @@ export const FinishPage = () => {
 				backgroundColor: "black",
 			}}
 		>
-			<div style={{ textAlign: "center", height: "600px" }}>
-				실험이 종료되었습니다. 감사합니다. 이어서 연구자의 안내에 따라 설문을
-				진행해주세요.
+			<div
+				style={{
+					lineHeight: "30",
+					textAlign: "center",
+				}}
+			>
+				<h3>
+					실험이 종료되었습니다. 이어서 연구자의 안내에 따라 설문을
+					진행해주세요.
+				</h3>
 			</div>
 		</div>
 	);

@@ -9,6 +9,7 @@ import {
 	DialogActions,
 	DialogContent,
 	Typography,
+	Divider,
 } from "@mui/material";
 import SelectAttributes from "../SelectAttributes/SelectAttributes";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,8 +87,12 @@ const DiscoverProxona = () => {
 		>
 			<DialogContent>
 				<Typography variant="h5" gutterBottom>
-					Discover more proxona
+					<b>Customize Own Personas</b>
 				</Typography>
+				<Typography variant="h6" sx={{ color: "#D9D9D9" }} gutterBottom mb={2}>
+					기존 시청자 페르소나와 다른 새로운 페르소나를 만들어보세요.
+				</Typography>
+				<Divider sx={{ marginBottom: "15px" }}></Divider>
 				{/* <SelectPersona extendable={true} /> */}
 				<SelectAttributes
 					attributes={location?.state?.attribute}
@@ -108,7 +113,7 @@ const DiscoverProxona = () => {
 						? `${threshold}개 이상의 특성을 골라주세요`
 						: clickCustomize
 						? `추가 중...`
-						: `프록소나 추가하기`}
+						: `시청자 페르소나 만들기`}
 				</Button>
 			</DialogActions>
 		</Dialog>

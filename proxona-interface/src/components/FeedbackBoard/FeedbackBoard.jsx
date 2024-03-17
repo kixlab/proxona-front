@@ -76,6 +76,8 @@ const Editor = ({
 	createFeedback,
 	messages,
 	setMessages,
+	botIsLoading,
+	setBotIsLoading,
 }) => {
 	const { draft } = plot;
 
@@ -109,6 +111,7 @@ const Editor = ({
 	};
 
 	const handleAction = async (actionType, proxona, content) => {
+		setBotIsLoading(true);
 		try {
 			const res = await createFeedback({
 				mode: actionType,
@@ -118,6 +121,7 @@ const Editor = ({
 
 			if (res) {
 				// console.log(res.data);
+
 				setMessages([
 					...messages,
 					{
@@ -133,6 +137,7 @@ const Editor = ({
 					},
 					{ who: res.data.proxona["name"], text: res.data.feedback },
 				]);
+				setBotIsLoading(false);
 				return res.data.feedback;
 			}
 		} catch (err) {

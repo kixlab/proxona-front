@@ -34,6 +34,8 @@ const DiscoverProxona = () => {
 		setSelectedDimension(dimension);
 	};
 
+	console.log(selectedDimensionTrue);
+
 	const loadPersona = async () => {
 		setClickCustomize(true);
 		await axios
@@ -57,6 +59,7 @@ const DiscoverProxona = () => {
 
 	useEffect(() => {
 		if (selectedDimension) {
+			setSelectedDimensionTrue([]);
 			Object.entries(selectedDimension).forEach((values) => {
 				values[1].map((value) => {
 					if (value?.selected == true) {

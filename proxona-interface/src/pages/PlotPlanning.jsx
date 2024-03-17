@@ -54,6 +54,7 @@ function PlotPlanning({ plot, proxonas }) {
 	};
 
 	const [messages, setMessages] = useState([]);
+	const [botIsLoading, setBotIsLoading] = useState(false);
 	const { username, handle } = useSelector((state) => state.loginInfo);
 	const navigate = useNavigate();
 
@@ -170,6 +171,8 @@ function PlotPlanning({ plot, proxonas }) {
 						>
 							<FeedbackBoard
 								setMessages={setMessages}
+								botIsLoading={botIsLoading}
+								setBotIsLoading={setBotIsLoading}
 								messages={messages}
 								handleId={id}
 								plot={plot}
@@ -181,6 +184,8 @@ function PlotPlanning({ plot, proxonas }) {
 					<Stack flex={1} p={2}>
 						<FeedbackChat
 							setMessages={setMessages}
+							botIsLoading={botIsLoading}
+							setBotIsLoading={setBotIsLoading}
 							messages={messages}
 							proxonas={proxonas}
 							removePersona={removePersona}

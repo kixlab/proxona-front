@@ -220,7 +220,7 @@ const SelectAttributes = ({
 					<Stack key={dimension} spacing={1}>
 						<Stack direction={"row"}>
 							<Typography variant="h6">{dimension}</Typography>
-							<Typography sx={{ ml: 3, color: "#6d53d3" }}>
+							<Typography sx={{ ml: 3, color: "#c4b7f7" }}>
 								{dimension === Object.keys(displayExplain)[0] &&
 								Object.values(displayExplain)[0]?.includes(":") ? (
 									<div>

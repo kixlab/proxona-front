@@ -24,7 +24,13 @@ import defaultStyle from "../ChatInterface/defaultStyle";
 import { Outlet } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 
-export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
+export const FeedbackChat = ({
+	proxonas,
+	setMessages,
+	messages,
+	botIsLoading,
+	setBotIsLoading,
+}) => {
 	// const [messages, setMessages] = useState(textMessage);
 	// const [messages, setMessages] = useState([]);
 	const { id } = useParams();
@@ -33,7 +39,7 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 	);
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
-	const [botIsLoading, setBotIsLoading] = useState(false);
+
 	const location = useLocation();
 	const mentionRef = useRef(null);
 	const [values, setValues] = useState("");
@@ -99,7 +105,7 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 				// 		filterMessage(message[1])[1] - 2
 				// 	),
 				// }));
-				console.log(res.data);
+				// console.log(res.data);
 
 				const mappedMessages = Object.entries(res.data).map((message) => ({
 					who: message[0],
@@ -228,7 +234,9 @@ export const FeedbackChat = ({ proxonas, setMessages, messages }) => {
 											bgcolor: "#24292f",
 										}}
 									>
-										<Typography variant="caption">{message.who}</Typography>
+										<Typography variant="caption" sx={{ paddingRight: "10px" }}>
+											{message.who}
+										</Typography>
 										<i class="bi bi-info-circle" style={{ fontSize: 12 }}></i>
 									</ButtonBase>
 									<Stack direction={"row"}>

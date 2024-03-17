@@ -156,6 +156,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 														LinkComponent: Link,
 														to: data.name,
 														state: {
+															experience: data.experience,
 															job: data.job,
 															generated: data.generated,
 															reason: data.reason,

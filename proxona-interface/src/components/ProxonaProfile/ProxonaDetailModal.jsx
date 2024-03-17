@@ -105,6 +105,18 @@ function ProxonaDetailModal() {
 						})}
 					</Stack>
 				</Stack>
+				{location.state.experience ? (
+					<>
+						<Divider></Divider>
+						<Typography padding={1} sx={{ fontWeight: "600" }}>
+							<Box component="div" sx={{ pr: 1, display: "inline" }}>
+								<i class="bi bi-chat-right-dots-fill"></i>
+							</Box>
+							{location.state.username} 는 어떤 경험을 가지고 있을까요?
+							<Stack padding={1}>{location.state.experience}</Stack>)
+						</Typography>
+					</>
+				) : null}
 				<Divider></Divider>
 				<Typography padding={1} sx={{ fontWeight: "600" }}>
 					<Box component="div" sx={{ pr: 1, display: "inline" }}>

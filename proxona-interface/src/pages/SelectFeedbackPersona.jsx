@@ -19,17 +19,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const SelectFeedbackPersona = ({ proxonas }) => {
 	const { id } = useParams();
-	const [targetPersona, setTargetPersona] = useState(() => {
-		const saved = localStorage.getItem("excluding_names");
-		if (saved) {
-			const initialValue = JSON.parse(saved);
-			return initialValue;
-		} else {
-			return [];
-		}
-	});
-	// const [targetPersona, setTargetPersona] = useState([]);
-
+	// const [targetPersona, setTargetPersona] = useState(() => {
+	// 	const saved = localStorage.getItem("excluding_names");
+	// 	if (saved) {
+	// 		const initialValue = JSON.parse(saved);
+	// 		return initialValue;
+	// 	} else {
+	// 		return [];
+	// 	}
+	// });
+	const [targetPersona, setTargetPersona] = useState([]);
 	const [profiles, setProfiles] = useState([]);
 	const location = useLocation();
 	const [inputText, setInputText] = useState("");
@@ -65,7 +64,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 			await axios
 				.get(port + `youtube_api/${username}/${id}/excluding-persona/`)
 				.then((response) => {
-					setTargetPersona(response.data);
+					setTargetPersona(response.data.excluded);
 				});
 		} catch (error) {
 			console.log(error);
@@ -107,6 +106,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 			console.error("Error loading proxonas", error);
 		}
 	};
+	console.log(targetPersona);
 
 	useEffect(() => {
 		setProfiles(proxonas);
@@ -126,13 +126,13 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 	useEffect(() => {
 		if (targetPersona.length > 0) {
 			removePersona();
-			localStorage.setItem("excluding_names", JSON.stringify(targetPersona));
+			// localStorage.setItem("excluding_names", JSON.stringify(targetPersona));
 		}
 	}, [targetPersona]);
 
-	// useEffect(() => {
-	// 	getRemovePersona();
-	// }, []);
+	useEffect(() => {
+		getRemovePersona();
+	}, []);
 
 	return (
 		<Container>
@@ -185,7 +185,12 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 								</Stack>
 						  ))
 						: profiles.map((proxona) => (
-								<div key={proxona.name}>
+								<Stack
+									key={proxona.name}
+									flex
+									alignItems="flex-end"
+									direction="column"
+								>
 									<ProxonaProfile
 										username={proxona.name}
 										summary={proxona.description}
@@ -200,14 +205,14 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 										inputText={inputText}
 									></ProxonaProfile>
 									<Button
-										sx={{ color: "white" }}
+										sx={{ color: "#808080" }}
 										onClick={() =>
 											setTargetPersona([proxona.name, ...targetPersona])
 										}
 									>
-										기획에서 빼기
+										<DeleteIcon />
 									</Button>
-								</div>
+								</Stack>
 						  ))}
 					{/* <div>
 						<ProxonaProfile

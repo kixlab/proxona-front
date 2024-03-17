@@ -187,10 +187,8 @@ const SelectAttributes = ({
 				}
 			);
 			if (response) {
-				addValues(
-					Object.entries(response.data["new_value"])[0][0],
-					Object.entries(response.data["new_value"])[0][1]
-				);
+				// console.log(Object.values(response.data["new_value"])[0]);
+				addValues(dimension, Object.values(response.data["new_value"])[0]);
 
 				setIsGenerating("");
 			}

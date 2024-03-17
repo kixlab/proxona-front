@@ -33,11 +33,25 @@ function PlotPlanning({ plot, proxonas }) {
 		setAnchorEl(null);
 	};
 	const open = Boolean(anchorEl);
-	const [excludedPersona, setExcludedPersona] = useState(() => {
-		const saved = localStorage.getItem("excluding_names");
-		const initialValue = JSON.parse(saved);
-		return initialValue || [];
-	});
+	// const [excludedPersona, setExcludedPersona] = useState(() => {
+	// 	const saved = localStorage.getItem("excluding_names");
+	// 	const initialValue = JSON.parse(saved);
+	// 	return initialValue || [];
+	// });
+
+	const [excludedPersona, setExcludedPersona] = useState([]);
+
+	const getRemovePersona = async () => {
+		try {
+			await axios
+				.get(port + `youtube_api/${username}/${id}/excluding-persona/`)
+				.then((response) => {
+					setExcludedPersona(response.data.excluded);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const [messages, setMessages] = useState([]);
 	const { username, handle } = useSelector((state) => state.loginInfo);
@@ -67,6 +81,10 @@ function PlotPlanning({ plot, proxonas }) {
 		if (excludedPersona.length > 0) {
 			removePersona();
 		}
+	}, [excludedPersona]);
+
+	useEffect(() => {
+		getRemovePersona();
 	}, []);
 
 	const removePersona = async () => {

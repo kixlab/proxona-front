@@ -124,7 +124,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 							내 채널의 시청자 페르소나: {proxonas.length} 명
 						</Typography>
 
-						<Stack spacing={20 / 8}>
+						<Stack spacing={20 / 8} flexDirection={"column-reverse"}>
 							{proxonas &&
 								// Object.entries(filteredProfile).map(([key, items]) => (
 

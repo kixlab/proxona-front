@@ -137,7 +137,7 @@ function ProxonaProfile({
 			<Stack direction={"row"} flexWrap={"wrap"} gap={10 / 8}>
 				{tags &&
 					tags
-						.map((tag) => tag["name"])
+						.map((tag) => tag["name_kor"])
 						.map((tag) => {
 							return <Chip label={`#${tag}`} color="primary" size="small" />;
 						})}

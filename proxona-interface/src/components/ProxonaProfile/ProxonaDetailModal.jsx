@@ -29,9 +29,12 @@ function ProxonaDetailModal() {
 				return item.dimension_name === curr.dimension_name;
 			});
 			if (existingItem) {
-				existingItem.name.push(curr.name);
+				existingItem.name_kor.push(curr.name_kor);
 			} else {
-				acc.push({ name: [curr.name], dimension_name: curr.dimension_name });
+				acc.push({
+					name_kor: [curr.name_kor],
+					dimension_name: curr.dimension_name,
+				});
 			}
 			return acc;
 		}, []);
@@ -87,11 +90,11 @@ function ProxonaDetailModal() {
 						이런 특성을 가지고 있어요!
 					</Typography>
 					<Stack padding={1}>
-						{dv.map(({ dimension_name, name }) => {
+						{dv.map(({ dimension_name, name_kor }) => {
 							return (
 								<div className="detail">
 									<Chip className="detail-head" label={dimension_name}></Chip>
-									{name.map((tag) => {
+									{name_kor.map((tag) => {
 										return (
 											<Chip
 												className="detail-body"

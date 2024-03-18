@@ -145,7 +145,7 @@ const SelectResult = () => {
 													Object.assign(
 														{},
 														...profile.values.map((dv) => ({
-															[dv.dimension_name]: dv.name,
+															[dv.dimension_name]: dv.name_kor,
 														}))
 													)
 												);

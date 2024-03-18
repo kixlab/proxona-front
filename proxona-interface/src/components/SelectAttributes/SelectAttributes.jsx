@@ -214,7 +214,9 @@ const SelectAttributes = ({
 	}, [initValues, attributes]);
 
 	useEffect(() => {
-		onSelect(dimensions);
+		if (extendable) {
+			onSelect(dimensions);
+		}
 	}, [addValues]);
 
 	return (

@@ -117,13 +117,16 @@ function ProxonaDetailModal() {
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>
 							{location.state.username} 는 어떤 경험을 가지고 있을까요?
-							{location.state.experience.map((exp) => {
+							<Stack padding={1}>
+								<li>{location.state.experience}</li>
+							</Stack>
+							{/* {location.state.experience.map((exp) => {
 								return (
 									<Stack padding={1}>
 										<li>{exp}</li>
 									</Stack>
 								);
-							})}
+							})} */}
 						</Typography>
 					</>
 				) : null}

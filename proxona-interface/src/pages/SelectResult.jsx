@@ -59,10 +59,11 @@ const SelectResult = () => {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-kor-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
+					console.log(response);
 					setAttributes(response.data);
 				});
 		} catch (error) {
@@ -144,7 +145,7 @@ const SelectResult = () => {
 													Object.assign(
 														{},
 														...profile.values.map((dv) => ({
-															[dv.dimension_name]: dv.name,
+															[dv.dimension_name]: dv.name_kor,
 														}))
 													)
 												);

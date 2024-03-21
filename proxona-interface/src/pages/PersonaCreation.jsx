@@ -58,7 +58,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-kor-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -156,7 +156,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 														LinkComponent: Link,
 														to: data.name,
 														state: {
-															experience: data.experience,
+															personal_experiences: data.personal_experiences,
 															job: data.job,
 															generated: data.generated,
 															reason: data.reason,

@@ -19,7 +19,7 @@ const SelectPersona = ({ extendable }) => {
 	const loadData = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/admin/${handle}/get-dim-val-def-set/`, {
+				.get(port + `youtube_api/admin/${handle}/get-dim-val-def-kor-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {

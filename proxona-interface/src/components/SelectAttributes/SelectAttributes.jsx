@@ -213,6 +213,12 @@ const SelectAttributes = ({
 		);
 	}, [initValues, attributes]);
 
+	useEffect(() => {
+		if (extendable) {
+			onSelect(dimensions);
+		}
+	}, [addValues]);
+
 	return (
 		<Stack spacing={5}>
 			{Object.entries(dimensions).map(([dimension, values]) => {

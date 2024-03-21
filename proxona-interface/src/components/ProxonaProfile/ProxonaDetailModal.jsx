@@ -29,9 +29,12 @@ function ProxonaDetailModal() {
 				return item.dimension_name === curr.dimension_name;
 			});
 			if (existingItem) {
-				existingItem.name.push(curr.name);
+				existingItem.name_kor.push(curr.name_kor);
 			} else {
-				acc.push({ name: [curr.name], dimension_name: curr.dimension_name });
+				acc.push({
+					name_kor: [curr.name_kor],
+					dimension_name: curr.dimension_name,
+				});
 			}
 			return acc;
 		}, []);
@@ -87,11 +90,11 @@ function ProxonaDetailModal() {
 						이런 특성을 가지고 있어요!
 					</Typography>
 					<Stack padding={1}>
-						{dv.map(({ dimension_name, name }) => {
+						{dv.map(({ dimension_name, name_kor }) => {
 							return (
 								<div className="detail">
 									<Chip className="detail-head" label={dimension_name}></Chip>
-									{name.map((tag) => {
+									{name_kor.map((tag) => {
 										return (
 											<Chip
 												className="detail-body"
@@ -105,7 +108,7 @@ function ProxonaDetailModal() {
 						})}
 					</Stack>
 				</Stack>
-				{location.state.experience ? (
+				{location.state.personal_experiences ? (
 					<>
 						<Divider></Divider>
 						<Typography padding={1} sx={{ fontWeight: "600" }}>
@@ -113,7 +116,13 @@ function ProxonaDetailModal() {
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>
 							{location.state.username} 는 어떤 경험을 가지고 있을까요?
-							<Stack padding={1}>{location.state.experience}</Stack>)
+							{location.state.personal_experiences.map((exp) => {
+								return (
+									<Stack padding={1}>
+										<li>{exp}</li>
+									</Stack>
+								);
+							})}
 						</Typography>
 					</>
 				) : null}

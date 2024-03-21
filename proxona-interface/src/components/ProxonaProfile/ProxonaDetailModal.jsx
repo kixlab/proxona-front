@@ -24,6 +24,7 @@ function ProxonaDetailModal() {
 	};
 
 	useEffect(() => {
+		console.log("experience", location.state.experience)
 		const outputArray = location.state.tags.reduce((acc, curr) => {
 			const existingItem = acc.find((item) => {
 				return item.dimension_name === curr.dimension_name;

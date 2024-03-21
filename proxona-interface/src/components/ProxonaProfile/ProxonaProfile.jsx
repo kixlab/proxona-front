@@ -27,7 +27,7 @@ function ProxonaProfile({
 	activateTextArea,
 	inputText,
 	setInputText,
-	personal_experiences,
+	experience,
 	disabled = false,
 }) {
 	return (

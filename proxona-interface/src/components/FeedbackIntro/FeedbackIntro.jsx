@@ -19,7 +19,7 @@ export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
 						variant="p"
 						sx={{ color: "#808080", marginBottom: "30px" }}
 					>
-						비디오 주제를 입력하면 채널 성격에 맞는 초안을 준비해드릴게요.
+						비디오 주제를 아래에 입력해주세요.
 					</Typography>
 
 					<Paper

@@ -209,12 +209,12 @@ export const FeedbackChat = ({
 														reason,
 														idx,
 														values,
-														personal_experiences,
+														experience,
 														job,
 														generated,
 													}) => {
 														return {
-															personal_experiences: personal_experiences,
+															experience: experience,
 															generated: generated,
 															job: job,
 															username: name,

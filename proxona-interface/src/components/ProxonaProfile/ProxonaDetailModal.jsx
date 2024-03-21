@@ -108,7 +108,7 @@ function ProxonaDetailModal() {
 						})}
 					</Stack>
 				</Stack>
-				{location.state.personal_experiences ? (
+				{location.state.experience ? (
 					<>
 						<Divider></Divider>
 						<Typography padding={1} sx={{ fontWeight: "600" }}>
@@ -116,7 +116,7 @@ function ProxonaDetailModal() {
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>
 							{location.state.username} 는 어떤 경험을 가지고 있을까요?
-							{location.state.personal_experiences.map((exp) => {
+							{location.state.experience.map((exp) => {
 								return (
 									<Stack padding={1}>
 										<li>{exp}</li>

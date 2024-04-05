@@ -142,13 +142,14 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 						<b>어떤 시청자 페르소나와 기획을 해볼까요?</b>
 					</Typography>
 					<Typography variant="p" sx={{ color: "#D9D9D9" }}>
-						이제부터, 새로운 비디오 스토리라인을 작성하는 시간입니다. <br></br>
-						어떤 시청자 페르소나에 집중해서 비디오를 기획하고 싶나요? <br></br>
-						덜 중요하다고 생각되는 시청자 페르소나는 제외하셔도 좋습니다. (
-						<DeleteIcon /> 클릭) <br></br>또한, 시청자 페르소나의 프로필을 수정
-						및 구체화하실 수 있습니다. <br></br>아이콘을 눌러 프로필을
-						수정해보세요. (
-						<EditIcon /> 클릭, 수정 후 <SaveIcon /> 클릭)
+						Now, it's time to brainstorm a new video storyline. <br></br>
+						Which audience persona would you like to focus on for planning the
+						video? <br></br>
+						It's okay to exclude less important audience personas. ( Click{" "}
+						<DeleteIcon /> ) <br></br>Additionally, you can modify and specify
+						the profile of the audience persona. <br></br>Click on the icon to
+						edit the profile. Click <EditIcon /> , Click <SaveIcon /> after
+						editing)
 					</Typography>
 				</Stack>
 				<Divider></Divider>
@@ -241,7 +242,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 					to={`/${id}/feedback/topic`}
 					LinkComponent={Link}
 				>
-					다음
+					Next
 				</Button>
 			</Stack>
 		</Container>

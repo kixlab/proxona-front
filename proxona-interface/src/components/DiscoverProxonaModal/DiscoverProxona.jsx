@@ -93,7 +93,8 @@ const DiscoverProxona = () => {
 					<b>Customize Own Personas</b>
 				</Typography>
 				<Typography variant="h6" sx={{ color: "#D9D9D9" }} gutterBottom mb={2}>
-					기존 시청자 페르소나와 다른 새로운 페르소나를 만들어보세요.
+					Create a new persona by your own, different from existing audience
+					personas.
 				</Typography>
 				<Divider sx={{ marginBottom: "15px" }}></Divider>
 				{/* <SelectPersona extendable={true} /> */}
@@ -105,7 +106,7 @@ const DiscoverProxona = () => {
 			</DialogContent>
 			<DialogActions>
 				<Button disabled={clickCustomize} onClick={handleClose}>
-					닫기
+					Close
 				</Button>
 				<Button
 					variant="contained"
@@ -113,10 +114,10 @@ const DiscoverProxona = () => {
 					onClick={() => loadPersona()}
 				>
 					{disabled
-						? `${threshold}개 이상의 특성을 골라주세요`
+						? `Choose ${threshold} or more values to create a new persona`
 						: clickCustomize
-						? `추가 중...`
-						: `시청자 페르소나 만들기`}
+						? `Adding..`
+						: `Create`}
 				</Button>
 			</DialogActions>
 		</Dialog>

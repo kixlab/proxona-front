@@ -98,7 +98,7 @@ const IntroIndex = () => {
 					})
 				}
 			>
-				다음
+				Next
 			</Button>
 		</Stack>
 	);

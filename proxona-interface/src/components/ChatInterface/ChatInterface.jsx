@@ -37,10 +37,10 @@ export const ChatInterface = ({ proxonas }) => {
 
 	const buttonRef = useRef([]);
 	const exampleQuestions = [
-		"어떤 비디오를 좋아해?",
-		"내 비디오를 왜 봐?",
-		"내 비디오 중에 제일 좋아하는게 뭐야?",
-		"평소 생활 습관이 어때?",
+		"What kind of videos do you like?",
+		"Why do you watch my videos?",
+		"What's your favorite video among mine?",
+		"What do you usually do in your spare time?",
 	];
 
 	const sendMessage = (e) => {
@@ -112,7 +112,7 @@ export const ChatInterface = ({ proxonas }) => {
 							variant="p"
 							sx={{ textAlign: "center", color: "#808080" }}
 						>
-							이런 질문들을 할 수 있어요.
+							You can ask these questions:
 						</Typography>
 						<Stack spacing={10 / 8}>
 							{exampleQuestions.map((element, key) => (
@@ -266,7 +266,9 @@ export const ChatInterface = ({ proxonas }) => {
 							setInputMessage(newPlainTextValue);
 						}}
 						style={defaultStyle}
-						placeholder={"'@'를 이용하여 직접 물어보세요!"}
+						placeholder={
+							"Tag a specific persona by using '@name' in front of your question!"
+						}
 						a11ySuggestionsListLabel={"Suggested mentions"}
 						inputRef={mentionRef}
 					>

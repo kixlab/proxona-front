@@ -59,7 +59,7 @@ const SelectResult = () => {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${username}/${id}/get-dim-val-kor-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -106,10 +106,11 @@ const SelectResult = () => {
 			>
 				<Stack alignItems={"center"}>
 					<Typography variant="h5" gutterBottom>
-						내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
+						How well do you know your channel's viewers?
 					</Typography>
 					<Typography variant="h4" gutterBottom>
-						내 채널의 대표적인 시청자를 눌러 특성을 확인해보세요.
+						Click on your channel's typical viewers to check their
+						characteristics.
 					</Typography>
 				</Stack>
 				<Stack direction={"row"} spacing={4}>
@@ -160,7 +161,7 @@ const SelectResult = () => {
 					</Stack>
 				</Stack>
 				<Button variant="contained" LinkComponent={Link} to={`/${id}/persona`}>
-					다음
+					Next
 				</Button>
 			</Stack>
 		</Box>

@@ -78,7 +78,7 @@ export const FeedbackDraft = ({
 							disabled={isLoading}
 							onClick={goToNext}
 						>
-							다음
+							Next
 						</Button>
 					</Stack>
 				</Stack>

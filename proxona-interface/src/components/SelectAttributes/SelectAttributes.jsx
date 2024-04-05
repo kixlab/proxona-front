@@ -114,7 +114,7 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 				/>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleClose}>닫기</Button>
+				<Button onClick={handleClose}>Close</Button>
 				<Button
 					variant="contained"
 					disabled={value.length === 0}
@@ -272,7 +272,9 @@ const SelectAttributes = ({
 										size="small"
 										onClick={() => handleSuggest(dimension)}
 									>
-										{isGenerating == dimension ? "AI 추천 중..." : "AI 추천"}
+										{isGenerating == dimension
+											? "AI 추천 중..."
+											: "AI recommendation"}
 									</Button>
 									<Button
 										color="primary"
@@ -283,7 +285,7 @@ const SelectAttributes = ({
 											setAddValueDialogOpen(true);
 										}}
 									>
-										직접<br></br>추가
+										Manual<br></br>addition
 									</Button>
 								</Stack>
 							)}

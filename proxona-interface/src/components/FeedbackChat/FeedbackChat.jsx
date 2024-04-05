@@ -35,7 +35,7 @@ export const FeedbackChat = ({
 	// const [messages, setMessages] = useState([]);
 	const { id } = useParams();
 	const [inputMessage, setInputMessage] = useState(
-		"내가 쓴 스토리라인에 대한 전반적인 생각을 말해줄래?"
+		"What do you think of the storyline I've outlined? I'd love to hear your overall thoughts?"
 	);
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);

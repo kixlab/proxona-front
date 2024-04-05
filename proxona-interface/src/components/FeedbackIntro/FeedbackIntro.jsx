@@ -13,13 +13,16 @@ export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
 						mb={2}
 						sx={{ color: "#6d53d3", marginBottom: "10px" }}
 					>
-						<b>어떤 주제에 대한 비디오를 기획해볼까요?</b>
+						<b>
+							Let's brainstorm ideas for a new video with your audience
+							personas!
+						</b>
 					</Typography>
 					<Typography
 						variant="p"
 						sx={{ color: "#808080", marginBottom: "30px" }}
 					>
-						비디오 주제를 아래에 입력해주세요.
+						Please write down the video topic and storyline below.
 					</Typography>
 
 					<Paper
@@ -49,7 +52,7 @@ export const FeedbackIntro = ({ topic, setTopic, goToNext, isLoading }) => {
 						disabled={!topic | isLoading ? true : false}
 						className="button-next"
 					>
-						{isLoading ? `초안을 작성중입니다...` : `다음`}
+						{isLoading ? `초안을 작성중입니다...` : `Next`}
 					</Button>
 				</Stack>
 			</>

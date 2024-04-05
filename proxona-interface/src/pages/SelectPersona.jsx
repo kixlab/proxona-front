@@ -19,7 +19,7 @@ const SelectPersona = ({ extendable }) => {
 	const loadData = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/admin/${handle}/get-dim-val-def-kor-set/`, {
+				.get(port + `youtube_api/admin/${handle}/get-dim-val-def-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -57,7 +57,7 @@ const SelectPersona = ({ extendable }) => {
 			>
 				<Stack alignItems={"center"}>
 					<Typography variant="h5" gutterBottom>
-						내 채널의 시청자들에 대해 얼마나 잘 알고 있나요?
+						How well do you know your channel's viewers?
 					</Typography>
 					<Typography variant="h4" gutterBottom>
 						내 채널의 시청자들의 다양한 특성을 확인해보세요.
@@ -76,7 +76,7 @@ const SelectPersona = ({ extendable }) => {
 				)}
 
 				<Button variant="contained" LinkComponent={Link} to={`/${id}/result`}>
-					다음
+					Next
 				</Button>
 			</Stack>
 		</Container>

@@ -58,7 +58,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 	const loadAttr = async () => {
 		try {
 			await axios
-				.get(port + `youtube_api/${username}/${id}/get-dim-val-kor-set/`, {
+				.get(port + `youtube_api/${username}/${id}/get-dim-val-set/`, {
 					headers: { "Content-Type": "application/json" },
 				})
 				.then((response) => {
@@ -121,7 +121,7 @@ function PersonaCreation({ proxonas, onCreateProxona }) {
 					</Stack>
 					<Stack flex={5} flexShrink={0} height={"100%"} overflow={"auto"}>
 						<Typography variant="h6" mb={2}>
-							내 채널의 시청자 페르소나: {proxonas.length} 명
+							Audience personas in my channel: {proxonas.length}
 						</Typography>
 
 						<Stack spacing={20 / 8} flexDirection={"column-reverse"}>

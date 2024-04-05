@@ -109,15 +109,16 @@ function PlotPlanning({ plot, proxonas }) {
 					<Stack flex={2} p={2} spacing={10 / 8} height={1}>
 						<Typography variant="h5">
 							<b>
-								이제 시청자 페르소나들의 피드백을 받아 비디오를 구체적으로
-								기획해봅시다.
+								Now, let's plan the video in detail based on feedback from
+								audience personas.
 							</b>
 						</Typography>
 						<Stack flexDirection={"row"} justifyContent={"space-between"}>
 							<Typography variant="p" sx={{ color: "#D9D9D9" }}>
-								아래 텍스트 에디터 속 스토리라인을 자유롭게 편집하고, <br></br>
-								피드백을 받고 싶은 부분을 <b>드래그</b> 해서 시청자
-								페르소나들에게 물어보세요!{" "}
+								Feel free to edit the storyline in the text editor below.{" "}
+								<br></br>
+								<b>Drag</b> and <b>ask</b> a specific audience persona about the
+								parts you'd like feedback on!
 							</Typography>
 							{profiles.length > 0 && (
 								<Stack flexDirection={"row-reverse"} alignItems="center">
@@ -132,7 +133,7 @@ function PlotPlanning({ plot, proxonas }) {
 										<MoreVertIcon />
 									</IconButton>
 									<Typography sx={{ color: "#D9D9D9" }}>
-										현재 참여 페르소나: {profiles.length}
+										Current participating personas: {profiles.length}
 									</Typography>
 
 									<Menu
@@ -199,7 +200,7 @@ function PlotPlanning({ plot, proxonas }) {
 						variant="contained"
 						onClick={() => navigate("finish")}
 					>
-						플래닝 완료
+						I'm done!
 					</Button>
 				</Stack>
 			</Stack>

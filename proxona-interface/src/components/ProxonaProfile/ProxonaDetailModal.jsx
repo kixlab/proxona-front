@@ -24,7 +24,7 @@ function ProxonaDetailModal() {
 	};
 
 	useEffect(() => {
-		console.log("experience", location.state.experience)
+		console.log("experience", location.state.experience);
 		const outputArray = location.state.tags.reduce((acc, curr) => {
 			const existingItem = acc.find((item) => {
 				return item.dimension_name === curr.dimension_name;
@@ -79,8 +79,8 @@ function ProxonaDetailModal() {
 				</Stack>
 				<Divider></Divider>
 				<Stack className="message" padding={1}>
-					직업: {location.state.job} <br></br>
-					자기 소개: {location.state.summary}
+					Job: {location.state.job} <br></br>
+					Who am {location.state.username}?: {location.state.summary}
 				</Stack>
 				<Divider></Divider>
 				<Stack className="selectors" padding={1}>
@@ -88,7 +88,7 @@ function ProxonaDetailModal() {
 						<Box component="div" sx={{ pr: 1, display: "inline" }}>
 							<i class="bi bi-chat-right-dots-fill"></i>
 						</Box>
-						이런 특성을 가지고 있어요!
+						Here are some characteristics {location.state.username} has!
 					</Typography>
 					<Stack padding={1}>
 						{dv.map(({ dimension_name, name_kor }) => {
@@ -135,7 +135,7 @@ function ProxonaDetailModal() {
 					<Box component="div" sx={{ pr: 1, display: "inline" }}>
 						<i class="bi bi-chat-right-dots-fill"></i>
 					</Box>
-					{location.state.username} 는 왜 이 채널을 시청할까요?
+					Why does {location.state.username} watch this channel?
 				</Typography>
 				<Stack padding={1}>{location.state.reason}</Stack>
 				<Divider></Divider>
@@ -145,7 +145,7 @@ function ProxonaDetailModal() {
 							<Box component="div" sx={{ pr: 1, display: "inline" }}>
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>
-							{location.state.username} 가 자주 보는 비디오
+							Videos {location.state.username} often watches in this channel
 						</Typography>
 						<Stack
 							padding={2}

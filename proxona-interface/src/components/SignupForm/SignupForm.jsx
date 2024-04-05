@@ -95,7 +95,7 @@ export const SignupForm = () => {
 								name="username"
 								value={formData.username}
 								onChange={handleChange}
-								placeholder="실험 아이디를 기입해주세요"
+								placeholder="Your ID"
 							/>
 						</label>
 					</Box>
@@ -107,7 +107,7 @@ export const SignupForm = () => {
 								name="handle"
 								value={formData.handle}
 								onChange={handleChange}
-								placeholder="채널 아이디 (@handle) 를 기입해주세요"
+								placeholder="Channel ID (@handle)"
 							/>
 						</label>
 					</Box>

@@ -103,8 +103,8 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 		<Dialog open={open} onClose={handleClose}>
 			<DialogContent p={2}>
 				<Typography gutterBottom>
-					<b style={{ textDecoration: "underline" }}>{dimension}</b>에 추가할
-					특성을 적어보세요.
+					Write down a new value to add her for{" "}
+					<b style={{ textDecoration: "underline" }}>{dimension}</b>
 				</Typography>
 				<TextField
 					value={value}
@@ -123,7 +123,7 @@ const AddValueDialog = ({ dimension, open, handleClose, handleAdd }) => {
 						handleClose();
 					}}
 				>
-					추가하기
+					Add
 				</Button>
 			</DialogActions>
 		</Dialog>
@@ -273,7 +273,7 @@ const SelectAttributes = ({
 										onClick={() => handleSuggest(dimension)}
 									>
 										{isGenerating == dimension
-											? "AI 추천 중..."
+											? "Recommending... "
 											: "AI recommendation"}
 									</Button>
 									<Button

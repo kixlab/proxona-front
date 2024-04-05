@@ -5,8 +5,8 @@ import { dummy } from "../../data/dummy";
 
 export const FloatingMenu = ({ show }) => {
 	const ACTIONS = {
-		EVALUATION: "이 부분에 대한 너의 생각은 어때?",
-		SUGGESTION: "이건 어떻게 고치면 좋을까?",
+		EVALUATION: "What are your thoughts on this part?",
+		SUGGESTION: "How can I revise/improve this part?",
 	};
 
 	const [action, setAction] = useState("");

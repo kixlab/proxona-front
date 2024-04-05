@@ -30,10 +30,10 @@ function ProxonaDetailModal() {
 				return item.dimension_name === curr.dimension_name;
 			});
 			if (existingItem) {
-				existingItem.name_kor.push(curr.name_kor);
+				existingItem.name.push(curr.name);
 			} else {
 				acc.push({
-					name_kor: [curr.name_kor],
+					name: [curr.name],
 					dimension_name: curr.dimension_name,
 				});
 			}
@@ -91,11 +91,11 @@ function ProxonaDetailModal() {
 						Here are some characteristics {location.state.username} has!
 					</Typography>
 					<Stack padding={1}>
-						{dv.map(({ dimension_name, name_kor }) => {
+						{dv.map(({ dimension_name, name }) => {
 							return (
 								<div className="detail">
 									<Chip className="detail-head" label={dimension_name}></Chip>
-									{name_kor.map((tag) => {
+									{name.map((tag) => {
 										return (
 											<Chip
 												className="detail-body"

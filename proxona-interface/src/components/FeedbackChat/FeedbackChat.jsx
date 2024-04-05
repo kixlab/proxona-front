@@ -149,7 +149,7 @@ export const FeedbackChat = ({
 					{initial ? (
 						<Stack spacing={20 / 8} alignSelf={"center"} py={40 / 8}>
 							<Typography variant="h6">
-								내 채널의 뷰어인 시청자 페르소나에게 마음껏 질문해보세요!
+								Feel free to ask questions to the viewer personas of my channel!
 							</Typography>
 							<Stack spacing={10 / 8}>
 								{exampleQuestions.map((element, key) => {

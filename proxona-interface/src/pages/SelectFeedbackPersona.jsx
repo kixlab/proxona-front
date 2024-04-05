@@ -139,7 +139,7 @@ const SelectFeedbackPersona = ({ proxonas }) => {
 			<Stack spacing={40 / 8} sx={{ m: "5rem" }}>
 				<Stack sx={{ textAlign: "center" }}>
 					<Typography variant="h4" mb={2}>
-						<b>어떤 시청자 페르소나와 기획을 해볼까요?</b>
+						<b>Let's brainstorm and plan with a specific viewer persona!</b>
 					</Typography>
 					<Typography variant="p" sx={{ color: "#D9D9D9" }}>
 						Now, it's time to brainstorm a new video storyline. <br></br>

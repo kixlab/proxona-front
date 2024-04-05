@@ -116,7 +116,7 @@ const DiscoverProxona = () => {
 					{disabled
 						? `Choose ${threshold} or more values to create a new persona`
 						: clickCustomize
-						? `Adding..`
+						? `Loading..`
 						: `Create`}
 				</Button>
 			</DialogActions>

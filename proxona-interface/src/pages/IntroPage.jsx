@@ -68,22 +68,23 @@ const IntroIndex = () => {
 	return (
 		<Stack sx={{ justifyContent: "center" }} className="signup_container">
 			<Box sx={{ fontSize: 25 }}>
+				Hello,{" "}
 				<Typography variant="span" sx={{ color: "#d9c6ff" }}>
 					<b>{channel_name}</b>
 				</Typography>{" "}
-				채널 크리에이터님, 안녕하세요.
+				Channel Creator!
 			</Box>
 			<Box sx={{ fontSize: 25 }}>
-				총{" "}
+				Based on a total of{" "}
 				<Typography variant="span" sx={{ color: "#d9c6ff" }}>
 					<b>{video_count}</b>
 				</Typography>{" "}
-				개의 비디오에 담긴{" "}
+				videos and{" "}
 				<Typography variant="span" sx={{ color: "#d9c6ff" }}>
 					<b>{comment_count}</b>
 				</Typography>{" "}
-				개의 댓글을 기반으로 <br></br>
-				{channel_name} 채널의 시청자들을 추측해보았습니다.
+				comments, <br></br>
+				we provide the overview of your channel audience.
 			</Box>
 			<Button
 				variant="contained"

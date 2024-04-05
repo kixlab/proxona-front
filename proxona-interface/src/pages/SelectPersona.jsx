@@ -60,7 +60,8 @@ const SelectPersona = ({ extendable }) => {
 						How well do you know your channel's viewers?
 					</Typography>
 					<Typography variant="h4" gutterBottom>
-						내 채널의 시청자들의 다양한 특성을 확인해보세요.
+						Please check out the diverse characteristics of your channel's
+						viewers.
 					</Typography>
 				</Stack>
 				{data ? (

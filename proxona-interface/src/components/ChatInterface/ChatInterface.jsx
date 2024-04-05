@@ -106,7 +106,7 @@ export const ChatInterface = ({ proxonas }) => {
 				{initial ? (
 					<Stack spacing={20 / 8} alignSelf={"center"}>
 						<Typography variant="h6">
-							내 채널의 뷰어인 시청자 페르소나에게 마음껏 질문해보세요!
+							Feel free to ask questions to the viewer personas of my channel!
 						</Typography>
 						<Typography
 							variant="p"

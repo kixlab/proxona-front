@@ -132,10 +132,14 @@ function PlotPlanning({ plot, proxonas }) {
 									>
 										<MoreVertIcon />
 									</IconButton>
-									<Typography sx={{ color: "#D9D9D9" }}>
-										Current participating personas: {profiles.length}
-									</Typography>
-
+									<Stack flexDirection={"row"} alignItems={"center"}>
+										<Typography sx={{ color: "#D9D9D9" }}>
+											Current participating <br></br>personas:
+										</Typography>
+										<Typography sx={{ color: "#D9D9D9", marginLeft: "15px" }}>
+											{profiles.length}
+										</Typography>
+									</Stack>
 									<Menu
 										id="long-menu"
 										MenuListProps={{

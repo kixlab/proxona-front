@@ -116,7 +116,7 @@ function ProxonaDetailModal() {
 							<Box component="div" sx={{ pr: 1, display: "inline" }}>
 								<i class="bi bi-chat-right-dots-fill"></i>
 							</Box>
-							{location.state.username} 는 어떤 경험을 가지고 있을까요?
+							Recent experience of {location.state.username}
 							<Stack padding={1}>
 								<li>{location.state.experience}</li>
 							</Stack>

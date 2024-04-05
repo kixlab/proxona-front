@@ -80,7 +80,7 @@ function ProxonaDetailModal() {
 				<Divider></Divider>
 				<Stack className="message" padding={1}>
 					Job: {location.state.job} <br></br>
-					Who am {location.state.username}?: {location.state.summary}
+					Who is {location.state.username}?: {location.state.summary}
 				</Stack>
 				<Divider></Divider>
 				<Stack className="selectors" padding={1}>

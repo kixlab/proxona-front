@@ -35,7 +35,7 @@ export const FeedbackChat = ({
 	// const [messages, setMessages] = useState([]);
 	const { id } = useParams();
 	const [inputMessage, setInputMessage] = useState(
-		"What do you think of the storyline I've outlined? I'd love to hear your overall thoughts?"
+		"I’d love to hear your overall thoughts!"
 	);
 	const [initial, setInitial] = useState(true);
 	const chatContainerRef = useRef(null);
